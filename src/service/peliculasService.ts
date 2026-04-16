@@ -17,3 +17,19 @@ export async function mostrarPeliculas(): Promise<APIResult<Peliculas[]>> {
     const error: APIError = await response.json();
     return {ok: false, error: error};
 }
+
+export async function buscarPelicula(id: string): Promise<APIResult<Peliculas[]>> {
+    const response = await fetch(`${baseURL}/peliculas/verPelicula/${id}`, {
+        method: 'GET',
+        headers: {
+            'Accept': 'application/json',
+        },
+    });
+    if (response.ok) {
+        const peliculas: Peliculas[] = await response.json();
+        return {ok: true, data: peliculas};
+    }
+    const error: APIError = await response.json();
+    return {ok: false, error: error};
+}
+
