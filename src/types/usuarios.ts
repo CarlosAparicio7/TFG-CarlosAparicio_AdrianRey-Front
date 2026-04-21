@@ -13,12 +13,17 @@ export type UsuarioEspecifico = {
     nombre: string,
     apellido: string,
     avatarIcon: string,
-    rol: string,
+    rol: string
 }
 
 export type NuevoUsuario = {
     nombre: string,
     apellido: string,
     avatarIcon: string,
-    rol: string,
+    rol: string
+}
+
+export type LoginUsuario = {
+    email: string,
+    password: string
 }
