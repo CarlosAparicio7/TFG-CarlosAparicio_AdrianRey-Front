@@ -7,3 +7,18 @@ export type Usuarios = {
     email: string,
     password: string
 }
+
+export type UsuarioEspecifico = {
+    id: number,
+    nombre: string,
+    apellido: string,
+    avatarIcon: string,
+    rol: string,
+}
+
+export type NuevoUsuario = {
+    nombre: string,
+    apellido: string,
+    avatarIcon: string,
+    rol: string,
+}
