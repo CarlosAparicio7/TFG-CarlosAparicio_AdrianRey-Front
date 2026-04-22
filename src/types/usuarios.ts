@@ -27,3 +27,14 @@ export type LoginUsuario = {
     email: string,
     password: string
 }
+
+export type LoginResponse = {
+    accessToken: string
+}
+
+export type RegistrarUsuario = {
+    nombre: string,
+    apellido: string,
+    email: string,
+    password: string
+}
