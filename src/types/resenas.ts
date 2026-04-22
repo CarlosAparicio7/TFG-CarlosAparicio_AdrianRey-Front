@@ -3,3 +3,14 @@ export type Resenas = {
     comentario: string,
     numeroEstrellas: number
 }
+
+export type ResenaEspecifica = {
+    id: number,
+    comentario: string,
+    numeroEstrellas: number
+}
+
+export type NuevaResena = {
+    comentario: string,
+    numeroEstrellas: number
+}
