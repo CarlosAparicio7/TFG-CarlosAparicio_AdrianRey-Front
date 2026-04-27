@@ -1,11 +1,11 @@
 export type Resenas = {
-    id: number,
+    id: string,
     comentario: string,
     numeroEstrellas: number
 }
 
 export type ResenaEspecifica = {
-    id: number,
+    id: string,
     comentario: string,
     numeroEstrellas: number
 }

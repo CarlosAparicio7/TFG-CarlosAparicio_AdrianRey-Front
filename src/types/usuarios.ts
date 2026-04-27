@@ -1,5 +1,5 @@
 export type Usuarios = {
-    id: number,
+    id: string,
     nombre: string,
     apellido: string,
     avatarIcon: string,
@@ -9,7 +9,7 @@ export type Usuarios = {
 }
 
 export type UsuarioEspecifico = {
-    id: number,
+    id: string,
     nombre: string,
     apellido: string,
     avatarIcon: string,

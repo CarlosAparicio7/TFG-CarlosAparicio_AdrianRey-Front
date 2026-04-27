@@ -1,5 +1,5 @@
 export type Peliculas = {
-    id: number,
+    id: string,
     nombre: string,
     descripcion: string,
     valoracion: number,
@@ -7,7 +7,7 @@ export type Peliculas = {
 }
 
 export type PeliculaEspecifica = {
-    id: number,
+    id: string,
     nombre: string,
     descripcion: string,
     valoracion: number,
