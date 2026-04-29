@@ -6,7 +6,6 @@ export type Peliculas = {
     director: string,
     genero: string,
     valoracion: number,
-    archivoVideo: number
 }
 
 export type PeliculaEspecifica = {
