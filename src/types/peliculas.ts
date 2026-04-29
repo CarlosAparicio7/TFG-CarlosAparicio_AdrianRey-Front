@@ -20,6 +20,5 @@ export type NuevaPelicula = {
     nombre: string,
     portada: string,
     descripcion: string,
-    valoracion: number,
     archivoVideo: number
 }
