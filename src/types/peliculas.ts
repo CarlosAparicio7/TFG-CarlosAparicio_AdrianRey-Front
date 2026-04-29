@@ -3,6 +3,8 @@ export type Peliculas = {
     nombre: string,
     portada: string,
     descripcion: string,
+    director: string,
+    genero: string,
     valoracion: number,
     archivoVideo: number
 }
@@ -12,6 +14,8 @@ export type PeliculaEspecifica = {
     nombre: string,
     portada: string,
     descripcion: string,
+    director: string,
+    genero: string,
     valoracion: number,
     archivoVideo: number
 }
@@ -20,5 +24,7 @@ export type NuevaPelicula = {
     nombre: string,
     portada: string,
     descripcion: string,
+    director: string,
+    genero: string,
     archivoVideo: number
 }
