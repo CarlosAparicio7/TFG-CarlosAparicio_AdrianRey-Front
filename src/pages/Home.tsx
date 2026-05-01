@@ -1,4 +1,4 @@
-import { Container, Grid, Card, CardContent, CardMedia, Typography, Button, Box, Paper, Rating } from "@mui/material";
+import { Box, Button, Card, CardContent, CardMedia, Container, Grid, Paper, Rating, Typography } from "@mui/material";
 import Header from "../components/Header";
 
 export default function Home() {
@@ -12,7 +12,7 @@ export default function Home() {
                         <Typography variant="h2" sx={{ fontWeight: 900, letterSpacing: -3, fontSize: { xs: '2.5rem', sm: '3.5rem', md: '4.5rem' }, background: 'linear-gradient(90deg, #003a54 0%, #005f8a 50%, #00a8e8 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', textShadow: '0px 10px 20px rgba(0,0,0,0.05)' }}>
                             Cartelera de Películas
                         </Typography>
-                        <Typography variant="body1" sx={{ color: '#2d3748', mt: 1, fontWeight: 700, fontSize: '1.2rem', letterSpacing: 1 }}>
+                        <Typography variant="body1" sx={{ color: '#f06b06', mt: 1, fontWeight: 700, fontSize: '1.2rem', letterSpacing: 1 }}>
                             DESCUBRE • CALIFICA • DISFRUTA
                         </Typography>
                     </Box>
