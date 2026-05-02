@@ -1,26 +1,10 @@
-export type Usuarios = {
+export type UsuarioLogueado = {
     id: string,
     nombre: string,
     apellido: string,
     avatarIcon: string,
     rol: string,
-    email: string,
-    password: string
-}
-
-export type UsuarioEspecifico = {
-    id: string,
-    nombre: string,
-    apellido: string,
-    avatarIcon: string,
-    rol: string
-}
-
-export type NuevoUsuario = {
-    nombre: string,
-    apellido: string,
-    avatarIcon: string,
-    rol: string
+    email: string
 }
 
 export type LoginUsuario = {
@@ -28,13 +12,12 @@ export type LoginUsuario = {
     password: string
 }
 
-export type LoginResponse = {
-    accessToken: string
-}
-
-export type RegistrarUsuario = {
+export type Usuarios = {
+    id: string,
     nombre: string,
     apellido: string,
+    avatarIcon: string,
+    rol: string,
     email: string,
     password: string
 }
