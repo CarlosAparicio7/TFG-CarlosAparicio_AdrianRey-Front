@@ -3,7 +3,7 @@ import type { APIError, APIResult } from "../types/util";
 
 const baseURL: string = "http://localhost:8080";
 
-export async function mostrarPeliculas(): Promise<APIResult<Peliculas[]>> {
+export async function getAllPeliculas(): Promise<APIResult<Peliculas[]>> {
     const response = await fetch(`${baseURL}/peliculas/listarPeliculas`, {
         method: 'GET',
         headers: {
@@ -18,7 +18,7 @@ export async function mostrarPeliculas(): Promise<APIResult<Peliculas[]>> {
     return {ok: false, error: error};
 }
 
-export async function buscarPelicula(id: string): Promise<APIResult<PeliculaEspecifica>> {
+export async function getOnePelicula(id: string): Promise<APIResult<PeliculaEspecifica>> {
     const response = await fetch(`${baseURL}/peliculas/verPelicula/${id}`, {
         method: 'GET',
         headers: {

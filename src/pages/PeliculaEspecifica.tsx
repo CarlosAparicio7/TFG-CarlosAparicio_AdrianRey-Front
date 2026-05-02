@@ -1,74 +1,172 @@
-import { Box, Card, CardMedia, Container, Paper, TextField, Typography } from "@mui/material";
+import { Box, Button, Card, CardContent, Container, Paper, Rating, TextField, Typography, Grid, CircularProgress, CardMedia } from "@mui/material";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { getOnePelicula } from "../service/peliculasService";
+
+type getOnePelicula = {
+    id: string,
+    nombre: string,
+    portada: string,
+    descripcion: string,
+    director: string,
+    genero: string,
+    valoracion: number,
+    urlVideo: string 
+}
 
 export default function PeliculaEspecifica() {
+
+    const [usePeliculaEspecifica, setPeliculaEspecifica] = useState<getOnePelicula>();
+    const { id } = useParams() as { id: string };
+    const [useErrorMsg, setErrorMsg] = useState<string>('');
+
+    useEffect(() => {
+        if (id) {
+            getOnePelicula(id).then(response => {
+                if (response.ok && response.data) {
+                    setPeliculaEspecifica({
+                        id: response.data.id,
+                        nombre: response.data.nombre,
+                        portada: response.data.portada,
+                        descripcion: response.data.descripcion,
+                        director: response.data.director,
+                        genero: response.data.genero,
+                        valoracion: response.data.valoracion,
+                        urlVideo: response.data.urlVideo 
+                    });
+                } else if (!response.ok) {
+                    console.log(response.error);
+                }
+            }).catch((error: Error) => {
+                setErrorMsg(error.message);
+            })
+        }
+    }, [id]);
+
     return (
-        <>
-            <Box sx={{ minHeight: '100vh', bgcolor: '#f7fafc', display: 'flex', flexDirection: 'column' }}>
-                <Container maxWidth={false} sx={{ mt: 2, mb: 4, flexGrow: 1, display: 'flex', px: { xs: 1, sm: 2, md: 4 } }}>
-                    <Paper elevation={2} sx={{ p: { xs: 2, md: 5 }, backgroundColor: '#edf2f7', borderRadius: { xs: 0, md: 6 }, width: '100%', minHeight: '85vh', boxSizing: 'border-box', border: '1px solid #cbd5e0', display: 'flex', flexDirection: 'column' }}>
-                        
-                        <Box sx={{ mb: { xs: 4, md: 6 }, textAlign: 'center' }}>
-                            <Typography variant="h2" sx={{ fontWeight: 900, letterSpacing: -3, fontSize: { xs: '2.5rem', sm: '3.5rem', md: '4.5rem' }, background: 'linear-gradient(90deg, #003a54 0%, #005f8a 50%, #00a8e8 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', textShadow: '0px 10px 20px rgba(0,0,0,0.05)' }}>
-                                Titulo de la Película
-                            </Typography>
+    <>
+        <Box sx={{ minHeight: '100vh', background: 'linear-gradient(90deg, #005f8a 30%, #f06b06 100%)', display: 'flex', flexDirection: 'column', backgroundAttachment: 'fixed' }}>
+            <Header />
+            <Container maxWidth={false} sx={{ mt: 2, mb: 4, flexGrow: 1, display: 'flex', px: { xs: 1, sm: 2, md: 4 } }}>
+                <Paper elevation={0} sx={{ p: { xs: 2, md: 5 }, backgroundColor: 'rgba(255, 255, 255, 0.12)', borderRadius: { xs: 0, md: 6 }, width: '100%', minHeight: '85vh', boxSizing: 'border-box', border: '1px solid rgba(255, 255, 255, 0.2)', display: 'flex', flexDirection: 'column', backdropFilter: 'blur(20px)', boxShadow: '0 8px 32px 0 rgba(0, 0, 0, 0.37)' }}>
+                    
+                    {useErrorMsg ? (
+                        <Box
+                            id="error-message"
+                            sx={{ mb: 4, mx: 'auto', borderRadius: 3, border: '1px solid rgba(255, 255, 255, 0.4)', backgroundColor: 'rgba(255, 255, 255, 0.15)', padding: '10px 20px', fontSize: '1rem', color: '#fff', textAlign: 'center', width: '90%', maxWidth: '1100px', boxSizing: 'border-box', backdropFilter: 'blur(10px)', fontWeight: 800, boxShadow: '0 8px 32px rgba(0, 0, 0, 0.2)', textTransform: 'uppercase', letterSpacing: 1 }}
+                        >
+                            Vaya, ha ocurrido un error. En este momento estamos trabajando en ello: {useErrorMsg}
                         </Box>
-
-                        <Box sx={{ display: 'flex', flexDirection: { xs: 'column', lg: 'row' }, gap: 4, alignItems: 'flex-start', justifyContent: 'center' }}>
-                            
-                            <Card sx={{ width: '100%', maxWidth: '320px', display: 'flex', flexDirection: 'column', borderRadius: 5, bgcolor: '#fff', border: '1px solid #e2e8f0', boxShadow: '0 8px 20px rgba(0,0,0,0.06)', transition: 'all 0.4s ease', padding: 3, flexShrink: 0, '&:hover': { transform: 'translateY(-10px)', boxShadow: '0 25px 50px rgba(0,95,138,0.15)' } }}>
-                                <Typography variant="body2" sx={{ color: '#4a5568', lineHeight: 1.7, display: '-webkit-box', overflow: 'hidden', WebkitBoxOrient: 'vertical', WebkitLineClamp: 3, fontSize: '0.95rem', mt: 1 }}>
-                                    Esta es la descripción de la película que el usuario lee.
+                    ) : (
+                        <>
+                            <Box sx={{ mb: { xs: 4, md: 6 }, textAlign: 'center' }}>
+                                <Typography variant="h2" sx={{ fontWeight: 900, letterSpacing: -3, fontSize: { xs: '2.5rem', sm: '3.5rem', md: '4.5rem' }, color: '#fff', textShadow: '0px 10px 20px rgba(0,0,0,0.3)' }}>
+                                    {usePeliculaEspecifica?.nombre}
                                 </Typography>
-                                <Box sx={{ mt: 3 }}>
-                                    <Typography variant="subtitle2" sx={{ fontWeight: 'bold', mb: 1, mt: 2 }}>
-                                        Género:
-                                    </Typography>
-                                    <Typography variant="subtitle2" sx={{ fontWeight: 'bold' }}>
-                                        Director:
-                                    </Typography>
-                                </Box>
-                            </Card>
-
-                            <Box sx={{ flexGrow: 1, width: '100%', maxWidth: 1000 }}>
-                                
-                                <Paper elevation={8} sx={{ width: '100%', borderRadius: 4, overflow: 'hidden', bgcolor: 'black' }}>
-                                    <CardMedia
-                                        component="video"
-                                        controls
-                                        src=""
-                                        sx={{ width: '100%', aspectRatio: '16/9', display: 'block', objectFit: 'contain' }}
-                                    />
-                                </Paper>
-
-                                <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, gap: 3, mt: 4, alignItems: 'flex-start' }}>
-                                    
-                                    <Box sx={{ flex: 1 }}>
-                                        <Typography variant="subtitle2" sx={{ fontWeight: 'bold', mb: 1 }}>
-                                            Valoración: Número de valoración de la película
-                                        </Typography>
-                                        <Typography variant="subtitle2" sx={{ fontWeight: 'bold', color: 'text.secondary' }}>
-                                            Valoración: Número de valoración del público sobre la pelicula con número de estrellas
-                                        </Typography>
-                                    </Box>
-
-                                    <Box sx={{ flex: 1.5, width: '100%' }}>
-                                        <TextField 
-                                            label="Comentario" 
-                                            placeholder="Comentario del usuario" 
-                                            multiline 
-                                            rows={4} 
-                                            fullWidth 
-                                            variant="outlined" 
-                                        />
-                                    </Box>
-
-                                </Box>
                             </Box>
 
-                        </Box>
-                    </Paper>
-                </Container>
-            </Box>
-        </>
-    );
+                            <Grid container spacing={4}>
+                                <Grid size={{ xs: 12, lg: 4 }}>
+                                    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3, height: '100%' }}>
+                                        <Card sx={{ borderRadius: 5, background: 'linear-gradient(135deg, #007bb3 0%, #f18a3a 100%)', border: '1px solid rgba(255, 255, 255, 0.4)', boxShadow: '0 15px 35px rgba(0,0,0,0.3)', p: 3, minHeight: '600px', display: 'flex', flexDirection: 'column' }}>
+                                            <CardContent sx={{ flexGrow: 1, p: 0 }}>
+                                                <Typography variant="h4" sx={{ color: '#e0f2fe', fontWeight: 900, mb: 4, borderBottom: '2px solid rgba(255,255,255,0.3)', pb: 2 }}>
+                                                    SINOPSIS
+                                                </Typography>
+                                                <Typography variant="body1" sx={{ color: '#fff', lineHeight: 2.1, fontSize: '1.2rem', fontWeight: 500, textAlign: 'justify' }}>
+                                                    {usePeliculaEspecifica?.descripcion}
+                                                </Typography>
+                                            </CardContent>
+                                            
+                                            <Box sx={{ bgcolor: 'rgba(0,0,0,0.2)', p: 3, borderRadius: 4, mt: 4 }}>
+                                                <Typography variant="h6" sx={{ color: '#ffd1b3', fontWeight: 900, mb: 2, fontSize: '0.9rem', letterSpacing: 1.5 }}>DETALLES TÉCNICOS</Typography>
+                                                <Typography variant="subtitle1" sx={{ color: '#fff', fontWeight: 700, mb: 1, display: 'flex', justifyContent: 'space-between' }}>
+                                                    GÉNERO <span style={{ fontWeight: 900, color: '#ffd1b3' }}>{usePeliculaEspecifica?.genero}</span>
+                                                </Typography>
+                                                <Typography variant="subtitle1" sx={{ color: '#fff', fontWeight: 700, display: 'flex', justifyContent: 'space-between' }}>
+                                                    DIRECTOR <span style={{ fontWeight: 900, color: '#ffd1b3' }}>{usePeliculaEspecifica?.director}</span>
+                                                </Typography>
+                                            </Box>
+                                        </Card>
+
+                                        <Box sx={{ p: 4, borderRadius: 5, bgcolor: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', backdropFilter: 'blur(10px)' }}>
+                                            <Typography variant="h6" sx={{ color: '#fff', fontWeight: 900, mb: 3, textAlign: 'center' }}>VALORACIONES</Typography>
+                                            
+                                            <Box sx={{ mb: 4 }}>
+                                                <Typography variant="overline" sx={{ color: '#ffd1b3', fontWeight: 900, fontSize: '0.9rem' }}>CRÍTICA OFICIAL</Typography>
+                                                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                                                    <Rating value={(usePeliculaEspecifica?.valoracion ?? 0) / 2} precision={0.1} readOnly sx={{ '& .MuiRating-iconFilled': { color: '#f06b06' } }} />
+                                                    <Typography variant="h4" sx={{ color: '#fff', fontWeight: 900 }}>{usePeliculaEspecifica?.valoracion}</Typography>
+                                                </Box>
+                                            </Box>
+
+                                            <Box>
+                                                <Typography variant="overline" sx={{ color: '#e0f2fe', fontWeight: 900, fontSize: '0.9rem' }}>COMUNIDAD</Typography>
+                                                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                                                    <Rating value={4.2 /2} precision={0.1} readOnly sx={{ '& .MuiRating-iconFilled': { color: '#00a8e8' } }} />
+                                                    <Typography variant="h4" sx={{ color: '#fff', fontWeight: 900 }}>4.2</Typography>
+                                                </Box>
+                                            </Box>
+                                        </Box>
+                                    </Box>
+                                </Grid>
+
+                                <Grid size={{ xs: 12, lg: 8 }}>
+                                    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+                                        <Paper elevation={24} sx={{ width: '100%', borderRadius: 5, overflow: 'hidden', bgcolor: '#000', border: '2px solid rgba(255,255,255,0.1)', boxShadow: '0 20px 60px rgba(0,0,0,0.6)', minHeight: '450px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                            {usePeliculaEspecifica?.urlVideo ? (
+                                                <CardMedia 
+                                                    component="video" 
+                                                    controls 
+                                                    src={`http://localhost:8080/videos/${usePeliculaEspecifica.urlVideo}`} 
+                                                    sx={{ width: '100%', aspectRatio: '16/9', display: 'block', objectFit: 'contain' }} 
+                                                />
+                                            ) : (
+                                                <Box sx={{ textAlign: 'center', color: '#fff' }}>
+                                                    <CircularProgress color="inherit" sx={{ mb: 2 }} />
+                                                    <Typography variant="h6" sx={{ fontWeight: 900 }}>Cargando Pelicula...</Typography>
+                                                </Box>
+                                            )}
+                                        </Paper>
+
+                                        <Box sx={{ p: 5, borderRadius: 5, bgcolor: 'rgba(255,255,255,0.95)', boxShadow: '0 15px 40px rgba(0,0,0,0.3)' }}>
+                                            <Box sx={{ mb: 3, display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '2px solid #e2e8f0', pb: 2 }}>
+                                                <Typography variant="h4" sx={{ color: '#005f8a', fontWeight: 900, letterSpacing: -1 }}>TU RESEÑA</Typography>
+                                                <Box sx={{ display: 'flex', alignItems: 'center', gap: 3 }}>
+                                                    <Typography variant="subtitle1" sx={{ fontWeight: 800, color: '#64748b' }}>PUNTUACIÓN:</Typography>
+                                                    <Rating size="large" sx={{ '& .MuiRating-iconFilled': { color: '#f06b06' } }} />
+                                                </Box>
+                                            </Box>
+                                            
+                                            <TextField 
+                                                label="Comparte tu opinión con la comunidad..." 
+                                                multiline 
+                                                rows={6} 
+                                                fullWidth 
+                                                variant="filled" 
+                                                slotProps={{ 
+                                                    input: { sx: { fontWeight: 600, color: '#003a54', fontSize: '1.2rem', p: 3 } }, 
+                                                    inputLabel: { sx: { fontWeight: 800, color: '#005f8a' } } 
+                                                }} 
+                                            />
+                                            
+                                            <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 3 }}>
+                                                <Button variant="contained" sx={{ bgcolor: '#005f8a', fontWeight: 900, px: 8, py: 2, borderRadius: 3, fontSize: '1.1rem', boxShadow: '0 10px 20px rgba(0,95,138,0.3)', '&:hover': { bgcolor: '#003a54' } }}>
+                                                    PUBLICAR AHORA
+                                                </Button>
+                                            </Box>
+                                        </Box>
+                                    </Box>
+                                </Grid>
+                            </Grid>
+                        </>
+                    )}
+                </Paper>
+            </Container>
+            <Footer />
+        </Box>
+    </>
+);
 }
