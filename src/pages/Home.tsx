@@ -1,9 +1,9 @@
 import { Box, Button, Card, CardContent, CardMedia, Container, Grid, Paper, Rating, Typography } from "@mui/material";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
 import { useEffect, useState } from "react";
-import { getAllPeliculas } from "../service/peliculasService";
 import { Link } from "react-router-dom";
+import Footer from "../components/Footer";
+import Header from "../components/Header";
+import { getAllPeliculas } from "../service/peliculasService";
 
 type getAllPeliculas = {
     id: string,
@@ -44,15 +44,20 @@ export default function Home() {
     }, []);
 
     return (
-<Box sx={{ minHeight: '100vh', background: 'linear-gradient(90deg, #005f8a 30%, #f06b06 100%)', display: 'flex', flexDirection: 'column', backgroundAttachment: 'fixed' }}>
+        <Box sx={{ minHeight: '100vh', background: 'linear-gradient(90deg, #005f8a 30%, #f06b06 100%)', display: 'flex', flexDirection: 'column', backgroundAttachment: 'fixed' }}>
             <Header />
             <Container maxWidth={false} sx={{ mt: 2, mb: 4, flexGrow: 1, display: 'flex', px: { xs: 1, sm: 2, md: 4 } }}>
                 <Paper elevation={0} sx={{ p: { xs: 2, md: 5 }, backgroundColor: 'rgba(255, 255, 255, 0.12)', borderRadius: { xs: 0, md: 6 }, width: '100%', minHeight: '85vh', boxSizing: 'border-box', border: '1px solid rgba(255, 255, 255, 0.2)', display: 'flex', flexDirection: 'column', backdropFilter: 'blur(20px)', boxShadow: '0 8px 32px 0 rgba(0, 0, 0, 0.37)' }}>
                     
                     <Box sx={{ mb: { xs: 4, md: 8 }, textAlign: 'center' }}>
-                        <Typography variant="h2" sx={{ fontWeight: 900, letterSpacing: -3, fontSize: { xs: '2.5rem', sm: '3.5rem', md: '4.5rem' }, color: '#fff', textShadow: '0px 10px 20px rgba(0,0,0,0.3)' }}>
-                            Cartelera de Películas
-                        </Typography>
+                        <Box sx={{display: 'flex'}}>
+                            <Typography variant="h2" sx={{ fontWeight: 900, letterSpacing: -3, marginLeft: 35, fontSize: { xs: '2.5rem', sm: '3.5rem', md: '4.5rem' }, color: '#fff', textShadow: '0px 10px 20px rgba(0,0,0,0.3)' }}>
+                                Cartelera de Películas
+                            </Typography>
+                            <Button component={Link} to={"/subirPelicula"} variant="contained" sx={{ bgcolor: '#005f8a', borderRadius: 3, textTransform: 'none', fontWeight: 900, py: 1.8, fontSize: '1.1rem', marginLeft: 10, '&:hover': { bgcolor: '#004a6d' } }}>
+                                Subir Película
+                            </Button>
+                        </Box>
                         <Typography variant="body1" sx={{ color: '#ffd1b3', mt: 1, fontWeight: 700, fontSize: '1.2rem', letterSpacing: 1 }}>
                             DESCUBRE • CALIFICA • DISFRUTA
                         </Typography>
@@ -61,7 +66,7 @@ export default function Home() {
                     {useErrorMsg ?
                         <Box
                             id="error-message"
-                            sx={{ mb: 4, mx: 'auto', borderRadius: 3, border: '1px solid rgba(255, 255, 255, 0.4)', backgroundColor: 'rgba(255, 255, 255, 0.15)', padding: '10px 20px', fontSize: '1rem', color: '#fff', textAlign: 'center', width: '90%', maxWidth: '1100px', boxSizing: 'border-box', backdropFilter: 'blur(10px)', fontWeight: 800, boxShadow: '0 8px 32px rgba(0, 0, 0, 0.2)', textTransform: 'uppercase', letterSpacing: 1 }}
+                            sx={{ mb: 4, mx: 'auto', borderRadius: 3, border: '1px solid rgba(255, 255, 255, 0.4)', backgroundColor: 'rgba(255, 255, 255, 0.15)', padding: '10px 20px', fontSize: '1rem', color: '#f70505', textAlign: 'center', width: '90%', maxWidth: '1100px', boxSizing: 'border-box', backdropFilter: 'blur(10px)', fontWeight: 800, boxShadow: '0 8px 32px rgba(0, 0, 0, 0.2)', textTransform: 'uppercase', letterSpacing: 1 }}
                         >
                             Vaya, ha ocurrido un error. En este momento estamos trabajando en ello: {useErrorMsg}
                         </Box>

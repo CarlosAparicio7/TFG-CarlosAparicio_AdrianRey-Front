@@ -1,8 +1,8 @@
-import { Box, Button, Card, CardContent, Container, Paper, Rating, TextField, Typography, Grid, CircularProgress, CardMedia } from "@mui/material";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
+import { Box, Button, Card, CardContent, CardMedia, CircularProgress, Container, Grid, Paper, Rating, TextField, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import Footer from "../components/Footer";
+import Header from "../components/Header";
 import { getOnePelicula } from "../service/peliculasService";
 
 type getOnePelicula = {
@@ -55,7 +55,7 @@ export default function PeliculaEspecifica() {
                     {useErrorMsg ? (
                         <Box
                             id="error-message"
-                            sx={{ mb: 4, mx: 'auto', borderRadius: 3, border: '1px solid rgba(255, 255, 255, 0.4)', backgroundColor: 'rgba(255, 255, 255, 0.15)', padding: '10px 20px', fontSize: '1rem', color: '#fff', textAlign: 'center', width: '90%', maxWidth: '1100px', boxSizing: 'border-box', backdropFilter: 'blur(10px)', fontWeight: 800, boxShadow: '0 8px 32px rgba(0, 0, 0, 0.2)', textTransform: 'uppercase', letterSpacing: 1 }}
+                            sx={{ mb: 4, mx: 'auto', borderRadius: 3, border: '1px solid rgba(255, 255, 255, 0.4)', backgroundColor: 'rgba(255, 255, 255, 0.15)', padding: '10px 20px', fontSize: '1rem', color: '#f70505', textAlign: 'center', width: '90%', maxWidth: '1100px', boxSizing: 'border-box', backdropFilter: 'blur(10px)', fontWeight: 800, boxShadow: '0 8px 32px rgba(0, 0, 0, 0.2)', textTransform: 'uppercase', letterSpacing: 1 }}
                         >
                             Vaya, ha ocurrido un error. En este momento estamos trabajando en ello: {useErrorMsg}
                         </Box>

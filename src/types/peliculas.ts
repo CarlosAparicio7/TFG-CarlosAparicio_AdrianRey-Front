@@ -25,5 +25,6 @@ export type NuevaPelicula = {
     descripcion: string,
     director: string,
     genero: string,
+    valoracion: number,
     urlVideo: string
 }
