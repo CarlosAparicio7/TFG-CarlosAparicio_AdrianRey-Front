@@ -33,7 +33,7 @@ export async function getOnePelicula(id: string): Promise<APIResult<PeliculaEspe
     return {ok: false, error: error};
 }
 
-export async function crearPelicula(request: NuevaPelicula, archivo: File | null): Promise<APIResult<NuevaPelicula>> {
+export async function crearPelicula(request: NuevaPelicula, archivo: File ): Promise<APIResult<NuevaPelicula>> {
     const formData = new FormData();
 
     formData.append('nombre', request.nombre);

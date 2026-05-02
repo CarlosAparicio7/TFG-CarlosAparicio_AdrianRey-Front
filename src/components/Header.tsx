@@ -5,7 +5,7 @@ import { AppBar, Box, Container, IconButton, Toolbar, Typography, Avatar, Toolti
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from 'react';
 
-interface Usuario {
+type Usuario = {
     id: number;
     nombre: string;
     apellido: string;
@@ -75,14 +75,12 @@ export default function Header() {
                                             </Typography>
                                         </Box>
 
-                                        <Link to="/perfil">
-                                            <IconButton sx={{ p: 0 }}>
-                                                <Avatar 
-                                                    src={usuario.avatarIcon} 
-                                                    sx={{ width: 50, height: 50, border: '2px solid orange' }} 
-                                                />
-                                            </IconButton>
-                                        </Link>
+                                        <IconButton sx={{ p: 0 }}>
+                                            <Avatar 
+                                                src={usuario.avatarIcon} 
+                                                sx={{ width: 50, height: 50, border: '2px solid orange' }} 
+                                            />
+                                        </IconButton>
 
                                         <Divider orientation="vertical" flexItem sx={{ mx: 1, bgcolor: 'rgba(255,255,255,0.3)', height: '40px', alignSelf: 'center' }} />
 
@@ -97,12 +95,6 @@ export default function Header() {
                                         <Link to="/login">
                                             <IconButton sx={{ p: 0 }}>
                                                 <PersonIcon sx={{ fontSize: '45px', color: 'orange' }} />
-                                            </IconButton>
-                                        </Link>
-                                        
-                                        <Link to="/login">
-                                            <IconButton sx={{ color: 'white' }}>
-                                                <LogoutIcon sx={{ fontSize: '30px' }} />
                                             </IconButton>
                                         </Link>
                                     </>

@@ -1,10 +1,11 @@
-export type UsuarioLogueado = {
-    id: string,
-    nombre: string,
-    apellido: string,
-    avatarIcon: string,
-    rol: string,
-    email: string
+export type createUser = {
+    id: string;
+    nombre: string;
+    apellido: string;
+    email: string;
+    password: string;
+    avatarIcon: string;
+    rol: string;
 }
 
 export type LoginUsuario = {
