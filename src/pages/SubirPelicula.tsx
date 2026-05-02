@@ -1,6 +1,6 @@
 import { AddPhotoAlternate, CloudUpload, Movie, MovieFilter } from "@mui/icons-material";
 import { Alert, Box, Button, Container, Grid, Paper, Snackbar, TextField, Typography } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import { crearPelicula } from "../service/peliculasService";
@@ -33,6 +33,13 @@ export default function SubirPelicula() {
     const [openAlert, setOpenAlert] = useState(false);
     const [alertText, setAlertText] = useState("");
     const [archivoBinario, setArchivoBinario] = useState<File | null>(null);
+
+    useEffect(() => {
+        const user = localStorage.getItem('usuario');
+        if (!user) {
+            navigate('/login');
+        }
+    }, [navigate]);
 
     const crearNombre = (e: React.ChangeEvent<HTMLInputElement>)=>{
         setAddPelicula({
