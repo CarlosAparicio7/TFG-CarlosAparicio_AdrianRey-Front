@@ -1,4 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
+import EditarPelicula from "../pages/EditarPelicula";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
 import PageNotFound from "../pages/PageNotFound";
@@ -14,5 +15,6 @@ export const router = createBrowserRouter([
     {path: "/register", element: <Register/>},
     {path: "/pelicula/:id", element: <PeliculaEspecifica/>},
     {path: "/subirPelicula", element: <SubirPelicula/>},
+    {path: "/editarPelicula/:id", element: <EditarPelicula/>},
     {path: "/settings", element: <Settings/>}
 ])
