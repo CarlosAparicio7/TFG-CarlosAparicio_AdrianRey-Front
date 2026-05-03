@@ -1,8 +1,10 @@
 import { AddPhotoAlternate, CheckCircle, Close, CloudUpload, Movie, MovieFilter } from "@mui/icons-material";
 import { Box, Button, Container, Grid, IconButton, LinearProgress, Paper, TextField, Typography } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
+import { getOnePelicula } from "../service/peliculasService";
 
 type DetallePelicula = {
     id: string,
@@ -39,9 +41,92 @@ type EditarPelicula = {
 
 export default function EditarPelicula() {
     const [datosPelicula, setDatosPelicula] = useState<DetallePelicula>(DefaultDetallePelicula);
+    const {id} = useParams() as {id: string};
     const [useErrorMsg, setErrorMsg] = useState<string>('');
     const [loading, setLoading] = useState(false);
     const [progress, setProgress] = useState(0);
+    const [archivoBinario, setArchivoBinario] = useState<File | null>(null);
+
+    useEffect(()=>{
+        if(id) {
+            getOnePelicula(id).then(response => {
+            if(response.ok && response.data){
+                setDatosPelicula({
+                    id: response.data.id,
+                    nombre: response.data.nombre,
+                    portada: response.data.portada,
+                    descripcion: response.data.descripcion,
+                    director: response.data.director,
+                    genero: response.data.genero,
+                    valoracion: response.data.valoracion,
+                    urlVideo: response.data.urlVideo
+                });
+            }else if(!response.ok) {
+                console.log(response.error);
+            } 
+            }).catch((useErrorMsg: Error)=> {
+                setErrorMsg(useErrorMsg.message)
+            })
+        }
+    },[id])
+
+    const editarNombre = (a: React.ChangeEvent<HTMLInputElement>) => {
+        setDatosPelicula({
+            ...datosPelicula,
+            nombre: a.target.value,
+        })
+    }
+
+    const editarPortada = (a: React.ChangeEvent<HTMLInputElement>) => {
+        setDatosPelicula({
+            ...datosPelicula,
+            portada: a.target.value,
+        })
+    }
+
+    const eliminarPortada = () => {
+        setDatosPelicula({ ...datosPelicula, portada: "" });
+    };
+
+    const editarDescripcion = (a: React.ChangeEvent<HTMLInputElement>) => {
+        setDatosPelicula({
+            ...datosPelicula,
+            descripcion: a.target.value,
+        })
+    }
+
+    const editarDirector = (a: React.ChangeEvent<HTMLInputElement>) => {
+        setDatosPelicula({
+            ...datosPelicula,
+            director: a.target.value,
+        })
+    }
+
+    const editarGenero = (a: React.ChangeEvent<HTMLInputElement>) => {
+        setDatosPelicula({
+            ...datosPelicula,
+            genero: a.target.value,
+        })
+    }
+
+    const editarValoracion = (a: React.ChangeEvent<HTMLInputElement>) => {
+        setDatosPelicula({
+            ...datosPelicula,
+            valoracion: Number(a.target.value),
+        })
+    }
+
+    const editarUrlVideo = (a: React.ChangeEvent<HTMLInputElement>) => {
+        setDatosPelicula({
+            ...datosPelicula,
+            urlVideo: a.target.value,
+        })
+    }
+
+    const eliminarVideo = () => {
+        setArchivoBinario(null);
+        setDatosPelicula({ ...datosPelicula, urlVideo: "" });
+    };
 
     return(
         <Box sx={{ minHeight: '100vh', background: 'linear-gradient(90deg, #005f8a 30%, #f06b06 100%)', display: 'flex', flexDirection: 'column', backgroundAttachment: 'fixed' }}>
@@ -81,7 +166,7 @@ export default function EditarPelicula() {
                             <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 0.5, mb: 4 }}>
                                 <MovieFilter sx={{ color: '#005f8a', fontSize: 50 }} />
                                 <Typography variant="h3" sx={{ fontWeight: 900, letterSpacing: -2, color: '#005f8a', fontSize: { xs: '2.2rem', md: '3.5rem' } }}>
-                                    Subir Película
+                                    Editar Película
                                 </Typography>
                                 <Typography variant="body1" sx={{ color: '#f06b06', mt: 0.5, fontWeight: 800, fontSize: '1.1rem', letterSpacing: 2 }}>
                                     CENTRO DE CONTROL
@@ -91,18 +176,18 @@ export default function EditarPelicula() {
                             <Grid container spacing={3}>
                                 <Grid size={{ xs: 12, md: 6 }}>
                                     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2.5 }}>
-                                        <TextField fullWidth label="Nombre de la Película" variant="outlined" onChange={crearNombre} sx={{ bgcolor: '#fff', borderRadius: 3, '& .MuiOutlinedInput-root': { borderRadius: 3, fontWeight: 600 } }} />
-                                        <TextField fullWidth label="Director" variant="outlined" onChange={crearDirector} sx={{ bgcolor: '#fff', borderRadius: 3, '& .MuiOutlinedInput-root': { borderRadius: 3, fontWeight: 600 } }} />
-                                        <TextField fullWidth label="Géneros" variant="outlined" placeholder="Acción, Drama..." onChange={crearGenero} sx={{ bgcolor: '#fff', borderRadius: 3, '& .MuiOutlinedInput-root': { borderRadius: 3, fontWeight: 600 } }} />
-                                        <TextField fullWidth label="Descripción" variant="outlined" multiline rows={5} onChange={crearDescripcion} sx={{ bgcolor: '#fff', borderRadius: 3, '& .MuiOutlinedInput-root': { borderRadius: 3, fontWeight: 600 } }} />
-                                        <TextField fullWidth label="Valoración" variant="outlined" placeholder="1-10" type="number" onChange={crearValoracion} slotProps={{ htmlInput: { min: 1, max: 10, step: 0.1 } }} sx={{ bgcolor: '#fff', borderRadius: 3, '& .MuiOutlinedInput-root': { borderRadius: 3, fontWeight: 600 } }} />
+                                        <TextField fullWidth label="Nombre de la Película" variant="outlined" onChange={editarNombre} sx={{ bgcolor: '#fff', borderRadius: 3, '& .MuiOutlinedInput-root': { borderRadius: 3, fontWeight: 600 } }} />
+                                        <TextField fullWidth label="Director" variant="outlined" onChange={editarDirector} sx={{ bgcolor: '#fff', borderRadius: 3, '& .MuiOutlinedInput-root': { borderRadius: 3, fontWeight: 600 } }} />
+                                        <TextField fullWidth label="Géneros" variant="outlined" placeholder="Acción, Drama..." onChange={editarGenero} sx={{ bgcolor: '#fff', borderRadius: 3, '& .MuiOutlinedInput-root': { borderRadius: 3, fontWeight: 600 } }} />
+                                        <TextField fullWidth label="Descripción" variant="outlined" multiline rows={5} onChange={editarDescripcion} sx={{ bgcolor: '#fff', borderRadius: 3, '& .MuiOutlinedInput-root': { borderRadius: 3, fontWeight: 600 } }} />
+                                        <TextField fullWidth label="Valoración" variant="outlined" placeholder="1-10" type="number" onChange={editarValoracion} slotProps={{ htmlInput: { min: 1, max: 10, step: 0.1 } }} sx={{ bgcolor: '#fff', borderRadius: 3, '& .MuiOutlinedInput-root': { borderRadius: 3, fontWeight: 600 } }} />
                                     </Box>
                                 </Grid>
 
                                 <Grid size={{ xs: 12, md: 6 }}>
                                     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2.5, height: '100%' }}>
                                         <Box sx={{ flex: 1, border: '2px dashed #005f8a', borderRadius: 5, p: 3, textAlign: 'center', bgcolor: 'rgba(0, 95, 138, 0.05)', cursor: 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', position: 'relative', transition: 'all 0.3s ease', '&:hover': { bgcolor: 'rgba(0, 95, 138, 0.1)' } }}>
-                                            {addPelicula.portada ? (
+                                            {datosPelicula.portada ? (
                                                 <Box sx={{ bgcolor: '#005f8a', p: 2, borderRadius: 3, display: 'flex', alignItems: 'center', gap: 1, color: '#fff' }}>
                                                     <CheckCircle />
                                                     <Typography sx={{ fontWeight: 900, fontSize: '0.85rem' }}>IMAGEN LISTA</Typography>
@@ -110,7 +195,7 @@ export default function EditarPelicula() {
                                                 </Box>
                                             ) : (
                                                 <>
-                                                    <input accept="image/*" style={{ display: 'none' }} id="upload-image" type="file" onChange={crearPortada} />
+                                                    <input accept="image/*" style={{ display: 'none' }} id="upload-image" type="file" onChange={editarPortada} />
                                                     <label htmlFor="upload-image" style={{ cursor: 'pointer', width: '100%' }}>
                                                         <AddPhotoAlternate sx={{ fontSize: 40, color: '#005f8a', mb: 1 }} />
                                                         <Typography variant="h6" sx={{ fontWeight: 900, color: '#005f8a', fontSize: '1.1rem' }}>Imagen de Portada</Typography>
@@ -120,7 +205,7 @@ export default function EditarPelicula() {
                                             )}
                                         </Box>
 
-                                        <TextField fullWidth label="Enlace URL de Portada" variant="outlined" placeholder="https://..." value={addPelicula.portada} onChange={crearPortada} sx={{ bgcolor: '#fff', borderRadius: 3, '& .MuiOutlinedInput-root': { borderRadius: 3, fontWeight: 600 } }} />
+                                        <TextField fullWidth label="Enlace URL de Portada" variant="outlined" placeholder="https://..." value={datosPelicula.portada} onChange={editarPortada} sx={{ bgcolor: '#fff', borderRadius: 3, '& .MuiOutlinedInput-root': { borderRadius: 3, fontWeight: 600 } }} />
 
                                         <Box sx={{ flex: 1, border: '2px dashed #f06b06', borderRadius: 5, p: 3, textAlign: 'center', bgcolor: 'rgba(240, 107, 6, 0.05)', cursor: 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', position: 'relative', transition: 'all 0.3s ease', '&:hover': { bgcolor: 'rgba(240, 107, 6, 0.1)' } }}>
                                             {archivoBinario ? (
@@ -131,7 +216,7 @@ export default function EditarPelicula() {
                                                 </Box>
                                             ) : (
                                                 <>
-                                                    <input accept="video/*" style={{ display: 'none' }} id="upload-video" type="file" onChange={crearUrlVideo} />
+                                                    <input accept="video/*" style={{ display: 'none' }} id="upload-video" type="file" onChange={editarUrlVideo} />
                                                     <label htmlFor="upload-video" style={{ cursor: 'pointer', width: '100%' }}>
                                                         <Movie sx={{ fontSize: 40, color: '#f06b06', mb: 1 }} />
                                                         <Typography variant="h6" sx={{ fontWeight: 900, color: '#f06b06', fontSize: '1.1rem' }}>Archivo de Video</Typography>
