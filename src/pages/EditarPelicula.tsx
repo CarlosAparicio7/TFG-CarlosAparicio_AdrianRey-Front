@@ -1,10 +1,10 @@
-import { AddPhotoAlternate, CheckCircle, Close, CloudUpload, Movie, MovieFilter } from "@mui/icons-material";
-import { Box, Button, Container, Grid, IconButton, LinearProgress, Paper, TextField, Typography } from "@mui/material";
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { AddPhotoAlternate, CheckCircle, CloudUpload, Movie, MovieFilter } from "@mui/icons-material";
+import { Box, Button, Container, Grid, LinearProgress, Paper, TextField, Typography } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
-import { getOnePelicula } from "../service/peliculasService";
+import { editarPelicula, getOnePelicula } from "../service/peliculasService";
 
 type DetallePelicula = {
     id: string,
@@ -42,6 +42,7 @@ type EditarPelicula = {
 export default function EditarPelicula() {
     const [datosPelicula, setDatosPelicula] = useState<DetallePelicula>(DefaultDetallePelicula);
     const {id} = useParams() as {id: string};
+    const navigate = useNavigate();
     const [useErrorMsg, setErrorMsg] = useState<string>('');
     const [loading, setLoading] = useState(false);
     const [progress, setProgress] = useState(0);
@@ -84,10 +85,6 @@ export default function EditarPelicula() {
         })
     }
 
-    const eliminarPortada = () => {
-        setDatosPelicula({ ...datosPelicula, portada: "" });
-    };
-
     const editarDescripcion = (a: React.ChangeEvent<HTMLInputElement>) => {
         setDatosPelicula({
             ...datosPelicula,
@@ -117,16 +114,60 @@ export default function EditarPelicula() {
     }
 
     const editarUrlVideo = (a: React.ChangeEvent<HTMLInputElement>) => {
+        if (a.target.files && a.target.files[0]) {
+            const file = a.target.files[0];
+            setArchivoBinario(file);
+            setDatosPelicula({ ...datosPelicula, urlVideo: file.name });
+        }
+    }
+
+    const editarUrlVideoTexto = (a: React.ChangeEvent<HTMLInputElement>) => {
         setDatosPelicula({
             ...datosPelicula,
             urlVideo: a.target.value,
-        })
+        });
+        setArchivoBinario(null);
     }
 
-    const eliminarVideo = () => {
-        setArchivoBinario(null);
-        setDatosPelicula({ ...datosPelicula, urlVideo: "" });
-    };
+    const botonEditarPelicula = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setLoading(true);
+        setProgress(0);
+
+        if(!id) {
+            return;
+        }
+
+        try {
+            const peliculasEditadas: EditarPelicula ={
+                id: datosPelicula.id,
+                nombre: datosPelicula.nombre,
+                portada: datosPelicula.portada,
+                descripcion: datosPelicula.descripcion,
+                director: datosPelicula.director,
+                genero: datosPelicula.genero,
+                valoracion: datosPelicula.valoracion,
+                urlVideo: datosPelicula.urlVideo
+            };
+            const respuesta = await editarPelicula(id, peliculasEditadas, archivoBinario);
+
+                if(respuesta.ok && respuesta.data) {
+                    setProgress(100);
+                    setErrorMsg("");
+                    alert("Pelicula actualizada");
+                    navigate(`/pelicula/${id}`)
+                } else{
+                    setErrorMsg("Error al actualizar la pelicula");
+                    console.warn("Error al actualizar la pelicula");
+                    setProgress(0);
+                }
+        }catch(error) {
+            console.log(error);
+            setProgress(0);
+        } finally {
+        setLoading(false);
+        }
+    }
 
     return(
         <Box sx={{ minHeight: '100vh', background: 'linear-gradient(90deg, #005f8a 30%, #f06b06 100%)', display: 'flex', flexDirection: 'column', backgroundAttachment: 'fixed' }}>
@@ -176,11 +217,11 @@ export default function EditarPelicula() {
                             <Grid container spacing={3}>
                                 <Grid size={{ xs: 12, md: 6 }}>
                                     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2.5 }}>
-                                        <TextField fullWidth label="Nombre de la Película" variant="outlined" onChange={editarNombre} sx={{ bgcolor: '#fff', borderRadius: 3, '& .MuiOutlinedInput-root': { borderRadius: 3, fontWeight: 600 } }} />
-                                        <TextField fullWidth label="Director" variant="outlined" onChange={editarDirector} sx={{ bgcolor: '#fff', borderRadius: 3, '& .MuiOutlinedInput-root': { borderRadius: 3, fontWeight: 600 } }} />
-                                        <TextField fullWidth label="Géneros" variant="outlined" placeholder="Acción, Drama..." onChange={editarGenero} sx={{ bgcolor: '#fff', borderRadius: 3, '& .MuiOutlinedInput-root': { borderRadius: 3, fontWeight: 600 } }} />
-                                        <TextField fullWidth label="Descripción" variant="outlined" multiline rows={5} onChange={editarDescripcion} sx={{ bgcolor: '#fff', borderRadius: 3, '& .MuiOutlinedInput-root': { borderRadius: 3, fontWeight: 600 } }} />
-                                        <TextField fullWidth label="Valoración" variant="outlined" placeholder="1-10" type="number" onChange={editarValoracion} slotProps={{ htmlInput: { min: 1, max: 10, step: 0.1 } }} sx={{ bgcolor: '#fff', borderRadius: 3, '& .MuiOutlinedInput-root': { borderRadius: 3, fontWeight: 600 } }} />
+                                        <TextField fullWidth label="Nombre de la Película" variant="outlined" value={datosPelicula.nombre} onChange={editarNombre} sx={{ bgcolor: '#fff', borderRadius: 3, '& .MuiOutlinedInput-root': { borderRadius: 3, fontWeight: 600 } }} />
+                                        <TextField fullWidth label="Director" variant="outlined" value={datosPelicula.director} onChange={editarDirector} sx={{ bgcolor: '#fff', borderRadius: 3, '& .MuiOutlinedInput-root': { borderRadius: 3, fontWeight: 600 } }} />
+                                        <TextField fullWidth label="Géneros" variant="outlined" value={datosPelicula.genero} onChange={editarGenero} sx={{ bgcolor: '#fff', borderRadius: 3, '& .MuiOutlinedInput-root': { borderRadius: 3, fontWeight: 600 } }} />
+                                        <TextField fullWidth label="Descripción" variant="outlined" value={datosPelicula.descripcion} multiline rows={5} onChange={editarDescripcion} sx={{ bgcolor: '#fff', borderRadius: 3, '& .MuiOutlinedInput-root': { borderRadius: 3, fontWeight: 600 } }} />
+                                        <TextField fullWidth label="Valoración" variant="outlined" value={datosPelicula.valoracion} type="number" onChange={editarValoracion} slotProps={{ htmlInput: { min: 1, max: 10, step: 0.1 } }} sx={{ bgcolor: '#fff', borderRadius: 3, '& .MuiOutlinedInput-root': { borderRadius: 3, fontWeight: 600 } }} />
                                     </Box>
                                 </Grid>
 
@@ -191,7 +232,6 @@ export default function EditarPelicula() {
                                                 <Box sx={{ bgcolor: '#005f8a', p: 2, borderRadius: 3, display: 'flex', alignItems: 'center', gap: 1, color: '#fff' }}>
                                                     <CheckCircle />
                                                     <Typography sx={{ fontWeight: 900, fontSize: '0.85rem' }}>IMAGEN LISTA</Typography>
-                                                    <IconButton size="small" onClick={eliminarPortada} sx={{ color: '#fff', ml: 1 }}><Close fontSize="small" /></IconButton>
                                                 </Box>
                                             ) : (
                                                 <>
@@ -205,14 +245,13 @@ export default function EditarPelicula() {
                                             )}
                                         </Box>
 
-                                        <TextField fullWidth label="Enlace URL de Portada" variant="outlined" placeholder="https://..." value={datosPelicula.portada} onChange={editarPortada} sx={{ bgcolor: '#fff', borderRadius: 3, '& .MuiOutlinedInput-root': { borderRadius: 3, fontWeight: 600 } }} />
+                                        <TextField fullWidth label="O pega el Enlace URL de Portada" variant="outlined" placeholder="https://..." value={datosPelicula.portada} onChange={editarPortada} sx={{ bgcolor: '#fff', borderRadius: 3, '& .MuiOutlinedInput-root': { borderRadius: 3, fontWeight: 600 } }} />
 
                                         <Box sx={{ flex: 1, border: '2px dashed #f06b06', borderRadius: 5, p: 3, textAlign: 'center', bgcolor: 'rgba(240, 107, 6, 0.05)', cursor: 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', position: 'relative', transition: 'all 0.3s ease', '&:hover': { bgcolor: 'rgba(240, 107, 6, 0.1)' } }}>
                                             {archivoBinario ? (
                                                 <Box sx={{ bgcolor: '#f06b06', p: 2, borderRadius: 3, display: 'flex', alignItems: 'center', gap: 1, color: '#fff' }}>
                                                     <Movie />
                                                     <Typography sx={{ fontWeight: 900, fontSize: '0.85rem' }}>VIDEO LISTO</Typography>
-                                                    <IconButton size="small" onClick={eliminarVideo} sx={{ color: '#fff', ml: 1 }}><Close fontSize="small" /></IconButton>
                                                 </Box>
                                             ) : (
                                                 <>
@@ -225,6 +264,9 @@ export default function EditarPelicula() {
                                                 </>
                                             )}
                                         </Box>
+
+                                        <TextField fullWidth label="O pega el Enlace URL de Video" variant="outlined" placeholder="https://..." value={datosPelicula.urlVideo} onChange={editarUrlVideoTexto} sx={{ bgcolor: '#fff', borderRadius: 3, '& .MuiOutlinedInput-root': { borderRadius: 3, fontWeight: 600 } }} />
+
                                     </Box>
                                 </Grid>
                             </Grid>

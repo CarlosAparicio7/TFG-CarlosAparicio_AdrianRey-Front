@@ -1,6 +1,6 @@
 import { Box, Button, Card, CardContent, CardMedia, CircularProgress, Container, Grid, Paper, Rating, TextField, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import { getOnePelicula } from "../service/peliculasService";
@@ -199,6 +199,9 @@ export default function PeliculaEspecifica() {
                                                         </Box>
                                                     </Box>
                                                 </Grid>
+                                                <Button component={Link} to={"/editarPelicula/" + usePeliculaEspecifica?.id} variant="contained" fullWidth sx={{ bgcolor: '#005f8a', borderRadius: 3, textTransform: 'none', fontWeight: 900, py: 1.8, fontSize: '1.1rem', marginTop: 2, '&:hover': { bgcolor: '#004a6d' } }}>
+                                                    Editar Pelicula
+                                                </Button>
                                             </Grid>
                                         </Box>
                                     </Grid>

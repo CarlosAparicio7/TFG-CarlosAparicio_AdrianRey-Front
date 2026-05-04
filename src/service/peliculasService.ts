@@ -33,7 +33,7 @@ export async function getOnePelicula(id: string): Promise<APIResult<PeliculaEspe
     return {ok: false, error: error};
 }
 
-export async function crearPelicula(request: NuevaPelicula, archivo: File ): Promise<APIResult<NuevaPelicula>> {
+export async function crearPelicula(request: NuevaPelicula, archivo: File | null): Promise<APIResult<NuevaPelicula>> {
     const formData = new FormData();
 
     formData.append('nombre', request.nombre);
@@ -50,10 +50,10 @@ export async function crearPelicula(request: NuevaPelicula, archivo: File ): Pro
 
     const response = await fetch(`${baseURL}/peliculas/subirPelicula`, {
         method: 'POST',
+        body: formData,
         headers: {
             'Accept': 'application/json',
         },
-        body: formData,
     });
     if (response.ok) {
         const pelicula: NuevaPelicula = await response.json();
@@ -63,10 +63,23 @@ export async function crearPelicula(request: NuevaPelicula, archivo: File ): Pro
     return {ok: false, error: error};
 }
 
-export async function editarPelicula(id: string, request: PeliculaEspecifica): Promise<APIResult<NuevaPelicula>> {
+export async function editarPelicula(id: string, request: PeliculaEspecifica, archivo: File | null): Promise<APIResult<NuevaPelicula>> {
+    const formData = new FormData();
+
+    formData.append('nombre', request.nombre);
+    formData.append('portada', request.portada);
+    formData.append('descripcion', request.descripcion);
+    formData.append('director', request.director);
+    formData.append('genero', request.genero);
+    formData.append('valoracion', request.valoracion.toString());
+    
+    if (archivo) {
+        formData.append('archivo', archivo);
+    }
+    
     const response = await fetch(`${baseURL}/peliculas/editarPelicula/${id}`, {
         method: 'PUT',
-        body: JSON.stringify(request),
+        body: formData,
         headers: {
             'Accept': 'application/json',
         },

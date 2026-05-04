@@ -2,9 +2,9 @@ import { AddPhotoAlternate, Close, CloudUpload, Movie, MovieFilter, CheckCircle 
 import { Box, Button, Container, Grid, Input, Paper, TextField, Typography, LinearProgress, IconButton } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Footer from "../components/Footer";
 import Header from "../components/Header";
 import { crearPelicula } from "../service/peliculasService";
-import Footer from "../components/Footer";
 
 type AddPelicula = {
     nombre: string,
@@ -196,7 +196,7 @@ export default function SubirPelicula() {
                                             )}
                                         </Box>
 
-                                        <TextField fullWidth label="Enlace URL de Portada" variant="outlined" placeholder="https://..." value={addPelicula.portada} onChange={crearPortada} sx={{ bgcolor: '#fff', borderRadius: 3, '& .MuiOutlinedInput-root': { borderRadius: 3, fontWeight: 600 } }} />
+                                        <TextField fullWidth label="O pega el Enlace URL de Portada" variant="outlined" placeholder="https://..." value={addPelicula.portada} onChange={crearPortada} sx={{ bgcolor: '#fff', borderRadius: 3, '& .MuiOutlinedInput-root': { borderRadius: 3, fontWeight: 600 } }} />
 
                                         <Box sx={{ flex: 1, border: '2px dashed #f06b06', borderRadius: 5, p: 3, textAlign: 'center', bgcolor: 'rgba(240, 107, 6, 0.05)', cursor: (addPelicula.urlVideo && !archivoBinario) ? 'default' : 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', position: 'relative', transition: 'all 0.3s ease', '&:hover': { bgcolor: 'rgba(240, 107, 6, 0.1)' }, opacity: (addPelicula.urlVideo && !archivoBinario) ? 0.5 : 1 }}>
                                             {archivoBinario ? (
