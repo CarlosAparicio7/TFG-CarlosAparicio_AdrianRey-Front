@@ -1,6 +1,6 @@
 import { AddPhotoAlternate, CheckCircle, Close, CloudUpload, Movie, MovieFilter } from "@mui/icons-material";
 import { Box, Button, Container, Grid, IconButton, LinearProgress, Paper, TextField, Typography } from "@mui/material";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
@@ -84,10 +84,6 @@ export default function EditarPelicula() {
         })
     }
 
-    const eliminarPortada = () => {
-        setDatosPelicula({ ...datosPelicula, portada: "" });
-    };
-
     const editarDescripcion = (a: React.ChangeEvent<HTMLInputElement>) => {
         setDatosPelicula({
             ...datosPelicula,
@@ -123,7 +119,22 @@ export default function EditarPelicula() {
         })
     }
 
-    
+    const botonEditarPelicula = async (e: React.FormEvent) => {
+        e.preventDefault();
+
+        if(!id) {
+            return;
+        }
+
+        try {
+            peliculasEditadas: EditarPelicula ={
+                id: datosPelicula.id,
+                nombre: datosPelicula.nombre,
+                portada: datosPelicula.portada,
+
+            }
+        }
+    }
 
     return(
         <Box sx={{ minHeight: '100vh', background: 'linear-gradient(90deg, #005f8a 30%, #f06b06 100%)', display: 'flex', flexDirection: 'column', backgroundAttachment: 'fixed' }}>
@@ -188,7 +199,6 @@ export default function EditarPelicula() {
                                                 <Box sx={{ bgcolor: '#005f8a', p: 2, borderRadius: 3, display: 'flex', alignItems: 'center', gap: 1, color: '#fff' }}>
                                                     <CheckCircle />
                                                     <Typography sx={{ fontWeight: 900, fontSize: '0.85rem' }}>IMAGEN LISTA</Typography>
-                                                    <IconButton size="small" onClick={eliminarPortada} sx={{ color: '#fff', ml: 1 }}><Close fontSize="small" /></IconButton>
                                                 </Box>
                                             ) : (
                                                 <>
