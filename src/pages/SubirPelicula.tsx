@@ -179,7 +179,7 @@ export default function SubirPelicula() {
 
                                 <Grid size={{ xs: 12, md: 6 }}>
                                     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2.5, height: '100%' }}>
-                                        <Box sx={{ flex: 1, border: '2px dashed #005f8a', borderRadius: 5, p: 3, textAlign: 'center', bgcolor: 'rgba(0, 95, 138, 0.05)', cursor: (addPelicula.portada && !addPelicula.portada.startsWith('http')) ? 'default' : 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', position: 'relative', transition: 'all 0.3s ease', '&:hover': { bgcolor: 'rgba(0, 95, 138, 0.1)' }, opacity: (addPelicula.portada && addPelicula.portada.startsWith('http')) ? 0.5 : 1 }}>
+                                        <Box sx={{ flex: 1, border: '2px dashed #005f8a', borderRadius: 5, p: 1, textAlign: 'center', bgcolor: 'rgba(0, 95, 138, 0.05)', cursor: (addPelicula.portada && !addPelicula.portada.startsWith('http')) ? 'default' : 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', position: 'relative', transition: 'all 0.3s ease', '&:hover': { bgcolor: 'rgba(0, 95, 138, 0.1)' }, opacity: (addPelicula.portada && addPelicula.portada.startsWith('http')) ? 0.5 : 1 }}>
                                             {addPelicula.portada && !addPelicula.portada.startsWith('http') ? (
                                                 <Box sx={{ bgcolor: '#005f8a', p: 2, borderRadius: 3, display: 'flex', alignItems: 'center', gap: 1, color: '#fff' }}>
                                                     <CheckCircle />
@@ -198,7 +198,7 @@ export default function SubirPelicula() {
 
                                         <TextField fullWidth label="O pega el Enlace URL de Portada" variant="outlined" placeholder="https://..." value={addPelicula.portada} onChange={crearPortada} sx={{ bgcolor: '#fff', borderRadius: 3, '& .MuiOutlinedInput-root': { borderRadius: 3, fontWeight: 600 } }} />
 
-                                        <Box sx={{ flex: 1, border: '2px dashed #f06b06', borderRadius: 5, p: 3, textAlign: 'center', bgcolor: 'rgba(240, 107, 6, 0.05)', cursor: (addPelicula.urlVideo && !archivoBinario) ? 'default' : 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', position: 'relative', transition: 'all 0.3s ease', '&:hover': { bgcolor: 'rgba(240, 107, 6, 0.1)' }, opacity: (addPelicula.urlVideo && !archivoBinario) ? 0.5 : 1 }}>
+                                        <Box sx={{ flex: 1, border: '2px dashed #f06b06', borderRadius: 5, p: 1, textAlign: 'center', bgcolor: 'rgba(240, 107, 6, 0.05)', cursor: (addPelicula.urlVideo && !archivoBinario) ? 'default' : 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', position: 'relative', transition: 'all 0.3s ease', '&:hover': { bgcolor: 'rgba(240, 107, 6, 0.1)' }, opacity: (addPelicula.urlVideo && !archivoBinario) ? 0.5 : 1 }}>
                                             {archivoBinario ? (
                                                 <Box sx={{ bgcolor: '#f06b06', p: 2, borderRadius: 3, display: 'flex', alignItems: 'center', gap: 1, color: '#fff' }}>
                                                     <Movie />
