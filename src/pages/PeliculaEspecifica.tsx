@@ -124,11 +124,14 @@ export default function PeliculaEspecifica() {
                                         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
                                             <Paper elevation={24} sx={{ width: '100%', borderRadius: 5, overflow: 'hidden', bgcolor: '#000', border: '2px solid rgba(255,255,255,0.1)', boxShadow: '0 20px 60px rgba(0,0,0,0.6)', minHeight: '450px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                                                 {usePeliculaEspecifica?.urlVideo ? (
-                                                    <CardMedia 
-                                                        component="video" 
-                                                        controls 
-                                                        src={`http://localhost:8080/videos/${usePeliculaEspecifica.urlVideo}`} 
-                                                        sx={{ width: '100%', aspectRatio: '16/9', display: 'block', objectFit: 'contain' }} 
+                                                    <CardMedia
+                                                        component={usePeliculaEspecifica.urlVideo.startsWith('http') ? "iframe" : "video"} 
+                                                        controls={!usePeliculaEspecifica.urlVideo.startsWith('http')}
+                                                        allowFullScreen
+                                                        src={usePeliculaEspecifica.urlVideo.startsWith('http') 
+                                                            ? usePeliculaEspecifica.urlVideo 
+                                                            : `http://localhost:8080/videos/${usePeliculaEspecifica.urlVideo}`} 
+                                                        sx={{ width: '100%', aspectRatio: '16/9', display: 'block', objectFit: 'contain', border: 0 }} 
                                                     />
                                                 ) : (
                                                     <Box sx={{ textAlign: 'center', color: '#fff' }}>
@@ -137,7 +140,6 @@ export default function PeliculaEspecifica() {
                                                     </Box>
                                                 )}
                                             </Paper>
-
                                             <Grid container spacing={4}>
                                                 <Grid size={{ xs: 12, md: 6 }}>
                                                     <Box sx={{ p: 4, borderRadius: 5, bgcolor: 'rgba(255,255,255,0.95)', boxShadow: '0 15px 40px rgba(0,0,0,0.3)', height: '100%', boxSizing: 'border-box' }}>

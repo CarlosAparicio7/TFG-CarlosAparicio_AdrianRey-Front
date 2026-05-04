@@ -1,5 +1,5 @@
 import { AddPhotoAlternate, Close, CloudUpload, Movie, MovieFilter, CheckCircle } from "@mui/icons-material";
-import { Box, Button, Container, Grid, Paper, TextField, Typography, LinearProgress, IconButton } from "@mui/material";
+import { Box, Button, Container, Grid, Input, Paper, TextField, Typography, LinearProgress, IconButton } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
@@ -69,6 +69,11 @@ export default function SubirPelicula() {
         setAddPelicula({ ...addPelicula, valoracion: Number(e.target.value) });
     }
 
+    const crearUrlVideoManual = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setAddPelicula({ ...addPelicula, urlVideo: e.target.value });
+        setArchivoBinario(null);
+    }
+
     const crearUrlVideo = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files[0]) {
             const file = e.target.files[0];
@@ -86,7 +91,6 @@ export default function SubirPelicula() {
         e.preventDefault();
         setLoading(true);
         setProgress(0);
-        
         const timer = setInterval(() => {
             setProgress((oldProgress) => {
                 if (oldProgress >= 95) return 95;
@@ -94,9 +98,8 @@ export default function SubirPelicula() {
                 return Math.min(oldProgress + diff, 95);
             });
         }, 150); 
-
         try {
-            const respuesta = await crearPelicula(addPelicula, archivoBinario);
+            const respuesta = await crearPelicula(addPelicula, archivoBinario as File);
             if (respuesta.ok && respuesta.data) {
                 clearInterval(timer);
                 setProgress(100);
@@ -176,28 +179,26 @@ export default function SubirPelicula() {
 
                                 <Grid size={{ xs: 12, md: 6 }}>
                                     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2.5, height: '100%' }}>
-                                        <Box sx={{ flex: 1, border: '2px dashed #005f8a', borderRadius: 5, p: 3, textAlign: 'center', bgcolor: 'rgba(0, 95, 138, 0.05)', cursor: 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', position: 'relative', transition: 'all 0.3s ease', '&:hover': { bgcolor: 'rgba(0, 95, 138, 0.1)' } }}>
-                                            {addPelicula.portada ? (
+                                        <Box sx={{ flex: 1, border: '2px dashed #005f8a', borderRadius: 5, p: 3, textAlign: 'center', bgcolor: 'rgba(0, 95, 138, 0.05)', cursor: (addPelicula.portada && !addPelicula.portada.startsWith('http')) ? 'default' : 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', position: 'relative', transition: 'all 0.3s ease', '&:hover': { bgcolor: 'rgba(0, 95, 138, 0.1)' }, opacity: (addPelicula.portada && addPelicula.portada.startsWith('http')) ? 0.5 : 1 }}>
+                                            {addPelicula.portada && !addPelicula.portada.startsWith('http') ? (
                                                 <Box sx={{ bgcolor: '#005f8a', p: 2, borderRadius: 3, display: 'flex', alignItems: 'center', gap: 1, color: '#fff' }}>
                                                     <CheckCircle />
                                                     <Typography sx={{ fontWeight: 900, fontSize: '0.85rem' }}>IMAGEN LISTA</Typography>
                                                     <IconButton size="small" onClick={eliminarPortada} sx={{ color: '#fff', ml: 1 }}><Close fontSize="small" /></IconButton>
                                                 </Box>
                                             ) : (
-                                                <>
-                                                    <input accept="image/*" style={{ display: 'none' }} id="upload-image" type="file" onChange={crearPortada} />
-                                                    <label htmlFor="upload-image" style={{ cursor: 'pointer', width: '100%' }}>
-                                                        <AddPhotoAlternate sx={{ fontSize: 40, color: '#005f8a', mb: 1 }} />
-                                                        <Typography variant="h6" sx={{ fontWeight: 900, color: '#005f8a', fontSize: '1.1rem' }}>Imagen de Portada</Typography>
-                                                        <Typography variant="caption" sx={{ color: '#005f8a', fontWeight: 600 }}>JPG, PNG o WEBP</Typography>
-                                                    </label>
-                                                </>
+                                                <Button component="label" sx={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', textTransform: 'none', color: '#005f8a', '&:hover': { background: 'transparent' }, cursor: addPelicula.portada.startsWith('http') ? 'default' : 'pointer' }} disabled={addPelicula.portada.startsWith('http')}>
+                                                    <AddPhotoAlternate sx={{ fontSize: 40, mb: 1 }} />
+                                                    <Typography variant="h6" sx={{ fontWeight: 900, fontSize: '1.1rem' }}>Imagen de Portada</Typography>
+                                                    <Typography variant="caption" sx={{ fontWeight: 600 }}>JPG, PNG o WEBP</Typography>
+                                                    <Input type="file" onChange={crearPortada} slotProps={{ input: { accept: 'image/*' } }} sx={{ display: 'none' }} />
+                                                </Button>
                                             )}
                                         </Box>
 
                                         <TextField fullWidth label="Enlace URL de Portada" variant="outlined" placeholder="https://..." value={addPelicula.portada} onChange={crearPortada} sx={{ bgcolor: '#fff', borderRadius: 3, '& .MuiOutlinedInput-root': { borderRadius: 3, fontWeight: 600 } }} />
 
-                                        <Box sx={{ flex: 1, border: '2px dashed #f06b06', borderRadius: 5, p: 3, textAlign: 'center', bgcolor: 'rgba(240, 107, 6, 0.05)', cursor: 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', position: 'relative', transition: 'all 0.3s ease', '&:hover': { bgcolor: 'rgba(240, 107, 6, 0.1)' } }}>
+                                        <Box sx={{ flex: 1, border: '2px dashed #f06b06', borderRadius: 5, p: 3, textAlign: 'center', bgcolor: 'rgba(240, 107, 6, 0.05)', cursor: (addPelicula.urlVideo && !archivoBinario) ? 'default' : 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', position: 'relative', transition: 'all 0.3s ease', '&:hover': { bgcolor: 'rgba(240, 107, 6, 0.1)' }, opacity: (addPelicula.urlVideo && !archivoBinario) ? 0.5 : 1 }}>
                                             {archivoBinario ? (
                                                 <Box sx={{ bgcolor: '#f06b06', p: 2, borderRadius: 3, display: 'flex', alignItems: 'center', gap: 1, color: '#fff' }}>
                                                     <Movie />
@@ -205,16 +206,15 @@ export default function SubirPelicula() {
                                                     <IconButton size="small" onClick={eliminarVideo} sx={{ color: '#fff', ml: 1 }}><Close fontSize="small" /></IconButton>
                                                 </Box>
                                             ) : (
-                                                <>
-                                                    <input accept="video/*" style={{ display: 'none' }} id="upload-video" type="file" onChange={crearUrlVideo} />
-                                                    <label htmlFor="upload-video" style={{ cursor: 'pointer', width: '100%' }}>
-                                                        <Movie sx={{ fontSize: 40, color: '#f06b06', mb: 1 }} />
-                                                        <Typography variant="h6" sx={{ fontWeight: 900, color: '#f06b06', fontSize: '1.1rem' }}>Archivo de Video</Typography>
-                                                        <Typography variant="caption" sx={{ color: '#f06b06', fontWeight: 600 }}>Sube el metraje final</Typography>
-                                                    </label>
-                                                </>
+                                                <Button component="label" sx={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', textTransform: 'none', color: '#f06b06', '&:hover': { background: 'transparent' } }} disabled={!!addPelicula.urlVideo && !archivoBinario}>
+                                                    <Movie sx={{ fontSize: 40, mb: 1 }} />
+                                                    <Typography variant="h6" sx={{ fontWeight: 900, fontSize: '1.1rem' }}>Archivo de Video</Typography>
+                                                    <Typography variant="caption" sx={{ fontWeight: 600 }}>Sube el metraje final</Typography>
+                                                    <Input type="file" onChange={crearUrlVideo} slotProps={{ input: { accept: 'video/*' } }} sx={{ display: 'none' }} />
+                                                </Button>
                                             )}
                                         </Box>
+                                        <TextField fullWidth label="Enlace URL de Video" variant="outlined" placeholder="https://..." value={archivoBinario ? "" : addPelicula.urlVideo} onChange={crearUrlVideoManual} disabled={!!archivoBinario} sx={{ bgcolor: '#fff', borderRadius: 3, '& .MuiOutlinedInput-root': { borderRadius: 3, fontWeight: 600 } }} />
                                     </Box>
                                 </Grid>
                             </Grid>
