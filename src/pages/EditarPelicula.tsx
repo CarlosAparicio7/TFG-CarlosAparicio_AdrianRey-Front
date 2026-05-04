@@ -123,10 +123,7 @@ export default function EditarPelicula() {
         })
     }
 
-    const eliminarVideo = () => {
-        setArchivoBinario(null);
-        setDatosPelicula({ ...datosPelicula, urlVideo: "" });
-    };
+    
 
     return(
         <Box sx={{ minHeight: '100vh', background: 'linear-gradient(90deg, #005f8a 30%, #f06b06 100%)', display: 'flex', flexDirection: 'column', backgroundAttachment: 'fixed' }}>
@@ -212,7 +209,6 @@ export default function EditarPelicula() {
                                                 <Box sx={{ bgcolor: '#f06b06', p: 2, borderRadius: 3, display: 'flex', alignItems: 'center', gap: 1, color: '#fff' }}>
                                                     <Movie />
                                                     <Typography sx={{ fontWeight: 900, fontSize: '0.85rem' }}>VIDEO LISTO</Typography>
-                                                    <IconButton size="small" onClick={eliminarVideo} sx={{ color: '#fff', ml: 1 }}><Close fontSize="small" /></IconButton>
                                                 </Box>
                                             ) : (
                                                 <>

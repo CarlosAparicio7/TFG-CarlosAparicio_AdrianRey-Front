@@ -101,9 +101,6 @@ export default function Home() {
                                         <Button component={Link} to={"/pelicula/" + peliculas.id} variant="contained" fullWidth sx={{ bgcolor: '#005f8a', borderRadius: 3, textTransform: 'none', fontWeight: 900, py: 1.8, fontSize: '1.1rem', '&:hover': { bgcolor: '#004a6d' } }}>
                                             Ver Película
                                         </Button>
-                                        <Button component={Link} to={"/editarPelicula/" + peliculas.id} variant="contained" fullWidth sx={{ bgcolor: '#005f8a', borderRadius: 3, textTransform: 'none', fontWeight: 900, py: 1.8, fontSize: '1.1rem', marginTop: 2, '&:hover': { bgcolor: '#004a6d' } }}>
-                                            Editar Pelicula
-                                        </Button>
                                     </Box>
                                 </Card>
                             </Grid>
