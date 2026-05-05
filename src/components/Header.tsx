@@ -1,9 +1,9 @@
 import LogoutIcon from '@mui/icons-material/Logout';
 import PersonIcon from '@mui/icons-material/Person';
 import SettingsIcon from '@mui/icons-material/Settings';
-import { AppBar, Box, Container, IconButton, Toolbar, Typography, Avatar, Tooltip, Divider } from '@mui/material';
+import { AppBar, Avatar, Box, Container, Divider, IconButton, Toolbar, Tooltip, Typography } from '@mui/material';
+import { useEffect, useState } from 'react';
 import { Link, useNavigate } from "react-router-dom";
-import { useState, useEffect } from 'react';
 
 type Usuario = {
     id: number;
