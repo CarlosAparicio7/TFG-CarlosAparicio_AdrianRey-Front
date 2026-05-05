@@ -1,7 +1,7 @@
 import { AddPhotoAlternate, CheckCircle, Close, CloudUpload, Movie, MovieFilter } from "@mui/icons-material";
 import { Box, Button, Container, Grid, IconButton, Input, LinearProgress, Paper, TextField, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import { crearPelicula } from "../service/peliculasService";
@@ -126,6 +126,7 @@ export default function SubirPelicula() {
     }
 
     return (
+    <>
         <Box sx={{ minHeight: '100vh', background: 'linear-gradient(90deg, #005f8a 30%, #f06b06 100%)', display: 'flex', flexDirection: 'column', backgroundAttachment: 'fixed' }}>
             <Header />
             <Container maxWidth={false} sx={{ mt: 2, mb: 4, flexGrow: 1, display: 'flex', px: { xs: 1, sm: 2, md: 4 }, justifyContent: 'center', alignItems: 'center' }}>
@@ -161,12 +162,7 @@ export default function SubirPelicula() {
                             )}
 
                             <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 0.5, mb: 4 }}>
-                                <Box sx={{ display: 'flex' }}>
-                                    <Button component={Link} to={"/"} variant="contained" fullWidth sx={{ bgcolor: '#75058f', borderRadius: 3, textTransform: 'none', fontWeight: 900, py: 1.8, fontSize: '1.1rem', marginRight: 40, '&:hover': { bgcolor: '#004a6d' } }}>
-                                        Volver
-                                    </Button>
-                                    <MovieFilter sx={{ color: '#005f8a', fontSize: 50, marginRight: 55}} />
-                                </Box>
+                                <MovieFilter sx={{ color: '#005f8a', fontSize: 50, mb: 1 }} />
                                 <Typography variant="h3" sx={{ fontWeight: 900, letterSpacing: -2, color: '#005f8a', fontSize: { xs: '2.2rem', md: '3.5rem' } }}>
                                     Subir Película
                                 </Typography>
@@ -239,5 +235,6 @@ export default function SubirPelicula() {
             </Container>
             <Footer />
         </Box>
-    );
+    </>
+    );  
 }
