@@ -46,7 +46,14 @@ export default function SubirPelicula() {
     }
 
     const crearPortada = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setAddPelicula({ ...addPelicula, portada: e.target.value });
+        if (e.target.files && e.target.files[0]) {
+            const archivo = e.target.files[0];
+            const vistaPrevia = URL.createObjectURL(archivo);
+            
+            setAddPelicula({ ...addPelicula, portada: vistaPrevia });
+        } else {
+            setAddPelicula({ ...addPelicula, portada: e.target.value });
+        }
     }
 
     const eliminarPortada = () => {
