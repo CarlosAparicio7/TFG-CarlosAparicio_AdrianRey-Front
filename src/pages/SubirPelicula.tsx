@@ -87,8 +87,12 @@ export default function SubirPelicula() {
         setAddPelicula({ ...addPelicula, urlVideo: "" });
     };
 
-    const botonPublicarPelicula = async (e: React.FormEvent) => {
+    const botonPublicarPelicula = async (e: React.SyntheticEvent) => {
         e.preventDefault();
+        if (!addPelicula.nombre || !addPelicula.director || !addPelicula.genero || !addPelicula.descripcion || !addPelicula.valoracion || !addPelicula.portada || (!addPelicula.urlVideo && !archivoBinario)) {
+            setErrorMsg("POR FAVOR, RELLENA TODOS LOS CAMPOS");
+            return;
+        }
         setLoading(true);
         setProgress(0);
         const timer = setInterval(() => {
@@ -169,11 +173,11 @@ export default function SubirPelicula() {
                             <Grid container spacing={3}>
                                 <Grid size={{ xs: 12, md: 6 }}>
                                     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2.5 }}>
-                                        <TextField fullWidth label="Nombre de la Película" variant="outlined" onChange={crearNombre} sx={{ bgcolor: '#fff', borderRadius: 3, '& .MuiOutlinedInput-root': { borderRadius: 3, fontWeight: 600 } }} />
-                                        <TextField fullWidth label="Director" variant="outlined" onChange={crearDirector} sx={{ bgcolor: '#fff', borderRadius: 3, '& .MuiOutlinedInput-root': { borderRadius: 3, fontWeight: 600 } }} />
-                                        <TextField fullWidth label="Géneros" variant="outlined" placeholder="Acción, Drama..." onChange={crearGenero} sx={{ bgcolor: '#fff', borderRadius: 3, '& .MuiOutlinedInput-root': { borderRadius: 3, fontWeight: 600 } }} />
-                                        <TextField fullWidth label="Descripción" variant="outlined" multiline rows={5} onChange={crearDescripcion} sx={{ bgcolor: '#fff', borderRadius: 3, '& .MuiOutlinedInput-root': { borderRadius: 3, fontWeight: 600 } }} />
-                                        <TextField fullWidth label="Valoración" variant="outlined" placeholder="1-10" type="number" onChange={crearValoracion} slotProps={{ htmlInput: { min: 1, max: 10, step: 0.1 } }} sx={{ bgcolor: '#fff', borderRadius: 3, '& .MuiOutlinedInput-root': { borderRadius: 3, fontWeight: 600 } }} />
+                                        <TextField required fullWidth label="Nombre de la Película" variant="outlined" onChange={crearNombre} sx={{ bgcolor: '#fff', borderRadius: 3, '& .MuiOutlinedInput-root': { borderRadius: 3, fontWeight: 600 } }} />
+                                        <TextField required fullWidth label="Director" variant="outlined" onChange={crearDirector} sx={{ bgcolor: '#fff', borderRadius: 3, '& .MuiOutlinedInput-root': { borderRadius: 3, fontWeight: 600 } }} />
+                                        <TextField required fullWidth label="Géneros" variant="outlined" placeholder="Acción, Drama..." onChange={crearGenero} sx={{ bgcolor: '#fff', borderRadius: 3, '& .MuiOutlinedInput-root': { borderRadius: 3, fontWeight: 600 } }} />
+                                        <TextField required fullWidth label="Descripción" variant="outlined" multiline rows={5} onChange={crearDescripcion} sx={{ bgcolor: '#fff', borderRadius: 3, '& .MuiOutlinedInput-root': { borderRadius: 3, fontWeight: 600 } }} />
+                                        <TextField required fullWidth label="Valoración" variant="outlined" placeholder="1-10" type="number" onChange={crearValoracion} slotProps={{ htmlInput: { min: 1, max: 10, step: 0.1 } }} sx={{ bgcolor: '#fff', borderRadius: 3, '& .MuiOutlinedInput-root': { borderRadius: 3, fontWeight: 600 } }} />
                                     </Box>
                                 </Grid>
 

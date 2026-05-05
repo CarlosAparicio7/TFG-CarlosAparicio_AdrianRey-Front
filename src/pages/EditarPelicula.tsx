@@ -1,5 +1,5 @@
 import { AddPhotoAlternate, CheckCircle, CloudUpload, Movie, MovieFilter } from "@mui/icons-material";
-import { Box, Button, Container, Grid, LinearProgress, Paper, TextField, Typography } from "@mui/material";
+import { Box, Button, Container, Grid, Paper, TextField, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Footer from "../components/Footer";
@@ -44,8 +44,6 @@ export default function EditarPelicula() {
     const {id} = useParams() as {id: string};
     const navigate = useNavigate();
     const [useErrorMsg, setErrorMsg] = useState<string>('');
-    const [loading, setLoading] = useState(false);
-    const [progress, setProgress] = useState(0);
     const [archivoBinario, setArchivoBinario] = useState<File | null>(null);
 
     useEffect(()=>{
@@ -131,9 +129,6 @@ export default function EditarPelicula() {
 
     const botonEditarPelicula = async (e: React.FormEvent) => {
         e.preventDefault();
-        setLoading(true);
-        setProgress(0);
-
         if(!id) {
             return;
         }
@@ -152,20 +147,15 @@ export default function EditarPelicula() {
             const respuesta = await editarPelicula(id, peliculasEditadas, archivoBinario);
 
                 if(respuesta.ok && respuesta.data) {
-                    setProgress(100);
                     setErrorMsg("");
                     alert("Pelicula actualizada");
                     navigate(`/pelicula/${id}`)
                 } else{
                     setErrorMsg("Error al actualizar la pelicula");
                     console.warn("Error al actualizar la pelicula");
-                    setProgress(0);
                 }
         }catch(error) {
             console.log(error);
-            setProgress(0);
-        } finally {
-        setLoading(false);
         }
     }
 
@@ -185,18 +175,6 @@ export default function EditarPelicula() {
                     flexDirection: 'column', 
                     boxShadow: '0 20px 40px rgba(0,0,0,0.15)' 
                 }}>
-                    
-                    {loading ? (
-                        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', py: 12, gap: 4 }}>
-                            <Typography variant="h4" sx={{ fontWeight: 900, color: '#005f8a', textAlign: 'center' }}>
-                                EDITANDO CONTENIDO...
-                            </Typography>
-                            <Box sx={{ width: '100%', maxWidth: '700px' }}>
-                                <LinearProgress variant="determinate" value={progress} sx={{ height: 16, borderRadius: 8, bgcolor: 'rgba(0,0,0,0.05)', '& .MuiLinearProgress-bar': { borderRadius: 8, background: 'linear-gradient(90deg, #005f8a, #f06b06)' } }} />
-                                <Typography sx={{ color: '#005f8a', mt: 3, textAlign: 'center', fontWeight: 900, fontSize: '1.2rem' }}>{Math.round(progress)}% COMPLETADO</Typography>
-                            </Box>
-                        </Box>
-                    ) : (
                         <>
                             {useErrorMsg && (
                                 <Box sx={{ mb: 4, borderRadius: 3, border: '1px solid #f70505', backgroundColor: '#fff5f5', p: 2, color: '#f70505', textAlign: 'center', fontWeight: 900 }}>
@@ -277,7 +255,6 @@ export default function EditarPelicula() {
                                 </Button>
                             </Box>
                         </>
-                    )}
                 </Paper>
             </Container>
             <Footer />

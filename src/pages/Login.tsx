@@ -33,8 +33,8 @@ export default function LoginPage() {
             } else {
                 setErrorMsg('El correo o la contraseña no son correctos.');
             }
-        }).catch((error: Error) => {
-            setErrorMsg("Error de conexión: " + error.message);
+        }).catch(() => {
+            setErrorMsg('El correo o la contraseña no son correctos.');
         });
     };
 
@@ -90,7 +90,6 @@ export default function LoginPage() {
                         fullWidth 
                         value={useLoginAccess.password}
                         onChange={(e) => setLoginAccess({ ...useLoginAccess, password: e.target.value })}
-                        onKeyDown={(e) => e.key === 'Enter' && handleLogin()}
                         slotProps={{ 
                             input: { 
                                 startAdornment: <InputAdornment position="start"><Lock sx={{ color: '#fff', mr: 1 }} /></InputAdornment>, 

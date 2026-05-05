@@ -86,7 +86,7 @@ return (
 
             <Box sx={{ mb: 3, textAlign: 'center' }}>
               <Box sx={{ position: 'relative', display: 'inline-block' }}>
-                <Avatar src={useRegisterUser.avatarIcon} sx={{ width: 90, height: 90, bgcolor: 'rgba(255, 255, 255, 0.2)', border: '3px solid #f06b06', mx: 'auto' }}>
+                <Avatar src={useRegisterUser.avatarIcon || undefined} sx={{ width: 90, height: 90, bgcolor: 'rgba(255, 255, 255, 0.2)', border: '3px solid #f06b06', mx: 'auto' }}>
                   {!useRegisterUser.avatarIcon && <Person sx={{ fontSize: 50, color: '#fff' }} />}
                 </Avatar>
                 <IconButton component="label" sx={{ position: 'absolute', bottom: 0, right: 0, bgcolor: '#005f8a', color: '#fff', '&:hover': { bgcolor: '#004a6d' }, border: '3px solid rgba(255, 255, 255, 0.3)', p: 0.8 }}>
@@ -97,20 +97,30 @@ return (
 
             <Grid container spacing={2}>
               <Grid size={{ xs: 12, sm: 6 }}>
-                <TextField placeholder="Nombre" fullWidth value={useRegisterUser.nombre} onChange={(e) => setRegisterUser({ ...useRegisterUser, nombre: e.target.value })} slotProps={{ input: { sx: { borderRadius: 2, height: 50, bgcolor: 'rgba(255, 255, 255, 0.9)', fontWeight: 600 } } }} />
+                <TextField required placeholder="Nombre" fullWidth value={useRegisterUser.nombre} onChange={(e) => setRegisterUser({ ...useRegisterUser, nombre: e.target.value })} slotProps={{ input: { sx: { borderRadius: 2, height: 50, bgcolor: 'rgba(255, 255, 255, 0.9)', fontWeight: 600 } } }} />
               </Grid>
               <Grid size={{ xs: 12, sm: 6 }}>
-                <TextField placeholder="Apellido" fullWidth value={useRegisterUser.apellido} onChange={(e) => setRegisterUser({ ...useRegisterUser, apellido: e.target.value })} slotProps={{ input: { sx: { borderRadius: 2, height: 50, bgcolor: 'rgba(255, 255, 255, 0.9)', fontWeight: 600 } } }} />
+                <TextField required placeholder="Apellido" fullWidth value={useRegisterUser.apellido} onChange={(e) => setRegisterUser({ ...useRegisterUser, apellido: e.target.value })} slotProps={{ input: { sx: { borderRadius: 2, height: 50, bgcolor: 'rgba(255, 255, 255, 0.9)', fontWeight: 600 } } }} />
               </Grid>
               <Grid size={12}>
-                <TextField placeholder="Correo Electrónico" fullWidth value={useRegisterUser.email} onChange={(e) => setRegisterUser({ ...useRegisterUser, email: e.target.value })} slotProps={{ input: { startAdornment: <InputAdornment position="start"><Email sx={{ color: '#005f8a', fontSize: 20 }} /></InputAdornment>, sx: { borderRadius: 2, height: 50, bgcolor: 'rgba(255, 255, 255, 0.9)', fontWeight: 600 } } } } />
+                <TextField required type='email' placeholder="Correo Electrónico" fullWidth value={useRegisterUser.email} onChange={(e) => setRegisterUser({ ...useRegisterUser, email: e.target.value })} slotProps={{ input: { startAdornment: <InputAdornment position="start"><Email sx={{ color: '#005f8a', fontSize: 20 }} /></InputAdornment>, sx: { borderRadius: 2, height: 50, bgcolor: 'rgba(255, 255, 255, 0.9)', fontWeight: 600 } } } } />
               </Grid>
               <Grid size={12}>
-                <TextField placeholder="Contraseña" type="password" fullWidth value={useRegisterUser.password} onChange={(e) => setRegisterUser({ ...useRegisterUser, password: e.target.value })} onKeyDown={(e) => e.key === 'Enter' && handleRegister()} slotProps={{ input: { startAdornment: <InputAdornment position="start"><Lock sx={{ color: '#005f8a', fontSize: 20 }} /></InputAdornment>, sx: { borderRadius: 2, height: 50, bgcolor: 'rgba(255, 255, 255, 0.9)', fontWeight: 600 } } } } />
+                <TextField required placeholder="Contraseña" type="password" fullWidth value={useRegisterUser.password} onChange={(e) => setRegisterUser({ ...useRegisterUser, password: e.target.value })} onKeyDown={(e) => e.key === 'Enter' && handleRegister()} slotProps={{ input: { startAdornment: <InputAdornment position="start"><Lock sx={{ color: '#005f8a', fontSize: 20 }} /></InputAdornment>, sx: { borderRadius: 2, height: 50, bgcolor: 'rgba(255, 255, 255, 0.9)', fontWeight: 600 } } } } />
               </Grid>
             </Grid>
 
-            <Button onClick={handleRegister} variant="contained" fullWidth sx={{ mt: 4, bgcolor: '#005f8a', py: 1.5, borderRadius: 2, fontWeight: 900, textTransform: 'none', fontSize: '1.1rem', '&:hover': { bgcolor: '#004a6d' } }}>Crear cuenta</Button>
+            <Button onClick={() => {
+              if (!useRegisterUser.nombre || !useRegisterUser.apellido || !useRegisterUser.email || !useRegisterUser.password) {
+                setErrorMsg("Por favor, rellena todos los campos ");
+                return;
+              }
+              if (!useRegisterUser.email.includes('@')) {
+                setErrorMsg("El correo debe contener un @.");
+                return;
+              }
+              handleRegister();
+            }} variant="contained" fullWidth sx={{ mt: 4, bgcolor: '#005f8a', py: 1.5, borderRadius: 2, fontWeight: 900, textTransform: 'none', fontSize: '1.1rem', '&:hover': { bgcolor: '#004a6d' } }}>Crear cuenta</Button>
 
             <Typography variant="body1" sx={{ color: '#fff', mt: 4, textAlign: 'center', fontSize: '1.1rem', fontWeight: 600 }}>
               ¿Ya tienes una cuenta?
