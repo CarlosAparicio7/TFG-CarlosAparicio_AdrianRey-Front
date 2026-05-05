@@ -93,17 +93,21 @@ export async function editarPelicula(id: string, request: PeliculaEspecifica, ar
 }
 
 export async function borrarPelicula(id: string): Promise<APIResult<PeliculaEspecifica>> {
-    const response = await fetch(`${baseURL}/peliculas/eliminarPelicula/${id}`, {
+    const response = await fetch(`${baseURL}/peliculas/eliminar/${id}`, {
         method: 'DELETE',
         headers: {
             'Accept': 'application/json',
         },
     });
     if (response.ok) {
-        const pelicula: PeliculaEspecifica = await response.json();
-        return {ok: true, data: pelicula};
+        const data = response.status !== 204 ? await response.json() : null;
+        
+        return { ok: true, data: data };
     }
-    const error: APIError = await response.json();
-    return {ok: false, error: error};
+    const errorData = await response.json().catch(() => ({ 
+        detail: "Error al intentar eliminar la película" 
+    }));
+
+    return { ok: false, error: errorData };
 }
 

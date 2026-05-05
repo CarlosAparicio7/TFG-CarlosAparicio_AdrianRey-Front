@@ -1,9 +1,10 @@
+import { DeleteForever } from "@mui/icons-material";
 import { Box, Button, Card, CardContent, CardMedia, CircularProgress, Container, Grid, Paper, Rating, TextField, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
-import { getOnePelicula } from "../service/peliculasService";
+import { borrarPelicula, getOnePelicula } from "../service/peliculasService";
 
 type getOnePelicula = {
     id: string,
@@ -20,6 +21,7 @@ export default function PeliculaEspecifica() {
 
     const navigate = useNavigate();
     const [usePeliculaEspecifica, setPeliculaEspecifica] = useState<getOnePelicula>();
+
     const { id } = useParams() as { id: string };
     const [useErrorMsg, setErrorMsg] = useState<string>('');
 
@@ -51,6 +53,31 @@ export default function PeliculaEspecifica() {
             })
         }
     }, [id]);
+
+    const handleDeletePelicula = (peliculaId: string) => {
+        if (!window.confirm("¿Estás seguro de que deseas eliminar esta película?")) return;
+
+        borrarPelicula(peliculaId).then((response) => {
+            if (!response.ok) {
+                alert(response.error?.detalle || "Error al eliminar la película");
+                return;
+            } 
+            
+            alert("Película eliminada con éxito");
+            navigate("/"); 
+            
+        }).catch((err) => {
+            setErrorMsg(err?.message ?? "Error desconocido");
+        });
+    };
+
+    if (!usePeliculaEspecifica && !useErrorMsg) {
+        return (
+            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+                <CircularProgress />
+            </Box>
+        );
+    }
 
     return (
     <>
@@ -152,6 +179,12 @@ export default function PeliculaEspecifica() {
                                             </Box>
                                         )}
                                         </Paper>
+                                        <Button component={Link} to={"/editarPelicula/" + usePeliculaEspecifica?.id} variant="contained" sx={{ bgcolor: '#005f8a', borderRadius: 3, textTransform: 'none', fontWeight: 900, py: 1.8, fontSize: '1.1rem', marginTop: 2, width: 400, height: 60, marginLeft: 30, '&:hover': { bgcolor: '#004a6d' } }}>
+                                            Editar Pelicula
+                                        </Button>
+                                        <Button variant="contained" color="error" startIcon={<DeleteForever />} onClick={() => usePeliculaEspecifica && handleDeletePelicula(usePeliculaEspecifica.id)}  sx={{ borderRadius: 3, textTransform: 'none', fontWeight: 900, py: 1.8, fontSize: '1.1rem', width: 400, height: 60, marginLeft: 30 }}>
+                                            Eliminar Película
+                                        </Button>
                                         <Grid container spacing={4}>
                                             <Grid size={{ xs: 12, md: 6 }}>
                                                 <Box sx={{ p: 4, borderRadius: 5, bgcolor: 'rgba(255,255,255,0.95)', boxShadow: '0 15px 40px rgba(0,0,0,0.3)', height: '100%', boxSizing: 'border-box' }}>
@@ -211,9 +244,6 @@ export default function PeliculaEspecifica() {
                                                     </Box>
                                                 </Box>
                                             </Grid>
-                                            <Button component={Link} to={"/editarPelicula/" + usePeliculaEspecifica?.id} variant="contained" fullWidth sx={{ bgcolor: '#005f8a', borderRadius: 3, textTransform: 'none', fontWeight: 900, py: 1.8, fontSize: '1.1rem', marginTop: 2, '&:hover': { bgcolor: '#004a6d' } }}>
-                                                Editar Pelicula
-                                            </Button>
                                         </Grid>
                                     </Box>
                                 </Grid>
