@@ -123,23 +123,29 @@ export default function PeliculaEspecifica() {
                                 <Grid size={{ xs: 12, lg: 8 }}>
                                     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
                                         <Paper elevation={24} sx={{ width: '100%', borderRadius: 5, overflow: 'hidden', bgcolor: '#000', border: '2px solid rgba(255,255,255,0.1)', boxShadow: '0 20px 60px rgba(0,0,0,0.6)', minHeight: '450px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                            {usePeliculaEspecifica?.urlVideo ? (
-                                                <CardMedia
-                                                    component={usePeliculaEspecifica.urlVideo.startsWith('http') ? "iframe" : "video"} 
-                                                    controls={!usePeliculaEspecifica.urlVideo.startsWith('http')}
-                                                    allowFullScreen
-                                                    scrolling="no"
-                                                    src={usePeliculaEspecifica.urlVideo.startsWith('http') 
-                                                        ? usePeliculaEspecifica.urlVideo 
-                                                        : `http://localhost:8080/videos/${usePeliculaEspecifica.urlVideo}`} 
-                                                    sx={{ width: '100%', aspectRatio: '16/9', display: 'block', objectFit: 'cover', border: 0, overflow: 'hidden' }} 
-                                                />
-                                            ) : (
-                                                <Box sx={{ textAlign: 'center', color: '#fff' }}>
-                                                    <CircularProgress color="inherit" sx={{ mb: 2 }} />
-                                                    <Typography variant="h6" sx={{ fontWeight: 900 }}>Cargando Pelicula...</Typography>
-                                                </Box>
-                                            )}
+                                        {usePeliculaEspecifica?.urlVideo ? (
+                                            <CardMedia
+                                                component={usePeliculaEspecifica.urlVideo.startsWith('http') ? "iframe" : "video"} 
+                                                controls={!usePeliculaEspecifica.urlVideo.startsWith('http')}
+                                                allowFullScreen
+                                                scrolling="no"
+                                                src={
+                                                usePeliculaEspecifica.urlVideo.startsWith('http')
+                                                    ? usePeliculaEspecifica.urlVideo
+                                                        .replace("watch?v=", "embed/")
+                                                        .replace("youtu.be/", "www.youtube.com/embed/")
+                                                        .split("?si=")[0]
+                                                        .split("&")[0]
+                                                    : `http://localhost:8080/videos/${usePeliculaEspecifica.urlVideo}`
+                                                }
+                                                sx={{ width: '100%', aspectRatio: '16/9', display: 'block', border: 0, overflow: 'hidden', borderRadius: '8px' }} 
+                                            />
+                                        ) : (
+                                            <Box sx={{ textAlign: 'center', color: '#fff' }}>
+                                                <CircularProgress color="inherit" sx={{ mb: 2 }} />
+                                                <Typography variant="h6" sx={{ fontWeight: 900 }}>Cargando Pelicula...</Typography>
+                                            </Box>
+                                        )}
                                         </Paper>
                                         <Grid container spacing={4}>
                                             <Grid size={{ xs: 12, md: 6 }}>

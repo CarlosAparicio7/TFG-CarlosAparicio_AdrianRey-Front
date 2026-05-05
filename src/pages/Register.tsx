@@ -70,7 +70,7 @@ return (
       <Container maxWidth={false} sx={{ mt: 2, mb: 4, flexGrow: 1, display: 'flex', px: { xs: 1, sm: 2, md: 4 }, justifyContent: 'center', alignItems: 'center' }}>
         <Paper elevation={0} sx={{ p: { xs: 2, md: 0 }, backgroundColor: 'rgba(255, 255, 255, 0.12)', borderRadius: { xs: 0, md: 6 }, width: '100%', maxWidth: 1100, minHeight: '85vh', boxSizing: 'border-box', border: '1px solid rgba(255, 255, 255, 0.2)', display: 'flex', flexDirection: { xs: 'column', md: 'row' }, backdropFilter: 'blur(20px)', boxShadow: '0 8px 32px 0 rgba(0, 0, 0, 0.37)', overflow: 'hidden' }}>
           
-          <Box sx={{ width: { xs: '100%', md: '35%' }, bgcolor: 'rgba(0, 95, 138, 0.6)', p: 4, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', color: '#fff', textAlign: 'center', borderRight: { md: '1px solid rgba(255, 255, 255, 0.1)' } }}>
+          <Box component={Link} to="/" sx={{ width: { xs: '100%', md: '35%' }, bgcolor: 'rgba(0, 95, 138, 0.6)', p: 4, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', color: '#fff', textAlign: 'center', borderRight: { md: '1px solid rgba(255, 255, 255, 0.1)' }, textDecoration: 'none'}}>
             <VideoCameraBack sx={{ fontSize: 60, mb: 2, opacity: 0.9 }} />
             <Typography variant="h3" sx={{ fontWeight: 900, mb: 1, letterSpacing: -2, textShadow: '0px 10px 20px rgba(0,0,0,0.3)' }}>INFOCINE&MAS</Typography>
             <Typography variant="body1" sx={{ color: '#ffd1b3', mt: 1, fontWeight: 700, fontSize: '1.1rem', letterSpacing: 1, textTransform: 'uppercase' }}>DESCUBRE • CALIFICA • DISFRUTA</Typography>

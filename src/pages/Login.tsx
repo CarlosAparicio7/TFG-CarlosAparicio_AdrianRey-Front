@@ -42,7 +42,7 @@ export default function LoginPage() {
         <Box sx={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'linear-gradient(90deg, #005f8a 30%, #f06b06 100%)', backgroundAttachment: 'fixed', p: 2 }}>
             <Paper elevation={0} sx={{ maxWidth: 450, width: '100%', borderRadius: 8, bgcolor: 'rgba(255, 255, 255, 0.25)', backdropFilter: 'blur(25px)', p: { xs: 4, md: 6 }, border: '1px solid rgba(255, 255, 255, 0.4)', boxShadow: '0 20px 50px rgba(0, 0, 0, 0.3)' }}>
                 
-                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1.5, mb: 4 }}>
+                <Box component={Link} to="/" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1.5, mb: 4, color: 'inherit', textDecoration: 'none' }}>
                     <MovieFilter sx={{ color: '#fff', fontSize: 32, filter: 'drop-shadow(0px 4px 8px rgba(0,0,0,0.2))' }} />
                     <Typography variant="h6" sx={{ fontWeight: 900, color: '#fff', letterSpacing: 2, fontSize: '1.4rem', textShadow: '0px 2px 10px rgba(0,0,0,0.2)' }}>INFOCINE&MAS</Typography>
                 </Box>
