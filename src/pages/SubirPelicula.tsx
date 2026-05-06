@@ -1,7 +1,7 @@
 import { AddPhotoAlternate, CheckCircle, Close, CloudUpload, Movie, MovieFilter } from "@mui/icons-material";
 import { Box, Button, Container, Grid, IconButton, Input, LinearProgress, Paper, TextField, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import { crearPelicula } from "../service/peliculasService";
@@ -169,7 +169,12 @@ export default function SubirPelicula() {
                             )}
 
                             <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 0.5, mb: 4 }}>
-                                <MovieFilter sx={{ color: '#005f8a', fontSize: 50, mb: 1 }} />
+                                <Box sx={{ display: 'flex' }}>
+                                    <Button component={Link} to={"/"} variant="contained" fullWidth sx={{ bgcolor: '#005f8a', borderRadius: 3, textTransform: 'none', fontWeight: 900, py: 1.8, fontSize: '1.1rem', marginRight: 40, '&:hover': { bgcolor: '#f06b06' } }}>
+                                        Volver
+                                    </Button>
+                                    <MovieFilter sx={{ color: '#005f8a', fontSize: 50, marginRight: 55}} />
+                                </Box>
                                 <Typography variant="h3" sx={{ fontWeight: 900, letterSpacing: -2, color: '#005f8a', fontSize: { xs: '2.2rem', md: '3.5rem' } }}>
                                     Subir Película
                                 </Typography>

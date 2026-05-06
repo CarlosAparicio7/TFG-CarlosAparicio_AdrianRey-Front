@@ -184,7 +184,7 @@ export default function EditarPelicula() {
 
                             <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 0.5, mb: 4 }}>
                                 <Box sx={{ display: 'flex' }}>
-                                    <Button component={Link} to={"/pelicula/" + datosPelicula.id} variant="contained" fullWidth sx={{ bgcolor: '#75058f', borderRadius: 3, textTransform: 'none', fontWeight: 900, py: 1.8, fontSize: '1.1rem', marginRight: 40, '&:hover': { bgcolor: '#004a6d' } }}>
+                                    <Button component={Link} to={"/pelicula/" + datosPelicula.id} variant="contained" fullWidth sx={{ bgcolor: '#005f8a', borderRadius: 3, textTransform: 'none', fontWeight: 900, py: 1.8, fontSize: '1.1rem', marginRight: 40, '&:hover': { bgcolor: '#f06b06' } }}>
                                         Volver
                                     </Button>
                                     <MovieFilter sx={{ color: '#005f8a', fontSize: 50, marginRight: 55}} />
