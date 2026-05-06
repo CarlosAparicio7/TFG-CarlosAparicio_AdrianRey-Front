@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import { getAllPeliculas } from "../service/peliculasService";
-import { Search } from "@mui/icons-material";
+import { DeleteSweep, NewReleases, Search, Star } from "@mui/icons-material";
 
 type getAllPeliculas = {
     id: string,
@@ -25,6 +25,7 @@ export default function Home() {
     const [tipoBusqueda, setTipoBusqueda] = useState<'nombre' | 'director'>('nombre');
     const [filtroValoracion, setFiltroValoracion] = useState('todos');
     const [filtroGenero, setFiltroGenero] = useState('todos');
+    const [filtroEspecial, setFiltroEspecial] = useState<'todas' | 'ultimas' | 'top'>('todas');
 
     useEffect(()=>{
         getAllPeliculas().then(response =>{
@@ -49,21 +50,39 @@ export default function Home() {
         });
     }, []);
 
+    const limpiarFiltros = () => {
+        setFiltroTexto('');
+        setTipoBusqueda('nombre');
+        setFiltroValoracion('todos');
+        setFiltroGenero('todos');
+        setFiltroEspecial('todas');
+    };
+
+    const normalizarTexto = (texto: string) => 
+        texto.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+
     const generosUnicos = Array.from(new Set(usePeliculas.map(p => p.genero)));
+    
+    const peliculasFiltradas = (() => {
+        const filtradas = usePeliculas.filter(pelicula => {
+            const cumpleTexto = tipoBusqueda === 'nombre' 
+                ? normalizarTexto(pelicula.nombre).includes(normalizarTexto(filtroTexto))
+                : normalizarTexto(pelicula.director).includes(normalizarTexto(filtroTexto));
 
-    const peliculasFiltradas = usePeliculas.filter(pelicula => {
-        const cumpleTexto = tipoBusqueda === 'nombre' 
-            ? pelicula.nombre.toLowerCase().includes(filtroTexto.toLowerCase())
-            : pelicula.director.toLowerCase().includes(filtroTexto.toLowerCase());
+            const cumpleValoracion = filtroValoracion === 'todos' 
+                || Math.trunc(pelicula.valoracion) === Number(filtroValoracion);
 
-        const cumpleValoracion = filtroValoracion === 'todos' 
-            || Math.trunc(pelicula.valoracion) === Number(filtroValoracion);
+            const cumpleGenero = filtroGenero === 'todos' 
+                || normalizarTexto(pelicula.genero) === normalizarTexto(filtroGenero);
 
-        const cumpleGenero = filtroGenero === 'todos' 
-            || pelicula.genero === filtroGenero;
+            return cumpleTexto && cumpleValoracion && cumpleGenero;
+        });
 
-        return cumpleTexto && cumpleValoracion && cumpleGenero;
-    });
+        if (filtroEspecial === 'ultimas') return [...filtradas].reverse().slice(0, 3);
+        if (filtroEspecial === 'top') return [...filtradas].sort((a, b) => b.valoracion - a.valoracion).slice(0, 5);
+        
+        return filtradas;
+    })();
 
     return (
         <Box sx={{ minHeight: '100vh', background: 'linear-gradient(90deg, #005f8a 30%, #f06b06 100%)', display: 'flex', flexDirection: 'column', backgroundAttachment: 'fixed' }}>
@@ -107,6 +126,9 @@ export default function Home() {
                                     <MenuItem key={g} value={g}>{g}</MenuItem>
                                 ))}
                             </Select>
+                            <Button startIcon={<NewReleases />} variant={filtroEspecial === 'ultimas' ? "contained" : "outlined"} onClick={() => setFiltroEspecial('ultimas')} sx={{ borderRadius: 3, height: 56, color: '#fff', borderColor: 'rgba(255, 255, 255, 0.4)', bgcolor: filtroEspecial === 'ultimas' ? '#005f8a' : 'transparent', px: 3, '&:hover': { bgcolor: '#004a6d' } }}>Últimas 3</Button>
+                            <Button startIcon={<Star />} variant={filtroEspecial === 'top' ? "contained" : "outlined"} onClick={() => setFiltroEspecial('top')} sx={{ borderRadius: 3, height: 56, color: '#fff', borderColor: 'rgba(255, 255, 255, 0.4)', bgcolor: filtroEspecial === 'top' ? '#f06b06' : 'transparent', px: 3, '&:hover': { bgcolor: '#d65f05' } }}>Top 5</Button>
+                            <Button startIcon={<DeleteSweep />} onClick={limpiarFiltros} variant="outlined" sx={{ borderRadius: 3, height: 56, color: '#fff', borderColor: 'rgba(255, 204, 188, 0.4)', px: 3, '&:hover': { borderColor: '#fff', color: '#fff' } }}>Limpiar</Button>
                         </Box>
                         <Typography variant="body1" sx={{ color: '#ffd1b3', mt: 1, fontWeight: 700, fontSize: '1.2rem', letterSpacing: 1 }}>
                             DESCUBRE • CALIFICA • DISFRUTA
