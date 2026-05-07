@@ -72,6 +72,7 @@ export async function editarPelicula(id: string, request: PeliculaEspecifica, ar
     formData.append('director', request.director);
     formData.append('genero', request.genero);
     formData.append('valoracion', request.valoracion.toString());
+    formData.append('urlVideo', request.urlVideo);
     
     if (archivo) {
         formData.append('archivo', archivo);
