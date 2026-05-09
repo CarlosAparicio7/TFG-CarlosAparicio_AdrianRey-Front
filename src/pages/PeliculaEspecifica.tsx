@@ -5,6 +5,9 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import { borrarPelicula, getOnePelicula } from "../service/peliculasService";
+import type { usuarioResena } from "../types/usuarios";
+import type { PeliculaResena } from "../types/peliculas";
+import { crearResena, mostrarResenas } from "../service/resenasService";
 
 type getOnePelicula = {
     id: string,
@@ -17,13 +20,39 @@ type getOnePelicula = {
     urlVideo: string 
 }
 
+type Resenas = {
+    id: string,
+    comentario: string,
+    numeroEstrellas: number,
+    usuario: usuarioResena,
+    pelicula: PeliculaResena
+}
+
+type NuevaResena = {
+    comentario: string,
+    numeroEstrellas: number,
+    usuarioId: string,
+    peliculaId: string
+}
+
 export default function PeliculaEspecifica() {
 
     const navigate = useNavigate();
     const [usePeliculaEspecifica, setPeliculaEspecifica] = useState<getOnePelicula>();
-
     const { id } = useParams() as { id: string };
     const [useErrorMsg, setErrorMsg] = useState<string>('');
+    const [listaResenas, setListaResenas] = useState<Resenas[]>([]);
+    const [resenaTexto, setResenaTexto] = useState<string>('');
+    const [notaUsuario, setNotaUsuario] = useState<number>(0);
+
+    const cargarResenas = () => {
+        mostrarResenas().then(response => {
+            if (response.ok && response.data) {
+                const filtradas = response.data.filter(r => r.pelicula.id === id);
+                setListaResenas(filtradas);
+            }
+        });
+    };
 
     useEffect(() => {
         const user = localStorage.getItem('usuario');
@@ -45,26 +74,46 @@ export default function PeliculaEspecifica() {
                         valoracion: response.data.valoracion,
                         urlVideo: response.data.urlVideo 
                     });
+                    cargarResenas();
                 } else if (!response.ok) {
                     console.log(response.error);
                 }
             }).catch((error: Error) => {
                 setErrorMsg(error.message);
-            })
+            });
         }
     }, [id]);
 
     const handleDeletePelicula = (peliculaId: string) => {
-
         borrarPelicula(peliculaId).then((response) => {
             if (!response.ok) {
                 alert(response.error?.detalle || "Error al eliminar la película");
                 return;
             }
             navigate("/"); 
-            
         }).catch((err) => {
             setErrorMsg(err?.message ?? "Error desconocido");
+        });
+    };
+
+    const handlePublicarResena = () => {
+        const userStr = localStorage.getItem('usuario');
+        if (!userStr || !id) return;
+
+        const usuario = JSON.parse(userStr);
+        const nueva: NuevaResena = {
+            comentario: resenaTexto,
+            numeroEstrellas: Number(notaUsuario),
+            usuarioId: usuario.id,
+            peliculaId: id
+        };
+
+        crearResena(nueva).then(response => {
+            if (response.ok) {
+                setResenaTexto('');
+                setNotaUsuario(0);
+                cargarResenas();
+            }
         });
     };
 
@@ -184,24 +233,26 @@ export default function PeliculaEspecifica() {
                                                     <Box sx={{ mb: 3, borderBottom: '2px solid #e2e8f0', pb: 2 }}>
                                                         <Typography variant="h5" sx={{ color: '#005f8a', fontWeight: 900, letterSpacing: -1 }}>TU RESEÑA</Typography>
                                                         <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mt: 1 }}>
-                                                            <Rating size="medium" sx={{ '& .MuiRating-iconFilled': { color: '#f06b06' } }} />
+                                                            <Typography component="input" type="number" value={notaUsuario} onChange={(e) => setNotaUsuario(Number(e.target.value))} 
+                                                                sx={{ fontWeight: 800, color: '#f06b06', bgcolor: 'rgba(0, 0, 0, 0.05)', border: '1px solid rgba(240, 107, 6, 0.3)', borderRadius: 1, outline: 'none', width: '60px', fontSize: '1.2rem', textAlign: 'center', p: '4px 8px', '&:focus': { borderColor: '#f06b06', bgcolor: 'rgba(255, 255, 255, 0.8)' } }} 
+                                                            />
                                                         </Box>
                                                     </Box>
-                                                    
                                                     <TextField 
                                                         label="Comparte tu opinión..." 
                                                         multiline 
                                                         rows={6}
-                                                        fullWidth 
+                                                        fullWidth
+                                                        value={resenaTexto}
+                                                        onChange={(e) => setResenaTexto(e.target.value)}
                                                         variant="filled" 
                                                         slotProps={{ 
-                                                            input: { sx: { fontWeight: 600, color: '#003a54', fontSize: '1rem', p: 2 } }, 
+                                                            input: { sx: { fontWeight: 600, color: '#003a54', fontSize: '1rem', p: 2, pt: 3 } }, 
                                                             inputLabel: { sx: { fontWeight: 800, color: '#005f8a' } } 
                                                         }} 
                                                     />
-                                                    
                                                     <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2 }}>
-                                                        <Button variant="contained" sx={{ bgcolor: '#005f8a', fontWeight: 900, px: 4, py: 1.5, borderRadius: 3, fontSize: '0.9rem', boxShadow: '0 10px 20px rgba(0,95,138,0.3)', '&:hover': { bgcolor: '#003a54' } }}>
+                                                        <Button onClick={handlePublicarResena} variant="contained" sx={{ bgcolor: '#005f8a', fontWeight: 900, px: 4, py: 1.5, borderRadius: 3, fontSize: '0.9rem', boxShadow: '0 10px 20px rgba(0,95,138,0.3)', '&:hover': { bgcolor: '#003a54' } }}>
                                                             PUBLICAR
                                                         </Button>
                                                     </Box>
@@ -211,29 +262,20 @@ export default function PeliculaEspecifica() {
                                             <Grid size={{ xs: 12, md: 6 }}>
                                                 <Box sx={{ p: 4, borderRadius: 5, bgcolor: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.2)', backdropFilter: 'blur(10px)', boxShadow: '0 15px 40px rgba(0,0,0,0.3)', height: '100%', boxSizing: 'border-box', display: 'flex', flexDirection: 'column' }}>
                                                     <Typography variant="h5" sx={{ color: '#fff', fontWeight: 900, mb: 3, borderBottom: '2px solid rgba(255,255,255,0.2)', pb: 2 }}>COMUNIDAD</Typography>
-                                                    
-                                                    <Box sx={{ flexGrow: 1, overflowY: 'auto', pr: 1, maxHeight: '300px', '&::-webkit-scrollbar': { width: '6px' }, '&::-webkit-scrollbar-thumb': { backgroundColor: 'rgba(255,255,255,0.3)', borderRadius: '10px' } }}>
-                                                        <Box sx={{ mb: 3, p: 2, bgcolor: 'rgba(0,0,0,0.2)', borderRadius: 3 }}>
-                                                            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1.5 }}>
-                                                                <Typography sx={{ color: '#ffd1b3', fontWeight: 900, fontSize: '0.85rem', letterSpacing: 0.5 }}>USUARIO_88</Typography>
-                                                                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                                                                    <Rating size="small" value={4} readOnly sx={{ '& .MuiRating-iconFilled': { color: '#00a8e8' } }} />
-                                                                    <Typography sx={{ color: '#fff', fontWeight: 900, fontSize: '0.9rem' }}>4.0</Typography>
-                                                                </Box>
-                                                            </Box>
-                                                            <Typography sx={{ color: '#fff', fontSize: '0.95rem', fontWeight: 500, lineHeight: 1.5 }}>¡Increíble producción! Me ha encantado el ritmo de la historia.</Typography>
-                                                        </Box>
 
-                                                        <Box sx={{ mb: 3, p: 2, bgcolor: 'rgba(0,0,0,0.2)', borderRadius: 3 }}>
+                                                    <Box sx={{ flexGrow: 1, overflowY: 'auto', pr: 1, maxHeight: '300px', '&::-webkit-scrollbar': { width: '6px' }, '&::-webkit-scrollbar-thumb': { backgroundColor: 'rgba(255,255,255,0.3)', borderRadius: '10px' } }}>
+                                                        {listaResenas.map(resena => 
+                                                        <Box key={resena.id} sx={{ mb: 3, p: 2, bgcolor: 'rgba(0,0,0,0.2)', borderRadius: 3 }}>
                                                             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1.5 }}>
-                                                                <Typography sx={{ color: '#ffd1b3', fontWeight: 900, fontSize: '0.85rem', letterSpacing: 0.5 }}>CINEFILO_PRO</Typography>
+                                                                <Typography sx={{ color: '#ffd1b3', fontWeight: 900, fontSize: '0.85rem', letterSpacing: 0.5 }}>{resena.usuario.nombre}</Typography>
                                                                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                                                                    <Rating size="small" value={5} readOnly sx={{ '& .MuiRating-iconFilled': { color: '#00a8e8' } }} />
-                                                                    <Typography sx={{ color: '#fff', fontWeight: 900, fontSize: '0.9rem' }}>5.0</Typography>
+                                                                    <Rating size="small" value={resena.numeroEstrellas / 2} readOnly sx={{ '& .MuiRating-iconFilled': { color: '#00a8e8' } }} />
+                                                                    <Typography sx={{ color: '#fff', fontWeight: 900, fontSize: '0.9rem' }}>{resena.numeroEstrellas}</Typography>
                                                                 </Box>
                                                             </Box>
-                                                            <Typography sx={{ color: '#fff', fontSize: '0.95rem', fontWeight: 500, lineHeight: 1.5 }}>Una obra maestra técnica. Los efectos visuales son de otro nivel.</Typography>
+                                                            <Typography sx={{ color: '#fff', fontSize: '0.95rem', fontWeight: 500, lineHeight: 1.5 }}>{resena.comentario}</Typography>
                                                         </Box>
+                                                        )}
                                                     </Box>
                                                 </Box>
                                             </Grid>

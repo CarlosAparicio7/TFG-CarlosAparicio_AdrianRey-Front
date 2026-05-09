@@ -1,4 +1,4 @@
-import type { NuevaResena, ResenaEspecifica, Resenas } from "../types/resenas";
+import type { NuevaResena, Resenas, ResenaEspecifica } from "../types/resenas";
 import type { APIError, APIResult } from "../types/util";
 
 const baseURL: string = "http://localhost:8080";
@@ -19,13 +19,20 @@ export async function mostrarResenas(): Promise<APIResult<Resenas[]>> {
 }
 
 export async function crearResena(request: NuevaResena): Promise<APIResult<NuevaResena>> {
+    const formData = new FormData();
+    formData.append('comentario', request.comentario);
+    formData.append('numeroEstrellas', request.numeroEstrellas.toString());
+    formData.append('peliculaId', request.peliculaId);
+    formData.append('usuarioId', request.usuarioId);
+
     const response = await fetch(`${baseURL}/resenas/crearResena`, {
         method: 'POST',
-        body: JSON.stringify(request),
+        body: formData,
         headers: {
             'Accept': 'application/json',
         },
     });
+
     if (response.ok) {
         const resena: NuevaResena = await response.json();
         return {ok: true, data: resena};
@@ -35,13 +42,17 @@ export async function crearResena(request: NuevaResena): Promise<APIResult<Nueva
 }
 
 export async function editarResena(id: string, request: ResenaEspecifica): Promise<APIResult<ResenaEspecifica>> {
-    const response = await fetch(`${baseURL}/resenas/actualizarResena/${id}`, {
+    const params = new URLSearchParams();
+    params.append('comentario', request.comentario);
+    params.append('numeroEstrellas', request.numeroEstrellas.toString());
+
+    const response = await fetch(`${baseURL}/resenas/actualizarResena/${id}?${params.toString()}`, {
         method: 'PUT',
-        body: JSON.stringify(request),
         headers: {
             'Accept': 'application/json',
         },
     });
+
     if (response.ok) {
         const resena: ResenaEspecifica = await response.json();
         return {ok: true, data: resena};
@@ -50,7 +61,7 @@ export async function editarResena(id: string, request: ResenaEspecifica): Promi
     return {ok: false, error: error};
 }
 
-export async function borrarResena(id: string): Promise<APIResult<ResenaEspecifica>> {
+export async function borrarResena(id: string): Promise<APIResult<string>> {
     const response = await fetch(`${baseURL}/resenas/borrarResena/${id}`, {
         method: 'DELETE',
         headers: {
@@ -58,8 +69,7 @@ export async function borrarResena(id: string): Promise<APIResult<ResenaEspecifi
         },
     });
     if (response.ok) {
-        const resena: ResenaEspecifica = await response.json();
-        return {ok: true, data: resena};
+        return {ok: true, data: id};
     }
     const error: APIError = await response.json();
     return {ok: false, error: error};

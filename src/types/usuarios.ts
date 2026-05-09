@@ -22,3 +22,8 @@ export type Usuarios = {
     email: string,
     password: string
 }
+
+export type usuarioResena = {
+    id: string,
+    nombre: string
+}

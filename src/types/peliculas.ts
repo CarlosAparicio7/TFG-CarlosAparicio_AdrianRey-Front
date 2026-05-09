@@ -28,3 +28,7 @@ export type NuevaPelicula = {
     valoracion: number,
     urlVideo: string
 }
+
+export type PeliculaResena = {
+    id: string,
+}
