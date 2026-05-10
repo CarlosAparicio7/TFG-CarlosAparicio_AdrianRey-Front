@@ -1,7 +1,8 @@
-import { Box, Typography, TextField, Button, InputAdornment, Paper, Alert, Collapse } from '@mui/material';
-import { MovieFilter, Email, Lock } from '@mui/icons-material';
-import { Link, useNavigate } from 'react-router-dom';
+import { Email, Lock, MovieFilter } from '@mui/icons-material';
+import { Alert, Box, Button, Collapse, InputAdornment, Paper, TextField, Typography } from '@mui/material';
 import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useTheme } from '../context/ThemeContext';
 import { accesoLogin } from '../service/usuariosService';
 
 type LoginUsuario = {
@@ -19,6 +20,8 @@ export default function LoginPage() {
 
     const [useLoginAccess, setLoginAccess] = useState<LoginUsuario>(loginDefault);
     const [useErrorMsg, setErrorMsg] = useState<string>('');
+
+    const { theme } = useTheme();
 
     const handleLogin = () => {
         setErrorMsg('');
@@ -39,7 +42,7 @@ export default function LoginPage() {
     };
 
     return (
-        <Box sx={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'linear-gradient(90deg, #005f8a 30%, #f06b06 100%)', backgroundAttachment: 'fixed', p: 2 }}>
+        <Box sx={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: theme === 'dark' ? '#0f172a' : 'linear-gradient(90deg, #005f8a 30%, #f06b06 100%)', backgroundAttachment: 'fixed', p: 2 }}>
             <Paper elevation={0} sx={{ maxWidth: 450, width: '100%', borderRadius: 8, bgcolor: 'rgba(255, 255, 255, 0.25)', backdropFilter: 'blur(25px)', p: { xs: 4, md: 6 }, border: '1px solid rgba(255, 255, 255, 0.4)', boxShadow: '0 20px 50px rgba(0, 0, 0, 0.3)' }}>
                 
                 <Box component={Link} to="/" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1.5, mb: 4, color: 'inherit', textDecoration: 'none' }}>
