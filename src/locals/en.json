@@ -46,5 +46,17 @@
     "textLoadingUploadingContent": "UPLOADING CONTENT...",
     "text%Completed": "% COMPLETED",
     "textImagePoster": "Image Poster",
-    "buttonPublishFilm": "Upload Film"
+    "buttonPublishFilm": "Upload Film",
+    "titleSetting": "Setting",
+    "textThemeSwitch": "Theme Switch",
+    "textSelectExperienceMode": "Select your preferred experience mode",
+    "textLanguageSwitch": "Language Switch",
+    "titlePageNotFound": "Page or film not found",
+    "descriptionPageNotFound": "We're sorry, the content you're looking for is not available in our current listings.",
+    "buttonBackPageNotFound": "Back to Home",
+    "titleLogin": "Sign In",
+    "textPlaceholderEmail": "Email Address",
+    "textPlaceholderPassword": "Password",
+    "buttonEnterLogin": "Enter",
+    "textNotAccountLogin": "Don't have an account yet?"
 }

@@ -2,6 +2,7 @@ import { Email, Lock, MovieFilter } from '@mui/icons-material';
 import { Alert, Box, Button, Collapse, InputAdornment, Paper, TextField, Typography } from '@mui/material';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useLanguage } from '../context/LanguageContext';
 import { useTheme } from '../context/ThemeContext';
 import { accesoLogin } from '../service/usuariosService';
 
@@ -22,6 +23,8 @@ export default function LoginPage() {
     const [useErrorMsg, setErrorMsg] = useState<string>('');
 
     const { theme } = useTheme();
+
+    const { t } = useLanguage();
 
     const handleLogin = () => {
         setErrorMsg('');
@@ -51,8 +54,8 @@ export default function LoginPage() {
                 </Box>
 
                 <Box sx={{ mb: 4, textAlign: 'center' }}>
-                    <Typography variant="h3" sx={{ fontWeight: 900, color: '#fff', mb: 1, letterSpacing: -1.5, fontSize: { xs: '2.2rem', md: '2.8rem' }, textShadow: '0px 8px 20px rgba(0,0,0,0.3)' }}>Iniciar Sesión</Typography>
-                    <Typography variant="body1" sx={{ color: '#ffd1b3', fontWeight: 800, letterSpacing: 2, textTransform: 'uppercase', fontSize: '0.85rem' }}>DESCUBRE • CALIFICA • DISFRUTA</Typography>
+                    <Typography variant="h3" sx={{ fontWeight: 900, color: '#fff', mb: 1, letterSpacing: -1.5, fontSize: { xs: '2.2rem', md: '2.8rem' }, textShadow: '0px 8px 20px rgba(0,0,0,0.3)' }}>{t("titleLogin")}</Typography>
+                    <Typography variant="body1" sx={{ color: '#ffd1b3', fontWeight: 800, letterSpacing: 2, textTransform: 'uppercase', fontSize: '0.85rem' }}>{t("sloganHome")}</Typography>
                 </Box>
 
                 <Collapse in={!!useErrorMsg} sx={{ mb: 3 }}>
@@ -74,7 +77,7 @@ export default function LoginPage() {
 
                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
                     <TextField 
-                        placeholder="Correo Electrónico" 
+                        placeholder={t("textPlaceholderEmail")} 
                         fullWidth 
                         value={useLoginAccess.email}
                         onChange={(e) => setLoginAccess({ ...useLoginAccess, email: e.target.value })}
@@ -88,7 +91,7 @@ export default function LoginPage() {
                     />
 
                     <TextField 
-                        placeholder="Contraseña" 
+                        placeholder={t("textPlaceholderPassword")}
                         type="password" 
                         fullWidth 
                         value={useLoginAccess.password}
@@ -109,11 +112,11 @@ export default function LoginPage() {
                     fullWidth 
                     sx={{ mt: 5, bgcolor: '#005f8a', py: 2, borderRadius: 4, fontWeight: 900, textTransform: 'none', fontSize: '1.2rem', boxShadow: '0 12px 24px rgba(0,0,0,0.2)', transition: 'all 0.3s ease', '&:hover': { bgcolor: '#f06b06', transform: 'translateY(-2px)' } }}
                 >
-                    Entrar
+                    {t("buttonEnterLogin")}
                 </Button>
 
                 <Typography variant="body1" sx={{ color: '#fff', mt: 4, textAlign: 'center', fontSize: '1.05rem', fontWeight: 600 }}>
-                    ¿Aún no tienes cuenta? 
+                    {t("textNotAccountLogin")} 
                     <Button 
                         component={Link} 
                         to="/register" 

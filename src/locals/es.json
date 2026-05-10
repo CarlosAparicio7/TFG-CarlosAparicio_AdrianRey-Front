@@ -46,5 +46,17 @@
     "textLoadingUploadingContent": "PUBLICANDO CONTENIDO...",
     "text%Completed": "% COMPLETADO",
     "textImagePoster": "Imagen de Portada",
-    "buttonPublishFilm": "Publicar Película"
+    "buttonPublishFilm": "Publicar Película",
+    "titleSetting": "Configuración",
+    "textThemeSwitch": "Cambio de Tema",
+    "textSelectExperienceMode": "Selecciona el modo que prefieras para tu experiencia",
+    "textLanguageSwitch": "Cambio de Idioma",
+    "titlePageNotFound": "Página o película no encontrada",
+    "descriptionPageNotFound": "Lo sentimos, el contenido que buscas no está disponible en nuestra cartelera actual.",
+    "buttonBackPageNotFound": "Volver al Inicio",
+    "titleLogin": "Iniciar Sesión",
+    "textPlaceholderEmail": "Correo Electrónico",
+    "textPlaceholderPassword": "Contraseña",
+    "buttonEnterLogin": "Entrar",
+    "textNotAccountLogin": "¿Aún no tienes cuenta?"
 }
