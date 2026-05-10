@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
+import { useLanguage } from "../context/LanguageContext";
 import { useTheme } from "../context/ThemeContext";
 import { crearPelicula } from "../service/peliculasService";
 
@@ -36,6 +37,8 @@ export default function SubirPelicula() {
     const [archivoBinario, setArchivoBinario] = useState<File | null>(null);
 
     const { theme } = useTheme();
+
+    const { t } = useLanguage();
 
     useEffect(() => {
         const user = localStorage.getItem('usuario');
@@ -156,11 +159,11 @@ export default function SubirPelicula() {
                     {loading ? (
                         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', py: 12, gap: 4 }}>
                             <Typography variant="h4" sx={{ fontWeight: 900, color: '#005f8a', textAlign: 'center' }}>
-                                PUBLICANDO CONTENIDO...
+                                {t("textLoadingUploadingContent")}
                             </Typography>
                             <Box sx={{ width: '100%', maxWidth: '700px' }}>
                                 <LinearProgress variant="determinate" value={progress} sx={{ height: 16, borderRadius: 8, bgcolor: 'rgba(0,0,0,0.05)', '& .MuiLinearProgress-bar': { borderRadius: 8, background: 'linear-gradient(90deg, #005f8a, #f06b06)' } }} />
-                                <Typography sx={{ color: '#005f8a', mt: 3, textAlign: 'center', fontWeight: 900, fontSize: '1.2rem' }}>{Math.round(progress)}% COMPLETADO</Typography>
+                                <Typography sx={{ color: '#005f8a', mt: 3, textAlign: 'center', fontWeight: 900, fontSize: '1.2rem' }}>{Math.round(progress)}{t("text%Completed")}</Typography>
                             </Box>
                         </Box>
                     ) : (
@@ -174,26 +177,26 @@ export default function SubirPelicula() {
                             <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 0.5, mb: 4 }}>
                                 <Box sx={{ display: 'flex' }}>
                                     <Button component={Link} to={"/"} variant="contained" fullWidth sx={{ bgcolor: '#005f8a', borderRadius: 3, textTransform: 'none', fontWeight: 900, py: 1.8, fontSize: '1.1rem', marginRight: 40, '&:hover': { bgcolor: '#f06b06' } }}>
-                                        Volver
+                                        {t("buttonBack")}
                                     </Button>
                                     <MovieFilter sx={{ color: '#005f8a', fontSize: 50, marginRight: 55}} />
                                 </Box>
                                 <Typography variant="h3" sx={{ fontWeight: 900, letterSpacing: -2, color: '#005f8a', fontSize: { xs: '2.2rem', md: '3.5rem' } }}>
-                                    Subir Película
+                                    {t("buttonUploadFilm")}
                                 </Typography>
                                 <Typography variant="body1" sx={{ color: '#f06b06', mt: 0.5, fontWeight: 800, fontSize: '1.1rem', letterSpacing: 2 }}>
-                                    CENTRO DE CONTROL
+                                    {t("descriptionEditFilm")}
                                 </Typography>
                             </Box>
 
                             <Grid container spacing={3}>
                                 <Grid size={{ xs: 12, md: 6 }}>
                                     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2.5 }}>
-                                        <TextField required fullWidth label="Nombre de la Película" variant="outlined" onChange={crearNombre} sx={{ bgcolor: '#fff', borderRadius: 3, '& .MuiOutlinedInput-root': { borderRadius: 3, fontWeight: 600 } }} />
-                                        <TextField required fullWidth label="Director" variant="outlined" onChange={crearDirector} sx={{ bgcolor: '#fff', borderRadius: 3, '& .MuiOutlinedInput-root': { borderRadius: 3, fontWeight: 600 } }} />
-                                        <TextField required fullWidth label="Géneros" variant="outlined" placeholder="Acción, Drama..." onChange={crearGenero} sx={{ bgcolor: '#fff', borderRadius: 3, '& .MuiOutlinedInput-root': { borderRadius: 3, fontWeight: 600 } }} />
-                                        <TextField required fullWidth label="Descripción" variant="outlined" multiline rows={5} onChange={crearDescripcion} sx={{ bgcolor: '#fff', borderRadius: 3, '& .MuiOutlinedInput-root': { borderRadius: 3, fontWeight: 600 } }} />
-                                        <TextField required fullWidth label="Valoración" variant="outlined" placeholder="1-10" type="number" onChange={crearValoracion} slotProps={{ htmlInput: { min: 1, max: 10, step: 0.1 } }} sx={{ bgcolor: '#fff', borderRadius: 3, '& .MuiOutlinedInput-root': { borderRadius: 3, fontWeight: 600 } }} />
+                                        <TextField required fullWidth label={t("textLabelName")} variant="outlined" onChange={crearNombre} sx={{ bgcolor: '#fff', borderRadius: 3, '& .MuiOutlinedInput-root': { borderRadius: 3, fontWeight: 600 } }} />
+                                        <TextField required fullWidth label={t("textLabelFilmmaker")} variant="outlined" onChange={crearDirector} sx={{ bgcolor: '#fff', borderRadius: 3, '& .MuiOutlinedInput-root': { borderRadius: 3, fontWeight: 600 } }} />
+                                        <TextField required fullWidth label={("textLabelGenders")} variant="outlined" placeholder="Acción, Drama..." onChange={crearGenero} sx={{ bgcolor: '#fff', borderRadius: 3, '& .MuiOutlinedInput-root': { borderRadius: 3, fontWeight: 600 } }} />
+                                        <TextField required fullWidth label={t("textLabelDescription")} variant="outlined" multiline rows={5} onChange={crearDescripcion} sx={{ bgcolor: '#fff', borderRadius: 3, '& .MuiOutlinedInput-root': { borderRadius: 3, fontWeight: 600 } }} />
+                                        <TextField required fullWidth label={t("textLabelRating")} variant="outlined" placeholder="1-10" type="number" onChange={crearValoracion} slotProps={{ htmlInput: { min: 1, max: 10, step: 0.1 } }} sx={{ bgcolor: '#fff', borderRadius: 3, '& .MuiOutlinedInput-root': { borderRadius: 3, fontWeight: 600 } }} />
                                     </Box>
                                 </Grid>
 
@@ -203,13 +206,13 @@ export default function SubirPelicula() {
                                             {addPelicula.portada && !addPelicula.portada.startsWith('http') ? (
                                                 <Box sx={{ bgcolor: '#005f8a', p: 2, borderRadius: 3, display: 'flex', alignItems: 'center', gap: 1, color: '#fff' }}>
                                                     <CheckCircle />
-                                                    <Typography sx={{ fontWeight: 900, fontSize: '0.85rem' }}>IMAGEN LISTA</Typography>
+                                                    <Typography sx={{ fontWeight: 900, fontSize: '0.85rem' }}>{t("textImageReady")}</Typography>
                                                     <IconButton size="small" onClick={eliminarPortada} sx={{ color: '#fff', ml: 1 }}><Close fontSize="small" /></IconButton>
                                                 </Box>
                                             ) : (
                                                 <Button component="label" sx={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', textTransform: 'none', color: '#005f8a', '&:hover': { background: 'transparent' }, cursor: addPelicula.portada.startsWith('http') ? 'default' : 'pointer' }} disabled={addPelicula.portada.startsWith('http')}>
                                                     <AddPhotoAlternate sx={{ fontSize: 40, mb: 1 }} />
-                                                    <Typography variant="h6" sx={{ fontWeight: 900, fontSize: '1.1rem' }}>Imagen de Portada</Typography>
+                                                    <Typography variant="h6" sx={{ fontWeight: 900, fontSize: '1.1rem' }}>{t("textImagePoster")}</Typography>
                                                     <Typography variant="caption" sx={{ fontWeight: 600 }}>JPG, PNG o WEBP</Typography>
                                                     <Input type="file" onChange={crearPortada} slotProps={{ input: { accept: 'image/*' } }} sx={{ display: 'none' }} />
                                                 </Button>
@@ -222,26 +225,26 @@ export default function SubirPelicula() {
                                             {archivoBinario ? (
                                                 <Box sx={{ bgcolor: '#f06b06', p: 2, borderRadius: 3, display: 'flex', alignItems: 'center', gap: 1, color: '#fff' }}>
                                                     <Movie />
-                                                    <Typography sx={{ fontWeight: 900, fontSize: '0.85rem' }}>VIDEO LISTO</Typography>
+                                                    <Typography sx={{ fontWeight: 900, fontSize: '0.85rem' }}>{t("textVideoReady")}</Typography>
                                                     <IconButton size="small" onClick={eliminarVideo} sx={{ color: '#fff', ml: 1 }}><Close fontSize="small" /></IconButton>
                                                 </Box>
                                             ) : (
                                                 <Button component="label" sx={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', textTransform: 'none', color: '#f06b06', '&:hover': { background: 'transparent' } }} disabled={!!addPelicula.urlVideo && !archivoBinario}>
                                                     <Movie sx={{ fontSize: 40, mb: 1 }} />
-                                                    <Typography variant="h6" sx={{ fontWeight: 900, fontSize: '1.1rem' }}>Archivo de Video</Typography>
-                                                    <Typography variant="caption" sx={{ fontWeight: 600 }}>Sube el metraje final</Typography>
+                                                    <Typography variant="h6" sx={{ fontWeight: 900, fontSize: '1.1rem' }}>{t("textFilmFile")}</Typography>
+                                                    <Typography variant="caption" sx={{ fontWeight: 600 }}>{t("textUploadFinalFootage")}</Typography>
                                                     <Input type="file" onChange={crearUrlVideo} slotProps={{ input: { accept: 'video/*' } }} sx={{ display: 'none' }} />
                                                 </Button>
                                             )}
                                         </Box>
-                                        <TextField fullWidth label="Enlace URL de Video" variant="outlined" placeholder="https://..." value={archivoBinario ? "" : addPelicula.urlVideo} onChange={crearUrlVideoManual} disabled={!!archivoBinario} sx={{ bgcolor: '#fff', borderRadius: 3, '& .MuiOutlinedInput-root': { borderRadius: 3, fontWeight: 600 } }} />
+                                        <TextField fullWidth label={t("textUrlFilm")} variant="outlined" placeholder="https://..." value={archivoBinario ? "" : addPelicula.urlVideo} onChange={crearUrlVideoManual} disabled={!!archivoBinario} sx={{ bgcolor: '#fff', borderRadius: 3, '& .MuiOutlinedInput-root': { borderRadius: 3, fontWeight: 600 } }} />
                                     </Box>
                                 </Grid>
                             </Grid>
 
                             <Box sx={{ mt: 5, display: 'flex', justifyContent: 'center' }}>
                                 <Button variant="contained" onClick={botonPublicarPelicula} startIcon={<CloudUpload />} sx={{ bgcolor: '#005f8a', color: '#fff', borderRadius: 4, textTransform: 'none', fontWeight: 900, py: 2, px: 10, fontSize: '1.2rem', '&:hover': { bgcolor: '#004a6d', transform: 'translateY(-3px)' } }}>
-                                    Publicar Película
+                                    {t("buttonPublishFilm")}
                                 </Button>
                             </Box>
                         </>

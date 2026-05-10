@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
+import { useLanguage } from "../context/LanguageContext";
 import { useTheme } from "../context/ThemeContext";
 import { borrarPelicula, getOnePelicula } from "../service/peliculasService";
 import { crearResena, mostrarResenas } from "../service/resenasService";
@@ -50,6 +51,8 @@ export default function PeliculaEspecifica() {
     const datosUsuarioLogueado = usuarioEnStorage ? JSON.parse(usuarioEnStorage) : null;
 
     const { theme } = useTheme();
+
+    const { t } = useLanguage();
 
     const cargarResenas = () => {
         mostrarResenas().then(response => {
@@ -135,14 +138,14 @@ export default function PeliculaEspecifica() {
                             id="error-message"
                             sx={{ mb: 4, mx: 'auto', borderRadius: 3, border: '1px solid rgba(255, 255, 255, 0.4)', backgroundColor: 'rgba(255, 255, 255, 0.15)', padding: '10px 20px', fontSize: '1rem', color: '#f70505', textAlign: 'center', width: '90%', maxWidth: '1100px', boxSizing: 'border-box', backdropFilter: 'blur(10px)', fontWeight: 800, boxShadow: '0 8px 32px rgba(0, 0, 0, 0.2)', textTransform: 'uppercase', letterSpacing: 1 }}
                         >
-                            Vaya, ha ocurrido un error. En este momento estamos trabajando en ello: {useErrorMsg}
+                            {t("textError")} {useErrorMsg}
                         </Box>
                     ) : (
                         <>
                             <Box sx={{ mb: { xs: 4, md: 6 }, textAlign: 'center' }}>
                                 <Box sx={{ display: 'flex' }}>
                                     <Button component={Link} to={"/"} variant="contained" sx={{ width: '200px', height: '60px', bgcolor: '#005f8a', borderRadius: 3, textTransform: 'none', fontWeight: 900, py: 1.8, fontSize: '1.1rem', marginRight: 45, '&:hover': { bgcolor: '#f06b06' } }}>
-                                        Volver
+                                        {t("buttonBack")}
                                     </Button>
                                     <Typography variant="h2" sx={{ fontWeight: 900, letterSpacing: -3, fontSize: { xs: '2.5rem', sm: '3.5rem', md: '4.5rem' }, color: '#fff', textShadow: '0px 10px 20px rgba(0,0,0,0.3)' }}>
                                         {usePeliculaEspecifica?.nombre}
@@ -156,7 +159,7 @@ export default function PeliculaEspecifica() {
                                         <Card sx={{ borderRadius: 5, background: 'linear-gradient(135deg, #007bb3 0%, #f18a3a 100%)', border: '1px solid rgba(255, 255, 255, 0.4)', boxShadow: '0 15px 35px rgba(0,0,0,0.3)', p: 3, minHeight: '600px', display: 'flex', flexDirection: 'column' }}>
                                             <CardContent sx={{ flexGrow: 1, p: 0 }}>
                                                 <Typography variant="h4" sx={{ color: '#e0f2fe', fontWeight: 900, mb: 4, borderBottom: '2px solid rgba(255,255,255,0.3)', pb: 2 }}>
-                                                    SINOPSIS
+                                                    {t("titleDescriptionWatchFilm")}
                                                 </Typography>
                                                 <Typography variant="body1" sx={{ color: '#fff', lineHeight: 2.1, fontSize: '1.2rem', fontWeight: 500, textAlign: 'justify' }}>
                                                     {usePeliculaEspecifica?.descripcion}
@@ -164,21 +167,21 @@ export default function PeliculaEspecifica() {
                                             </CardContent>
                                             
                                             <Box sx={{ bgcolor: 'rgba(0,0,0,0.2)', p: 3, borderRadius: 4, mt: 4 }}>
-                                                <Typography variant="h6" sx={{ color: '#ffd1b3', fontWeight: 900, mb: 2, fontSize: '0.9rem', letterSpacing: 1.5 }}>DETALLES TÉCNICOS</Typography>
+                                                <Typography variant="h6" sx={{ color: '#ffd1b3', fontWeight: 900, mb: 2, fontSize: '0.9rem', letterSpacing: 1.5 }}>{t("titleTechnicalDetailsWatchFilm")}</Typography>
                                                 <Typography variant="subtitle1" sx={{ color: '#fff', fontWeight: 700, mb: 1, display: 'flex', justifyContent: 'space-between' }}>
-                                                    GÉNERO <span style={{ fontWeight: 900, color: '#ffd1b3' }}>{usePeliculaEspecifica?.genero}</span>
+                                                    {t("textGenderWatchFilm")} <span style={{ fontWeight: 900, color: '#ffd1b3' }}>{usePeliculaEspecifica?.genero}</span>
                                                 </Typography>
                                                 <Typography variant="subtitle1" sx={{ color: '#fff', fontWeight: 700, display: 'flex', justifyContent: 'space-between' }}>
-                                                    DIRECTOR <span style={{ fontWeight: 900, color: '#ffd1b3' }}>{usePeliculaEspecifica?.director}</span>
+                                                    {t("textFilmmakerWatchFilm")} <span style={{ fontWeight: 900, color: '#ffd1b3' }}>{usePeliculaEspecifica?.director}</span>
                                                 </Typography>
                                             </Box>
                                         </Card>
 
                                         <Box sx={{ p: 4, borderRadius: 5, bgcolor: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', backdropFilter: 'blur(10px)' }}>
-                                            <Typography variant="h6" sx={{ color: '#fff', fontWeight: 900, mb: 3, textAlign: 'center' }}>VALORACIONES</Typography>
+                                            <Typography variant="h6" sx={{ color: '#fff', fontWeight: 900, mb: 3, textAlign: 'center' }}>{t("titleRatingsWatchFilm")}</Typography>
                                             
                                             <Box sx={{ mb: 4 }}>
-                                                <Typography variant="overline" sx={{ color: '#ffd1b3', fontWeight: 900, fontSize: '0.9rem' }}>CRÍTICA OFICIAL</Typography>
+                                                <Typography variant="overline" sx={{ color: '#ffd1b3', fontWeight: 900, fontSize: '0.9rem' }}>{t("textCriticReviewWatchFilm")}</Typography>
                                                 <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                                                     <Rating value={(usePeliculaEspecifica?.valoracion ?? 0) / 2} precision={0.1} readOnly sx={{ '& .MuiRating-iconFilled': { color: '#f06b06' } }} />
                                                     <Typography variant="h4" sx={{ color: '#fff', fontWeight: 900 }}>{usePeliculaEspecifica?.valoracion}</Typography>
@@ -186,7 +189,7 @@ export default function PeliculaEspecifica() {
                                             </Box>
 
                                             <Box>
-                                                <Typography variant="overline" sx={{ color: '#e0f2fe', fontWeight: 900, fontSize: '0.9rem' }}>COMUNIDAD</Typography>
+                                                <Typography variant="overline" sx={{ color: '#e0f2fe', fontWeight: 900, fontSize: '0.9rem' }}>{t("textCommunityWatchFilm")}</Typography>
                                                 <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                                                     <Rating value={4.2 /2} precision={0.1} readOnly sx={{ '& .MuiRating-iconFilled': { color: '#00a8e8' } }} />
                                                     <Typography variant="h4" sx={{ color: '#fff', fontWeight: 900 }}>4.2</Typography>
@@ -219,17 +222,17 @@ export default function PeliculaEspecifica() {
                                         ) : (
                                             <Box sx={{ textAlign: 'center', color: '#fff' }}>
                                                 <CircularProgress color="inherit" sx={{ mb: 2 }} />
-                                                <Typography variant="h6" sx={{ fontWeight: 900 }}>Cargando Pelicula...</Typography>
+                                                <Typography variant="h6" sx={{ fontWeight: 900 }}>{t("textLoadingFilmWatchFilm")}</Typography>
                                             </Box>
                                         )}
                                         </Paper>
                                         {datosUsuarioLogueado && datosUsuarioLogueado.rol === 'ADMIN' && (
                                         <Box sx={{ display: 'flex', justifyContent: 'center', gap: 3, mt: 2 }}>
                                             <Button component={Link} to={"/editarPelicula/" + usePeliculaEspecifica?.id} variant="contained" sx={{ bgcolor: '#005f8a', borderRadius: 3, textTransform: 'none', fontWeight: 900, py: 1.8, fontSize: '1.1rem', width: '100%', maxWidth: 300, height: 60, '&:hover': { bgcolor: '#004a6d' } }}>
-                                                Editar Pelicula
+                                                {t("buttonEditFilm")}
                                             </Button>
                                             <Button variant="contained" color="error" startIcon={<DeleteForever />} onClick={() => usePeliculaEspecifica && handleDeletePelicula(usePeliculaEspecifica.id)} sx={{ borderRadius: 3, textTransform: 'none', fontWeight: 900, py: 1.8, fontSize: '1.1rem', width: '100%', maxWidth: 300, height: 60 }}>
-                                                Eliminar Película
+                                                {t("buttonDeleteFilm")}
                                             </Button>
                                         </Box>
                                         )}
@@ -237,7 +240,7 @@ export default function PeliculaEspecifica() {
                                             <Grid size={{ xs: 12, md: 6 }}>
                                                 <Box sx={{ p: 4, borderRadius: 5, bgcolor: 'rgba(255,255,255,0.95)', boxShadow: '0 15px 40px rgba(0,0,0,0.3)', height: '100%', boxSizing: 'border-box' }}>
                                                     <Box sx={{ mb: 3, borderBottom: '2px solid #e2e8f0', pb: 2 }}>
-                                                        <Typography variant="h5" sx={{ color: '#005f8a', fontWeight: 900, letterSpacing: -1 }}>TU RESEÑA</Typography>
+                                                        <Typography variant="h5" sx={{ color: '#005f8a', fontWeight: 900, letterSpacing: -1 }}>{t("titleReviewWatchFilm")}</Typography>
                                                         <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mt: 1 }}>
                                                             <Typography component="input" type="number" value={notaUsuario} onChange={(e) => setNotaUsuario(Number(e.target.value))} 
                                                                 sx={{ fontWeight: 800, color: '#f06b06', bgcolor: 'rgba(0, 0, 0, 0.05)', border: '1px solid rgba(240, 107, 6, 0.3)', borderRadius: 1, outline: 'none', width: '60px', fontSize: '1.2rem', textAlign: 'center', p: '4px 8px', '&:focus': { borderColor: '#f06b06', bgcolor: 'rgba(255, 255, 255, 0.8)' } }} 
@@ -245,7 +248,7 @@ export default function PeliculaEspecifica() {
                                                         </Box>
                                                     </Box>
                                                     <TextField 
-                                                        label="Comparte tu opinión..." 
+                                                        label={t("textShareOpinionWatchFilm")} 
                                                         multiline 
                                                         rows={6}
                                                         fullWidth
@@ -259,7 +262,7 @@ export default function PeliculaEspecifica() {
                                                     />
                                                     <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2 }}>
                                                         <Button onClick={handlePublicarResena} variant="contained" sx={{ bgcolor: '#005f8a', fontWeight: 900, px: 4, py: 1.5, borderRadius: 3, fontSize: '0.9rem', boxShadow: '0 10px 20px rgba(0,95,138,0.3)', '&:hover': { bgcolor: '#003a54' } }}>
-                                                            PUBLICAR
+                                                            {t("buttonPostWatchFilm")}
                                                         </Button>
                                                     </Box>
                                                 </Box>
@@ -267,7 +270,7 @@ export default function PeliculaEspecifica() {
 
                                             <Grid size={{ xs: 12, md: 6 }}>
                                                 <Box sx={{ p: 4, borderRadius: 5, bgcolor: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.2)', backdropFilter: 'blur(10px)', boxShadow: '0 15px 40px rgba(0,0,0,0.3)', height: '100%', boxSizing: 'border-box', display: 'flex', flexDirection: 'column' }}>
-                                                    <Typography variant="h5" sx={{ color: '#fff', fontWeight: 900, mb: 3, borderBottom: '2px solid rgba(255,255,255,0.2)', pb: 2 }}>COMUNIDAD</Typography>
+                                                    <Typography variant="h5" sx={{ color: '#fff', fontWeight: 900, mb: 3, borderBottom: '2px solid rgba(255,255,255,0.2)', pb: 2 }}>{t("textCommunityWatchFilm")}</Typography>
 
                                                     <Box sx={{ flexGrow: 1, overflowY: 'auto', pr: 1, maxHeight: '300px', '&::-webkit-scrollbar': { width: '6px' }, '&::-webkit-scrollbar-thumb': { backgroundColor: 'rgba(255,255,255,0.3)', borderRadius: '10px' } }}>
                                                         {listaResenas.map(resena => 

@@ -1,10 +1,13 @@
 import { Email, Facebook, Instagram, Twitter } from '@mui/icons-material';
 import { Box, Container, Divider, Grid, IconButton, Typography } from '@mui/material';
 import { Link } from "react-router-dom";
+import { useLanguage } from '../context/LanguageContext';
 import { useTheme } from '../context/ThemeContext';
 
 export default function Footer() {
     const { theme } = useTheme();
+
+    const { t } = useLanguage();
     
     return (
         <>
@@ -35,10 +38,10 @@ export default function Footer() {
 
                         <Grid size={{ xs: 12, md: 4 }}>
                             <Typography variant="h6" sx={{ fontWeight: 800, mb: 1, color: '#f06b06', fontSize: { xs: '1.2rem', md: '1.4rem' } }}>
-                                ÚNETE A LA REVOLUCIÓN
+                                {t("textFooter")}
                             </Typography>
                             <Typography variant="body1" sx={{ color: '#fff', mb: 1.5, px: 1, fontSize: '1.05rem', fontWeight: 500, lineHeight: 1.3 }}>
-                                Sube tus creaciones y comparte talento sin filtros.
+                                {t("descriptionFooter")}
                             </Typography>
                             <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1 }}>
                                 <Email sx={{ color: '#f06b06', fontSize: 22 }} />
@@ -48,7 +51,7 @@ export default function Footer() {
 
                         <Grid size={{ xs: 12, md: 4 }}>
                             <Typography variant="h6" sx={{ fontWeight: 800, mb: 1.5, color: '#f06b06', fontSize: { xs: '1.2rem', md: '1.4rem' } }}>
-                                COMUNIDAD
+                                {t("textFooter2")}
                             </Typography>
                             <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2 }}>
                                 <IconButton sx={{ color: 'white', bgcolor: 'rgba(255,255,255,0.05)', p: 1, '&:hover': { bgcolor: '#f06b06' } }}>
@@ -69,7 +72,7 @@ export default function Footer() {
 
                     <Box sx={{ textAlign: 'center' }}>
                         <Typography variant="caption" sx={{ color: '#f06b06', fontWeight: 900, letterSpacing: 2, fontSize: '0.85rem' }}>
-                            INFOCINE&MAS — TU CINE, TU COMUNIDAD — 2026
+                            {t("textBackFooter")}
                         </Typography>
                     </Box>
                 </Container>

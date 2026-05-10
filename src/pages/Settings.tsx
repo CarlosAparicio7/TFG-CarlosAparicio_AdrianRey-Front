@@ -1,5 +1,6 @@
 import { Box, Card, CardContent, Container, Grid, Paper, Typography } from "@mui/material";
 import Header from "../components/Header";
+import LanguageSwitcher from "../components/LanguageSwitcher";
 import ThemeToggle from "../components/ThemeToggle";
 import { useTheme } from "../context/ThemeContext";
 
@@ -25,6 +26,15 @@ export default function Settings() {
                                         Cambio de apariencia
                                     </Typography>
                                     <ThemeToggle/>
+                                </CardContent>
+                            </Card>
+
+                            <Card sx={{ width: '100%', display: 'flex', flexDirection: 'column', borderRadius: 5, background: 'linear-gradient(135deg, #007bb3 0%, #f18a3a 100%)', border: '1px solid rgba(255, 255, 255, 0.4)', boxShadow: '0 15px 35px rgba(0,0,0,0.3)', transition: 'all 0.4s ease', '&:hover': { transform: 'translateY(-12px)', boxShadow: '0 25px 50px rgba(0,0,0,0.4)', border: '1px solid #fff' } }}>
+                                <CardContent>
+                                    <Typography variant="h6" noWrap sx={{ fontWeight: 900, mb: 0.5, color: '#e0f2fe', fontSize: '1.4rem' }}>
+                                        Cambio de idioma
+                                    </Typography>
+                                    <LanguageSwitcher/>
                                 </CardContent>
                             </Card>
                         </Grid>

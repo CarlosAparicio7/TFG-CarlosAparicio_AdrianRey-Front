@@ -22,7 +22,6 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
     const [theme, setTheme] = useState<Theme>(storedTheme);
 
     const toggleTheme = () => {
-        console.log("Cambiando tema...");
         setTheme((prev) => (prev === "light" ? "dark" : "light"));
     };
 
@@ -50,4 +49,3 @@ export function useTheme() {
     }
     return ctx;
 }
-console.log("CARGANDO PROVIDER")

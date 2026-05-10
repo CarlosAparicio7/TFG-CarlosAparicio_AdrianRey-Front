@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
+import { useLanguage } from "../context/LanguageContext";
 import { useTheme } from "../context/ThemeContext";
 import { getAllPeliculas } from "../service/peliculasService";
 
@@ -29,6 +30,8 @@ export default function Home() {
     const [filtroEspecial, setFiltroEspecial] = useState<'todas' | 'ultimas' | 'top'>('todas');
 
     const { theme } = useTheme();
+
+    const { t } = useLanguage();
 
     useEffect(()=>{
         getAllPeliculas().then(response =>{
@@ -96,35 +99,35 @@ export default function Home() {
                     <Box sx={{ mb: { xs: 4, md: 8 }, textAlign: 'center' }}>
                         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', mb: 4, position: 'relative', minHeight: '100px' }}>
                             <Typography variant="h2" sx={{ fontWeight: 900, letterSpacing: -3, fontSize: { xs: '2.5rem', sm: '3.5rem', md: '4.5rem' }, color: '#fff', textShadow: '0px 10px 20px rgba(0,0,0,0.3)' }}>
-                                Cartelera de Películas
+                                {t("titleHome")}
                             </Typography>
                             <Button component={Link} to={"/subirPelicula"} variant="contained" sx={{ position: 'absolute', right: 0, bgcolor: '#005f8a', borderRadius: 3, textTransform: 'none', fontWeight: 900, py: 2.5, px: 4, fontSize: '1.2rem', '&:hover': { bgcolor: '#004a6d' } }}>
-                                Subir Película
+                                {t("buttonUploadFilm")}
                             </Button>
                         </Box>
                         <Box sx={{ mb: 3, display: 'flex', justifyContent: 'center', gap: 3, flexWrap: 'wrap', borderRadius: 4 }}>
-                            <TextField size="medium" placeholder={tipoBusqueda === 'nombre' ? "Buscar película..." : "Buscar director..."} value={filtroTexto}
+                            <TextField size="medium" placeholder={tipoBusqueda === 'nombre' ? t("textSearchFilm") : t("textSearchFilmmaker")} value={filtroTexto}
                                 onChange={(e) => setFiltroTexto(e.target.value)}
                                 slotProps={{ input: { startAdornment: <InputAdornment position="start"><Search sx={{ color: '#ffd1b3', fontSize: '1.4rem' }} /></InputAdornment>, sx: { color: '#fff', bgcolor: 'rgba(0, 0, 0, 0.2)', borderRadius: 3, width: 350, height: 56, border: '1px solid rgba(255, 255, 255, 0.2)', '& fieldset': { border: 'none' } } } }}
                             />
                             <Select size="medium" value={tipoBusqueda} sx={{ color: '#fff', bgcolor: 'rgba(0, 0, 0, 0.2)', borderRadius: 3, minWidth: 160, height: 56, border: '1px solid rgba(255, 255, 255, 0.2)', '& .MuiOutlinedInput-notchedOutline': { border: 'none' }, '& .MuiSvgIcon-root': { color: '#ffd1b3' } }}
                                 onChange={(e) => setTipoBusqueda(e.target.value)}
                             >
-                                <MenuItem value="nombre">Por Nombre</MenuItem>
-                                <MenuItem value="director">Por Director</MenuItem>
+                                <MenuItem value="nombre">{t("filterName")}</MenuItem>
+                                <MenuItem value="director">{t("filterFilmmaker")}</MenuItem>
                             </Select>
                             <Select size="medium" value={filtroValoracion} displayEmpty sx={{ color: '#fff', bgcolor: 'rgba(0, 0, 0, 0.2)', borderRadius: 3, minWidth: 200, height: 56, border: '1px solid rgba(255, 255, 255, 0.2)', '& .MuiOutlinedInput-notchedOutline': { border: 'none' }, '& .MuiSvgIcon-root': { color: '#ffd1b3' } }}
                                 onChange={(e) => setFiltroValoracion(e.target.value)}
                             >
-                                <MenuItem value="todos">Cualquier Nota</MenuItem>
+                                <MenuItem value="todos">{t("filterNote")}</MenuItem>
                                 {[...Array(11)].map((_, i) => (
-                                    <MenuItem key={i} value={i.toString()}>{i} Estrellas</MenuItem>
+                                    <MenuItem key={i} value={i.toString()}>{i} {t("textFilterNote")}</MenuItem>
                                 ))}
                             </Select>
                             <Select size="medium" value={filtroGenero} displayEmpty sx={{ color: '#fff', bgcolor: 'rgba(0, 0, 0, 0.2)', borderRadius: 3, minWidth: 200, height: 56, border: '1px solid rgba(255, 255, 255, 0.2)', '& .MuiOutlinedInput-notchedOutline': { border: 'none' }, '& .MuiSvgIcon-root': { color: '#ffd1b3' } }}
                                 onChange={(e) => setFiltroGenero(e.target.value)}
                             >
-                                <MenuItem value="todos">Todos los Géneros</MenuItem>
+                                <MenuItem value="todos">{t("filterGender")}</MenuItem>
                                 {generosUnicos.map(g => (
                                     <MenuItem key={g} value={g}>{g}</MenuItem>
                                 ))}
@@ -134,7 +137,7 @@ export default function Home() {
                             <Button startIcon={<DeleteSweep />} onClick={limpiarFiltros} variant="outlined" sx={{ borderRadius: 3, height: 56, color: '#fff', borderColor: 'rgba(255, 204, 188, 0.4)', px: 3, '&:hover': { borderColor: '#fff', color: '#fff' } }}>Limpiar</Button>
                         </Box>
                         <Typography variant="body1" sx={{ color: '#ffd1b3', mt: 1, fontWeight: 700, fontSize: '1.2rem', letterSpacing: 1 }}>
-                            DESCUBRE • CALIFICA • DISFRUTA
+                            {t("sloganHome")}
                         </Typography>
                     </Box>
                     {useErrorMsg ?
@@ -142,7 +145,7 @@ export default function Home() {
                             id="error-message"
                             sx={{ mb: 4, mx: 'auto', borderRadius: 3, border: '1px solid rgba(255, 255, 255, 0.4)', backgroundColor: 'rgba(255, 255, 255, 0.15)', padding: '10px 20px', fontSize: '1rem', color: '#f70505', textAlign: 'center', width: '90%', maxWidth: '1100px', boxSizing: 'border-box', backdropFilter: 'blur(10px)', fontWeight: 800, boxShadow: '0 8px 32px rgba(0, 0, 0, 0.2)', textTransform: 'uppercase', letterSpacing: 1 }}
                         >
-                            Vaya, ha ocurrido un error. En este momento estamos trabajando en ello: {useErrorMsg}
+                            {t("textError")} {useErrorMsg}
                         </Box>
                     :
                     <Grid container spacing={3} sx={{ width: '100%', margin: 0 }}>
@@ -180,7 +183,7 @@ export default function Home() {
 
                                     <Box sx={{ p: 3, pt: 0 }}>
                                         <Button component={Link} to={"/pelicula/" + peliculas.id} variant="contained" fullWidth sx={{ bgcolor: '#005f8a', borderRadius: 3, textTransform: 'none', fontWeight: 900, py: 1.8, fontSize: '1.1rem', '&:hover': { bgcolor: '#004a6d' } }}>
-                                            Ver Película
+                                            {t("buttonWatchFilm")}
                                         </Button>
                                     </Box>
                                 </Card>
