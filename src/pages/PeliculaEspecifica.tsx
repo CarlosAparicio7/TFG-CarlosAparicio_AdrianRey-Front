@@ -45,6 +45,9 @@ export default function PeliculaEspecifica() {
     const [resenaTexto, setResenaTexto] = useState<string>('');
     const [notaUsuario, setNotaUsuario] = useState<number>(0);
 
+    const usuarioEnStorage = localStorage.getItem('usuario');
+    const datosUsuarioLogueado = usuarioEnStorage ? JSON.parse(usuarioEnStorage) : null;
+
     const cargarResenas = () => {
         mostrarResenas().then(response => {
             if (response.ok && response.data) {
@@ -217,7 +220,7 @@ export default function PeliculaEspecifica() {
                                             </Box>
                                         )}
                                         </Paper>
-
+                                        {datosUsuarioLogueado && datosUsuarioLogueado.rol === 'ADMIN' && (
                                         <Box sx={{ display: 'flex', justifyContent: 'center', gap: 3, mt: 2 }}>
                                             <Button component={Link} to={"/editarPelicula/" + usePeliculaEspecifica?.id} variant="contained" sx={{ bgcolor: '#005f8a', borderRadius: 3, textTransform: 'none', fontWeight: 900, py: 1.8, fontSize: '1.1rem', width: '100%', maxWidth: 300, height: 60, '&:hover': { bgcolor: '#004a6d' } }}>
                                                 Editar Pelicula
@@ -226,7 +229,7 @@ export default function PeliculaEspecifica() {
                                                 Eliminar Película
                                             </Button>
                                         </Box>
-
+                                        )}
                                         <Grid container spacing={4}>
                                             <Grid size={{ xs: 12, md: 6 }}>
                                                 <Box sx={{ p: 4, borderRadius: 5, bgcolor: 'rgba(255,255,255,0.95)', boxShadow: '0 15px 40px rgba(0,0,0,0.3)', height: '100%', boxSizing: 'border-box' }}>
