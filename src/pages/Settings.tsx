@@ -24,37 +24,41 @@ export default function Settings() {
                         </Box>
 
                         <Grid container spacing={3} sx={{ width: '100%', margin: 0, display: 'flex', justifyContent: 'center' }}>
-                            <Card sx={{ width: '100%', maxWidth: 900, display: 'flex', flexDirection: 'column', borderRadius: 5, background: 'linear-gradient(135deg, #007bb3 0%, #f18a3a 100%)', border: '1px solid rgba(255, 255, 255, 0.4)', boxShadow: '0 15px 35px rgba(0,0,0,0.3)', transition: 'all 0.4s ease' }}>
-                                <CardContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', py: { xs: 6, md: 10 } }}>
-                                    <Typography variant="h4" noWrap sx={{ fontWeight: 900, mb: 4, color: '#e0f2fe', fontSize: { xs: '2rem', md: '2.8rem' }, textAlign: 'center' }}>
-                                        {t("textThemeSwitch")}
-                                    </Typography>
-                                    
-                                    <Box sx={{ transform: 'scale(2.2)', my: 4 }}>
-                                        <ThemeToggle/>
-                                    </Box>
+                            <Grid size={{ xs: 12, md: 6 }}>
+                                <Card sx={{ width: '100%', maxWidth: 900, display: 'flex', flexDirection: 'column', borderRadius: 5, background: 'linear-gradient(135deg, #007bb3 0%, #f18a3a 100%)', border: '1px solid rgba(255, 255, 255, 0.4)', boxShadow: '0 15px 35px rgba(0,0,0,0.3)', transition: 'all 0.4s ease' }}>
+                                    <CardContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', py: { xs: 6, md: 10 } }}>
+                                        <Typography variant="h4" noWrap sx={{ fontWeight: 900, mb: 4, color: '#e0f2fe', fontSize: { xs: '2rem', md: '2.8rem' }, textAlign: 'center' }}>
+                                            {t("textThemeSwitch")}
+                                        </Typography>
+                                        
+                                        <Box sx={{ transform: 'scale(2.2)', my: 4 }}>
+                                            <ThemeToggle/>
+                                        </Box>
 
-                                    <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.8)', mt: 6, fontWeight: 600, fontSize: '1.1rem' }}>
-                                        {t("textSelectExperienceMode")}
-                                    </Typography>
-                                </CardContent>
-                            </Card>
+                                        <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.8)', mt: 6, fontWeight: 600, fontSize: '1.1rem' }}>
+                                            {t("textSelectExperienceMode")}
+                                        </Typography>
+                                    </CardContent>
+                                </Card>
+                            </Grid>
 
-                            <Card sx={{ width: '100%', maxWidth: 900, display: 'flex', flexDirection: 'column', borderRadius: 5, background: 'linear-gradient(135deg, #007bb3 0%, #f18a3a 100%)', border: '1px solid rgba(255, 255, 255, 0.4)', boxShadow: '0 15px 35px rgba(0,0,0,0.3)', transition: 'all 0.4s ease' }}>
-                                <CardContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', py: { xs: 6, md: 10 } }}>
-                                    <Typography variant="h4" noWrap sx={{ fontWeight: 900, mb: 4, color: '#e0f2fe', fontSize: { xs: '2rem', md: '2.8rem' }, textAlign: 'center' }}>
-                                        {t("textLanguageSwitch")}
-                                    </Typography>
-                                    
-                                    <Box sx={{ transform: 'scale(2.2)', my: 4 }}>
-                                        <LanguageSwitcher/>
-                                    </Box>
+                            <Grid size={{ xs: 12, md: 6 }}>
+                                <Card sx={{ width: '100%', maxWidth: 900, display: 'flex', flexDirection: 'column', borderRadius: 5, background: 'linear-gradient(135deg, #007bb3 0%, #f18a3a 100%)', border: '1px solid rgba(255, 255, 255, 0.4)', boxShadow: '0 15px 35px rgba(0,0,0,0.3)', transition: 'all 0.4s ease' }}>
+                                    <CardContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', py: { xs: 6, md: 10 } }}>
+                                        <Typography variant="h4" noWrap sx={{ fontWeight: 900, mb: 4, color: '#e0f2fe', fontSize: { xs: '2rem', md: '2.8rem' }, textAlign: 'center' }}>
+                                            {t("textLanguageSwitch")}
+                                        </Typography>
+                                        
+                                        <Box sx={{ transform: 'scale(2.2)', my: 4 }}>
+                                            <LanguageSwitcher/>
+                                        </Box>
 
-                                    <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.8)', mt: 6, fontWeight: 600, fontSize: '1.1rem' }}>
-                                        {t("textSelectExperienceMode")}
-                                    </Typography>
-                                </CardContent>
-                            </Card>
+                                        <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.8)', mt: 6, fontWeight: 600, fontSize: '1.1rem' }}>
+                                            {t("textSelectExperienceMode")}
+                                        </Typography>
+                                    </CardContent>
+                                </Card>
+                            </Grid>
                         </Grid>
                     </Paper>
                 </Container>
