@@ -105,7 +105,7 @@ export default function Home() {
                                 slotProps={{ input: { startAdornment: <InputAdornment position="start"><Search sx={{ color: '#ffd1b3', fontSize: '1.4rem' }} /></InputAdornment>, sx: { color: '#fff', bgcolor: 'rgba(0, 0, 0, 0.2)', borderRadius: 3, width: 350, height: 56, border: '1px solid rgba(255, 255, 255, 0.2)', '& fieldset': { border: 'none' } } } }}
                             />
                             <Select size="medium" value={tipoBusqueda} sx={{ color: '#fff', bgcolor: 'rgba(0, 0, 0, 0.2)', borderRadius: 3, minWidth: 160, height: 56, border: '1px solid rgba(255, 255, 255, 0.2)', '& .MuiOutlinedInput-notchedOutline': { border: 'none' }, '& .MuiSvgIcon-root': { color: '#ffd1b3' } }}
-                                onChange={(e) => setTipoBusqueda(e.target.value as any)}
+                                onChange={(e) => setTipoBusqueda(e.target.value)}
                             >
                                 <MenuItem value="nombre">Por Nombre</MenuItem>
                                 <MenuItem value="director">Por Director</MenuItem>
