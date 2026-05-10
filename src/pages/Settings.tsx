@@ -58,7 +58,7 @@ export default function Settings() {
                         </Grid>
                     </Paper>
                 </Container>
-                <Footer />
+                <Footer/>
             </Box>
     );
 }

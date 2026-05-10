@@ -58,5 +58,14 @@
     "textPlaceholderEmail": "Correo Electrónico",
     "textPlaceholderPassword": "Contraseña",
     "buttonEnterLogin": "Entrar",
-    "textNotAccountLogin": "¿Aún no tienes cuenta?"
+    "textNotAccountLogin": "¿Aún no tienes cuenta?",
+    "buttonLinkRegister": "Regístrate",
+    "titleRegister": "Registro",
+    "textPlaceholderNameRegister": "Nombre",
+    "textPlaceholderLastNameRegister": "Apellido",
+    "textErrorCompleteFields": "Por favor, rellena todos los campos",
+    "textErrorComplete@": "El correo debe contener un @.",
+    "buttonRegister": "Crear cuenta",
+    "buttonLinkLogin": "¿Ya tienes una cuenta?",
+    "buttonSignIn": "Inicia sesión"
 }

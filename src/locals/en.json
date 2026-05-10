@@ -58,5 +58,14 @@
     "textPlaceholderEmail": "Email Address",
     "textPlaceholderPassword": "Password",
     "buttonEnterLogin": "Enter",
-    "textNotAccountLogin": "Don't have an account yet?"
+    "textNotAccountLogin": "Don't have an account yet?",
+    "buttonLinkRegister": "Sign Up",
+    "titleRegister": "SIGN UP",
+    "textPlaceholderNameRegister": "Name",
+    "textPlaceholderLastNameRegister": "LastName",
+    "textErrorCompleteFields": "Please complete all fields",
+    "textErrorComplete@": "Email must contain an @.",
+    "buttonRegister": "Create Account",
+    "buttonLinkLogin": "Already have an account?",
+    "buttonSignIn": "Sign In"
 }

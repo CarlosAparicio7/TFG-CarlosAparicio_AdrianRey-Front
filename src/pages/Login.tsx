@@ -122,7 +122,7 @@ export default function LoginPage() {
                         to="/register" 
                         sx={{ color: '#ffd1b3', fontWeight: 900, textTransform: 'none', fontSize: '1.05rem', ml: 1, textDecoration: 'underline', '&:hover': { bgcolor: 'transparent', color: '#fff' } }}
                     >
-                        Regístrate
+                        {t("buttonLinkRegister")}
                     </Button>
                 </Typography>
             </Paper>
