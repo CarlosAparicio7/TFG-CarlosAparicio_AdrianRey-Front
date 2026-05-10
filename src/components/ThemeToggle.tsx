@@ -14,4 +14,3 @@ export default function ThemeToggle() {
         </button>
     );
 }
-console.log("CARGANDO TOGGLE")
