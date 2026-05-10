@@ -3,6 +3,7 @@ import Header from "../components/Header";
 import LanguageSwitcher from "../components/LanguageSwitcher";
 import ThemeToggle from "../components/ThemeToggle";
 import { useTheme } from "../context/ThemeContext";
+import Footer from "../components/Footer";
 
 export default function Settings() {
     const { theme } = useTheme();
@@ -19,13 +20,20 @@ export default function Settings() {
                             </Typography>
                         </Box>
 
-                        <Grid container spacing={3} sx={{ width: '100%', margin: 0 }}>
-                            <Card sx={{ width: '100%', display: 'flex', flexDirection: 'column', borderRadius: 5, background: 'linear-gradient(135deg, #007bb3 0%, #f18a3a 100%)', border: '1px solid rgba(255, 255, 255, 0.4)', boxShadow: '0 15px 35px rgba(0,0,0,0.3)', transition: 'all 0.4s ease', '&:hover': { transform: 'translateY(-12px)', boxShadow: '0 25px 50px rgba(0,0,0,0.4)', border: '1px solid #fff' } }}>
-                                <CardContent>
-                                    <Typography variant="h6" noWrap sx={{ fontWeight: 900, mb: 0.5, color: '#e0f2fe', fontSize: '1.4rem' }}>
-                                        Cambio de apariencia
+                        <Grid container spacing={3} sx={{ width: '100%', margin: 0, display: 'flex', justifyContent: 'center' }}>
+                            <Card sx={{ width: '100%', maxWidth: 900, display: 'flex', flexDirection: 'column', borderRadius: 5, background: 'linear-gradient(135deg, #007bb3 0%, #f18a3a 100%)', border: '1px solid rgba(255, 255, 255, 0.4)', boxShadow: '0 15px 35px rgba(0,0,0,0.3)', transition: 'all 0.4s ease' }}>
+                                <CardContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', py: { xs: 6, md: 10 } }}>
+                                    <Typography variant="h4" noWrap sx={{ fontWeight: 900, mb: 4, color: '#e0f2fe', fontSize: { xs: '2rem', md: '2.8rem' }, textAlign: 'center' }}>
+                                        Cambio de Tema
                                     </Typography>
-                                    <ThemeToggle/>
+                                    
+                                    <Box sx={{ transform: 'scale(2.2)', my: 4 }}>
+                                        <ThemeToggle/>
+                                    </Box>
+
+                                    <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.8)', mt: 6, fontWeight: 600, fontSize: '1.1rem' }}>
+                                        Selecciona el modo que prefieras para tu experiencia
+                                    </Typography>
                                 </CardContent>
                             </Card>
 
@@ -40,6 +48,7 @@ export default function Settings() {
                         </Grid>
                     </Paper>
                 </Container>
+                <Footer />
             </Box>
     );
 }
