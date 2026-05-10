@@ -38,7 +38,7 @@ export default function Footer() {
                                 ÚNETE A LA REVOLUCIÓN
                             </Typography>
                             <Typography variant="body1" sx={{ color: '#fff', mb: 1.5, px: 1, fontSize: '1.05rem', fontWeight: 500, lineHeight: 1.3 }}>
-                                Sube tus creaciones y comparte talento sin filtros.
+                                Sube tus creaciones y comparte tu talento sin filtros.
                             </Typography>
                             <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1 }}>
                                 <Email sx={{ color: '#f06b06', fontSize: 22 }} />
