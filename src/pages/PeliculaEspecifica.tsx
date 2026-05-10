@@ -4,10 +4,11 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
+import { useTheme } from "../context/ThemeContext";
 import { borrarPelicula, getOnePelicula } from "../service/peliculasService";
-import type { usuarioResena } from "../types/usuarios";
-import type { PeliculaResena } from "../types/peliculas";
 import { crearResena, mostrarResenas } from "../service/resenasService";
+import type { PeliculaResena } from "../types/peliculas";
+import type { usuarioResena } from "../types/usuarios";
 
 type getOnePelicula = {
     id: string,
@@ -47,6 +48,8 @@ export default function PeliculaEspecifica() {
 
     const usuarioEnStorage = localStorage.getItem('usuario');
     const datosUsuarioLogueado = usuarioEnStorage ? JSON.parse(usuarioEnStorage) : null;
+
+    const { theme } = useTheme();
 
     const cargarResenas = () => {
         mostrarResenas().then(response => {
@@ -122,7 +125,7 @@ export default function PeliculaEspecifica() {
 
     return (
     <>
-        <Box sx={{ minHeight: '100vh', background: 'linear-gradient(90deg, #005f8a 30%, #f06b06 100%)', display: 'flex', flexDirection: 'column', backgroundAttachment: 'fixed' }}>
+        <Box sx={{ minHeight: '100vh', background: theme === 'dark' ? '#0f172a' : 'linear-gradient(90deg, #005f8a 30%, #f06b06 100%)', display: 'flex', flexDirection: 'column', backgroundAttachment: 'fixed' }}>
             <Header />
             <Container maxWidth={false} sx={{ mt: 2, mb: 4, flexGrow: 1, display: 'flex', px: { xs: 1, sm: 2, md: 4 } }}>
                 <Paper elevation={0} sx={{ p: { xs: 2, md: 5 }, backgroundColor: 'rgba(255, 255, 255, 0.12)', borderRadius: { xs: 0, md: 6 }, width: '100%', minHeight: '85vh', boxSizing: 'border-box', border: '1px solid rgba(255, 255, 255, 0.2)', display: 'flex', flexDirection: 'column', backdropFilter: 'blur(20px)', boxShadow: '0 8px 32px 0 rgba(0, 0, 0, 0.37)' }}>

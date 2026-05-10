@@ -1,11 +1,14 @@
-import { Box, Container, Typography, IconButton, Divider, Grid } from '@mui/material';
-import { Facebook, Instagram, Twitter, Email } from '@mui/icons-material';
+import { Email, Facebook, Instagram, Twitter } from '@mui/icons-material';
+import { Box, Container, Divider, Grid, IconButton, Typography } from '@mui/material';
 import { Link } from "react-router-dom";
+import { useTheme } from '../context/ThemeContext';
 
 export default function Footer() {
+    const { theme } = useTheme();
+    
     return (
         <>
-            <Box sx={{ background: 'linear-gradient(90deg, #003a54 30%, #005f8a 100%)', color: 'white', pt: 3, pb: 2, width: '100%' }}>
+            <Box sx={{ background: theme === 'dark' ? '#1e293b' : 'linear-gradient(90deg, #003a54 30%, #005f8a 100%)', color: 'white', pt: 3, pb: 2, width: '100%' }}>
                 <Container maxWidth={false} sx={{ px: { xs: 2, md: 6 } }}>
                     <Grid container spacing={2} sx={{ alignItems: 'center', textAlign: 'center' }}>
                         

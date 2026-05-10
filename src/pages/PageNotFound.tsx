@@ -1,14 +1,17 @@
-import { Link } from "react-router-dom";
-import { Box, Typography, Button, Container } from "@mui/material";
 import { Movie, Replay } from "@mui/icons-material";
+import { Box, Button, Container, Typography } from "@mui/material";
+import { Link } from "react-router-dom";
+import { useTheme } from "../context/ThemeContext";
 
 export default function PageNotFound() {
+  const { theme } = useTheme();
+
   return (
-    <Container maxWidth={false} sx={{ background: 'linear-gradient(90deg, #005f8a 30%, #f06b06 100%)', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+    <Container maxWidth={false} sx={{ background: theme === 'dark' ? '#0f172a' : 'linear-gradient(90deg, #005f8a 30%, #f06b06 100%)', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
       <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', gap: 2, p: 6, bgcolor: 'rgba(255, 255, 255, 0.12)', borderRadius: 6, boxShadow: '0 8px 32px 0 rgba(0, 0, 0, 0.37)', border: '1px solid rgba(255, 255, 255, 0.2)', backdropFilter: 'blur(20px)', maxWidth: 500, width: '100%' }}>
-        
+
         <Movie sx={{ fontSize: 100, color: '#fff', mb: 1 }} />
-        
+
         <Typography variant="h1" sx={{ fontWeight: 900, fontSize: '6rem', m: 0, color: '#fff', textShadow: '0px 10px 20px rgba(0,0,0,0.3)', letterSpacing: -4 }}>
           404
         </Typography>

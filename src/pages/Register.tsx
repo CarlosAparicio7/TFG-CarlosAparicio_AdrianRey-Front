@@ -1,7 +1,8 @@
-import { Box, Typography, TextField, Button, Avatar, IconButton, InputAdornment, Grid, Paper, Container} from '@mui/material';
-import { PhotoCamera, MovieFilter, Person, Email, Lock, VideoCameraBack } from '@mui/icons-material';
-import { Link, useNavigate } from 'react-router-dom';
+import { Email, Lock, MovieFilter, Person, PhotoCamera, VideoCameraBack } from '@mui/icons-material';
+import { Avatar, Box, Button, Container, Grid, IconButton, InputAdornment, Paper, TextField, Typography } from '@mui/material';
 import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useTheme } from '../context/ThemeContext';
 import { crearUsuario } from '../service/usuariosService';
 
 export type createUser = {
@@ -29,6 +30,8 @@ export default function RegisterPage() {
   const navigate = useNavigate();
   const [useRegisterUser, setRegisterUser] = useState<createUser>(registerDefault);
   const [useErrorMsg, setErrorMsg] = useState<string>('');
+
+  const { theme } = useTheme();
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -66,7 +69,7 @@ export default function RegisterPage() {
   };
 
 return (
-    <Box sx={{ minHeight: '100vh', background: 'linear-gradient(90deg, #005f8a 30%, #f06b06 100%)', display: 'flex', flexDirection: 'column', backgroundAttachment: 'fixed' }}>
+    <Box sx={{ minHeight: '100vh', background: theme === 'dark' ? '#0f172a' : 'linear-gradient(90deg, #005f8a 30%, #f06b06 100%)', display: 'flex', flexDirection: 'column', backgroundAttachment: 'fixed' }}>
       <Container maxWidth={false} sx={{ mt: 2, mb: 4, flexGrow: 1, display: 'flex', px: { xs: 1, sm: 2, md: 4 }, justifyContent: 'center', alignItems: 'center' }}>
         <Paper elevation={0} sx={{ p: { xs: 2, md: 0 }, backgroundColor: 'rgba(255, 255, 255, 0.12)', borderRadius: { xs: 0, md: 6 }, width: '100%', maxWidth: 1100, minHeight: '85vh', boxSizing: 'border-box', border: '1px solid rgba(255, 255, 255, 0.2)', display: 'flex', flexDirection: { xs: 'column', md: 'row' }, backdropFilter: 'blur(20px)', boxShadow: '0 8px 32px 0 rgba(0, 0, 0, 0.37)', overflow: 'hidden' }}>
           

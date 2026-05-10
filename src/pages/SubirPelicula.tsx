@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
+import { useTheme } from "../context/ThemeContext";
 import { crearPelicula } from "../service/peliculasService";
 
 type AddPelicula = {
@@ -33,6 +34,8 @@ export default function SubirPelicula() {
     const [progress, setProgress] = useState(0);
     const navigate = useNavigate();
     const [archivoBinario, setArchivoBinario] = useState<File | null>(null);
+
+    const { theme } = useTheme();
 
     useEffect(() => {
         const user = localStorage.getItem('usuario');
@@ -134,7 +137,7 @@ export default function SubirPelicula() {
 
     return (
     <>
-        <Box sx={{ minHeight: '100vh', background: 'linear-gradient(90deg, #005f8a 30%, #f06b06 100%)', display: 'flex', flexDirection: 'column', backgroundAttachment: 'fixed' }}>
+        <Box sx={{ minHeight: '100vh', background: theme === 'dark' ? '#0f172a' : 'linear-gradient(90deg, #005f8a 30%, #f06b06 100%)', display: 'flex', flexDirection: 'column', backgroundAttachment: 'fixed' }}>
             <Header />
             <Container maxWidth={false} sx={{ mt: 2, mb: 4, flexGrow: 1, display: 'flex', px: { xs: 1, sm: 2, md: 4 }, justifyContent: 'center', alignItems: 'center' }}>
                 <Paper elevation={0} sx={{ 
