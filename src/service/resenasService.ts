@@ -1,4 +1,4 @@
-import type { NuevaResena, Resenas, ResenaEspecifica } from "../types/resenas";
+import type { NuevaResena, ResenaEspecifica, Resenas } from "../types/resenas";
 import type { APIError, APIResult } from "../types/util";
 
 const baseURL: string = "http://localhost:8080";
@@ -12,6 +12,21 @@ export async function mostrarResenas(): Promise<APIResult<Resenas[]>> {
     });
     if (response.ok) {
         const resenas: Resenas[] = await response.json();
+        return {ok: true, data: resenas};
+    }
+    const error: APIError = await response.json();
+    return {ok: false, error: error};
+}
+
+export async function getOneResena(id: string): Promise<APIResult<ResenaEspecifica>> {
+    const response = await fetch(`${baseURL}/resenas/obtenerResena/${id}`, {
+        method: 'GET',
+        headers: {
+            'Accept': 'application/json',
+        },
+    });
+    if (response.ok) {
+        const resenas: ResenaEspecifica = await response.json();
         return {ok: true, data: resenas};
     }
     const error: APIError = await response.json();
@@ -42,12 +57,13 @@ export async function crearResena(request: NuevaResena): Promise<APIResult<Nueva
 }
 
 export async function editarResena(id: string, request: ResenaEspecifica): Promise<APIResult<ResenaEspecifica>> {
-    const params = new URLSearchParams();
-    params.append('comentario', request.comentario);
-    params.append('numeroEstrellas', request.numeroEstrellas.toString());
+    const formData = new FormData();
+    formData.append('comentario', request.comentario);
+    formData.append('numeroEstrellas', request.numeroEstrellas.toString());
 
-    const response = await fetch(`${baseURL}/resenas/actualizarResena/${id}?${params.toString()}`, {
+    const response = await fetch(`${baseURL}/resenas/actualizarResena/${id}`, {
         method: 'PUT',
+        body: formData,
         headers: {
             'Accept': 'application/json',
         },

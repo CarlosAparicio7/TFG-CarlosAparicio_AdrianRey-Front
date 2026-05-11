@@ -25,5 +25,6 @@ export type Usuarios = {
 
 export type usuarioResena = {
     id: string,
-    nombre: string
+    nombre: string,
+    apellido: string
 }

@@ -1,6 +1,6 @@
 import { DeleteForever } from "@mui/icons-material";
 import EditIcon from '@mui/icons-material/Edit';
-import { Box, Button, Card, CardContent, CardMedia, CircularProgress, Container, Grid, Paper, Rating, TextField, Typography } from "@mui/material";
+import { Box, Button, Card, CardContent, CardMedia, CircularProgress, Container, Grid, IconButton, Paper, Rating, TextField, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import Footer from "../components/Footer";
@@ -106,18 +106,6 @@ export default function PeliculaEspecifica() {
         });
     };
 
-    const handleDeleteResena = (resenaId: string) => {
-        borrarResena(resenaId).then((response) => {
-            if(!response.ok) {
-                alert(response.error?.detalle || "Error al eliminar la reseña");
-                return;
-            }
-            navigate("/pelicula/:id")
-        }).catch((err) => {
-            setErrorMsg(err?.message ?? "Error desconocido");
-        });
-    };
-
     const handlePublicarResena = () => {
         const userStr = localStorage.getItem('usuario');
         if (!userStr || !id) return;
@@ -137,6 +125,16 @@ export default function PeliculaEspecifica() {
                 cargarResenas();
             }
         });
+    };
+
+    const handleDeleteResena = (resenaId: string) => {
+        borrarResena(resenaId).then(response => {
+            if (response.ok) {
+                cargarResenas();
+            } else {
+                alert("No se pudo eliminar la reseña");
+            }
+        }).catch(err => console.error(err));
     };
 
     return (
@@ -287,17 +285,25 @@ export default function PeliculaEspecifica() {
 
                                                     <Box sx={{ flexGrow: 1, overflowY: 'auto', pr: 1, maxHeight: '300px', '&::-webkit-scrollbar': { width: '6px' }, '&::-webkit-scrollbar-thumb': { backgroundColor: 'rgba(255,255,255,0.3)', borderRadius: '10px' } }}>
                                                         {listaResenas.map(resena => 
-                                                        <Box key={resena.id} sx={{ mb: 3, p: 2, bgcolor: 'rgba(0,0,0,0.2)', borderRadius: 3 }}>
+                                                        <Box key={resena.id} sx={{ mb: 3, p: 2, bgcolor: 'rgba(0,0,0,0.2)', borderRadius: 3, position: 'relative', border: '1px solid rgba(255,255,255,0.05)' }}>
                                                             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1.5 }}>
-                                                                <Typography sx={{ color: '#ffd1b3', fontWeight: 900, fontSize: '0.85rem', letterSpacing: 0.5 }}>{resena.usuario.nombre}</Typography>
-                                                                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                                                                    <Rating size="small" value={resena.numeroEstrellas / 2} readOnly sx={{ '& .MuiRating-iconFilled': { color: '#00a8e8' } }} />
-                                                                    <Typography sx={{ color: '#fff', fontWeight: 900, fontSize: '0.9rem' }}>{resena.numeroEstrellas}</Typography>
-                                                                </Box>
-                                                                    <Box sx={{ display: 'flex', gap: 1 }}>
-                                                                        <Button variant="contained" color="primary" startIcon={<EditIcon />} component={Link} to={"/editarResena/" + resena.id}sx={{ borderRadius: 2, textTransform: 'none', fontWeight: 700, fontSize: '0.75rem' }}></Button>
-                                                                        <Button variant="contained" color="error" startIcon={<DeleteForever />} onClick={() => handleDeleteResena(resena.id)} sx={{ borderRadius: 2, textTransform: 'none', fontWeight: 700, fontSize: '0.75rem' }}></Button>
+                                                                <Box>
+                                                                    <Typography sx={{ color: '#ffd1b3', fontWeight: 900, fontSize: '0.85rem', letterSpacing: 0.5 }}>{resena.usuario.nombre} {resena.usuario.apellido}</Typography>
+                                                                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                                                                        <Rating size="small" value={resena.numeroEstrellas / 2} readOnly sx={{ '& .MuiRating-iconFilled': { color: '#00a8e8' } }} />
+                                                                        <Typography sx={{ color: '#fff', fontWeight: 900, fontSize: '0.9rem' }}>{resena.numeroEstrellas}</Typography>
                                                                     </Box>
+                                                                </Box>
+                                                                {(datosUsuarioLogueado?.id === resena.usuario.id || datosUsuarioLogueado?.rol === 'ADMIN') && (
+                                                                    <Box sx={{ display: 'flex', gap: 1 }}>
+                                                                        <IconButton component={Link} to={"/editarResena/" + resena.id} size="small" sx={{ color: 'rgba(255,255,255,0.5)', '&:hover': { color: '#12a507', bgcolor: 'rgba(255,77,77,0.1)' } }}>
+                                                                            <EditIcon />
+                                                                        </IconButton>
+                                                                        <IconButton onClick={() => handleDeleteResena(resena.id)} size="small" sx={{ color: 'rgba(255,255,255,0.5)', '&:hover': { color: '#ff4d4d', bgcolor: 'rgba(255,77,77,0.1)' } }}>
+                                                                            <DeleteForever sx={{ fontSize: '1.5rem' }} />
+                                                                        </IconButton>
+                                                                    </Box>
+                                                                )}
                                                             </Box>
                                                             <Typography sx={{ color: '#fff', fontSize: '0.95rem', fontWeight: 500, lineHeight: 1.5 }}>{resena.comentario}</Typography>
                                                         </Box>
