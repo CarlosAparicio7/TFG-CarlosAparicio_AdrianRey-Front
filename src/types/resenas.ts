@@ -10,9 +10,10 @@ export type Resenas = {
 }
 
 export type ResenaEspecifica = {
-    id: string;
-    comentario: string;
-    numeroEstrellas: number;
+    id: string,
+    comentario: string,
+    numeroEstrellas: number,
+    peliculaId: string
 }
 
 export type NuevaResena = {

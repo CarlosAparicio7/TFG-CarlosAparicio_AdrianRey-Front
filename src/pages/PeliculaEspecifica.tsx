@@ -296,7 +296,7 @@ export default function PeliculaEspecifica() {
                                                                 </Box>
                                                                 {(datosUsuarioLogueado?.id === resena.usuario.id || datosUsuarioLogueado?.rol === 'ADMIN') && (
                                                                     <Box sx={{ display: 'flex', gap: 1 }}>
-                                                                        <IconButton component={Link} to={"/editarResena/" + resena.id} size="small" sx={{ color: 'rgba(255,255,255,0.5)', '&:hover': { color: '#12a507', bgcolor: 'rgba(255,77,77,0.1)' } }}>
+                                                                        <IconButton component={Link} to={"/editarResena/" + resena.id} state={{ idPelicula: id }} size="small" sx={{ color: 'rgba(255,255,255,0.5)', '&:hover': { color: '#12a507', bgcolor: 'rgba(255,77,77,0.1)' } }}>
                                                                             <EditIcon />
                                                                         </IconButton>
                                                                         <IconButton onClick={() => handleDeleteResena(resena.id)} size="small" sx={{ color: 'rgba(255,255,255,0.5)', '&:hover': { color: '#ff4d4d', bgcolor: 'rgba(255,77,77,0.1)' } }}>
