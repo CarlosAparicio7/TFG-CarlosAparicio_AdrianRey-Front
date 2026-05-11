@@ -42,12 +42,13 @@ export async function crearResena(request: NuevaResena): Promise<APIResult<Nueva
 }
 
 export async function editarResena(id: string, request: ResenaEspecifica): Promise<APIResult<ResenaEspecifica>> {
-    const params = new URLSearchParams();
-    params.append('comentario', request.comentario);
-    params.append('numeroEstrellas', request.numeroEstrellas.toString());
+    const formData = new FormData();
+    formData.append('comentario', request.comentario);
+    formData.append('numeroEstrellas', request.numeroEstrellas.toString());
 
-    const response = await fetch(`${baseURL}/resenas/actualizarResena/${id}?${params.toString()}`, {
+    const response = await fetch(`${baseURL}/resenas/actualizarResena/${id}`, {
         method: 'PUT',
+        body: formData,
         headers: {
             'Accept': 'application/json',
         },
