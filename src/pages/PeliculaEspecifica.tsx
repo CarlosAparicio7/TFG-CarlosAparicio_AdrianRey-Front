@@ -1,4 +1,5 @@
 import { DeleteForever } from "@mui/icons-material";
+import EditIcon from '@mui/icons-material/Edit';
 import { Box, Button, Card, CardContent, CardMedia, CircularProgress, Container, Grid, Paper, Rating, TextField, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
@@ -7,7 +8,7 @@ import Header from "../components/Header";
 import { useLanguage } from "../context/LanguageContext";
 import { useTheme } from "../context/ThemeContext";
 import { borrarPelicula, getOnePelicula } from "../service/peliculasService";
-import { crearResena, mostrarResenas } from "../service/resenasService";
+import { borrarResena, crearResena, mostrarResenas } from "../service/resenasService";
 import type { PeliculaResena } from "../types/peliculas";
 import type { usuarioResena } from "../types/usuarios";
 
@@ -100,6 +101,18 @@ export default function PeliculaEspecifica() {
                 return;
             }
             navigate("/"); 
+        }).catch((err) => {
+            setErrorMsg(err?.message ?? "Error desconocido");
+        });
+    };
+
+    const handleDeleteResena = (resenaId: string) => {
+        borrarResena(resenaId).then((response) => {
+            if(!response.ok) {
+                alert(response.error?.detalle || "Error al eliminar la reseña");
+                return;
+            }
+            navigate("/pelicula/:id")
         }).catch((err) => {
             setErrorMsg(err?.message ?? "Error desconocido");
         });
@@ -281,6 +294,10 @@ export default function PeliculaEspecifica() {
                                                                     <Rating size="small" value={resena.numeroEstrellas / 2} readOnly sx={{ '& .MuiRating-iconFilled': { color: '#00a8e8' } }} />
                                                                     <Typography sx={{ color: '#fff', fontWeight: 900, fontSize: '0.9rem' }}>{resena.numeroEstrellas}</Typography>
                                                                 </Box>
+                                                                    <Box sx={{ display: 'flex', gap: 1 }}>
+                                                                        <Button variant="contained" color="primary" startIcon={<EditIcon />} component={Link} to={"/editarResena/" + resena.id}sx={{ borderRadius: 2, textTransform: 'none', fontWeight: 700, fontSize: '0.75rem' }}></Button>
+                                                                        <Button variant="contained" color="error" startIcon={<DeleteForever />} onClick={() => handleDeleteResena(resena.id)} sx={{ borderRadius: 2, textTransform: 'none', fontWeight: 700, fontSize: '0.75rem' }}></Button>
+                                                                    </Box>
                                                             </Box>
                                                             <Typography sx={{ color: '#fff', fontSize: '0.95rem', fontWeight: 500, lineHeight: 1.5 }}>{resena.comentario}</Typography>
                                                         </Box>

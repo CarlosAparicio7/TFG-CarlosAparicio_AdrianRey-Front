@@ -1,5 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import EditarPelicula from "../pages/EditarPelicula";
+import EditarResena from "../pages/EditarResena";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
 import PageNotFound from "../pages/PageNotFound";
@@ -16,5 +17,6 @@ export const router = createBrowserRouter([
     {path: "/pelicula/:id", element: <PeliculaEspecifica/>},
     {path: "/subirPelicula", element: <SubirPelicula/>},
     {path: "/editarPelicula/:id", element: <EditarPelicula/>},
+    {path: "/editarResena/:id", element: <EditarResena/>},
     {path: "/settings", element: <Settings/>}
 ])
