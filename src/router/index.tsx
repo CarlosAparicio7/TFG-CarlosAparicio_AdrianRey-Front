@@ -8,10 +8,12 @@ import PeliculaEspecifica from "../pages/PeliculaEspecifica";
 import Register from "../pages/Register";
 import Settings from "../pages/Settings";
 import SubirPelicula from "../pages/SubirPelicula";
+import ControlPeliculas from "../pages/ControlPeliculas";
 
 export const router = createBrowserRouter([
     {path: "*", element: <PageNotFound/>},
     {path: "/", element: <Home/>},
+    {path: "/control", element: <ControlPeliculas/>},
     {path: "/login", element: <Login/>},
     {path: "/register", element: <Register/>},
     {path: "/pelicula/:id", element: <PeliculaEspecifica/>},

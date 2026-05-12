@@ -1,4 +1,4 @@
-import type { NuevaPelicula, PeliculaEspecifica, Peliculas } from "../types/peliculas";
+import type { ControlPelicula, NuevaPelicula, PeliculaEspecifica, Peliculas } from "../types/peliculas";
 import type { APIError, APIResult } from "../types/util";
 
 const baseURL: string = "http://localhost:8080";
@@ -112,3 +112,34 @@ export async function borrarPelicula(id: string): Promise<APIResult<PeliculaEspe
     return { ok: false, error: errorData };
 }
 
+export async function getBorradores(): Promise<APIResult<Peliculas[]>> {
+    const response = await fetch(`${baseURL}/peliculas/borradores`, {
+        method: 'GET',
+        headers: {
+            'Accept': 'application/json',
+        },
+    });
+    if (response.ok) {
+        const peliculas: Peliculas[] = await response.json();
+        return { ok: true, data: peliculas };
+    }
+    const error: APIError = await response.json();
+    return { ok: false, error: error };
+}
+
+export async function aceptarPelicula(id: string): Promise<APIResult<ControlPelicula>> {
+    const response = await fetch(`${baseURL}/peliculas/aceptar/${id}`, {
+        method: 'PUT',
+        headers: {
+            'Accept': 'application/json',
+        },
+    });
+
+    if (response.ok) {
+        const text = await response.text();
+        const data: ControlPelicula = text ? JSON.parse(text) : {} as ControlPelicula;
+        return { ok: true, data: data };
+    }
+    const error: APIError = await response.json();
+    return { ok: false, error: error };
+}

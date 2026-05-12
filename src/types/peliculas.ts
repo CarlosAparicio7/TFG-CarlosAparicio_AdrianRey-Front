@@ -32,3 +32,7 @@ export type NuevaPelicula = {
 export type PeliculaResena = {
     id: string,
 }
+
+export type ControlPelicula = {
+    publicada: boolean
+}
