@@ -67,7 +67,11 @@ export default function RegisterPage() {
         console.log(response.error);
       }
     }).catch((error: Error) => {
-      setErrorMsg("Error de conexión: " + error.message);
+      if(error.message.includes("is not valid JSON")){
+        setErrorMsg("Este correo electrónico ya está en uso");
+      }else {
+        setErrorMsg("Error de conexión: " + error.message);
+      }
     });
   };
 
