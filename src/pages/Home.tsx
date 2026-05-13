@@ -132,9 +132,9 @@ export default function Home() {
                                     <MenuItem key={g} value={g}>{g}</MenuItem>
                                 ))}
                             </Select>
-                            <Button startIcon={<NewReleases />} variant={filtroEspecial === 'ultimas' ? "contained" : "outlined"} onClick={() => setFiltroEspecial('ultimas')} sx={{ borderRadius: 3, height: 56, color: '#fff', borderColor: 'rgba(255, 255, 255, 0.4)', bgcolor: filtroEspecial === 'ultimas' ? '#005f8a' : 'transparent', px: 3, '&:hover': { bgcolor: '#004a6d' } }}>Últimas 3</Button>
+                            <Button startIcon={<NewReleases />} variant={filtroEspecial === 'ultimas' ? "contained" : "outlined"} onClick={() => setFiltroEspecial('ultimas')} sx={{ borderRadius: 3, height: 56, color: '#fff', borderColor: 'rgba(255, 255, 255, 0.4)', bgcolor: filtroEspecial === 'ultimas' ? '#005f8a' : 'transparent', px: 3, '&:hover': { bgcolor: '#004a6d' } }}>{t("filterLatest")} 3</Button>
                             <Button startIcon={<Star />} variant={filtroEspecial === 'top' ? "contained" : "outlined"} onClick={() => setFiltroEspecial('top')} sx={{ borderRadius: 3, height: 56, color: '#fff', borderColor: 'rgba(255, 255, 255, 0.4)', bgcolor: filtroEspecial === 'top' ? '#f06b06' : 'transparent', px: 3, '&:hover': { bgcolor: '#d65f05' } }}>Top 4 </Button>
-                            <Button startIcon={<DeleteSweep />} onClick={limpiarFiltros} variant="outlined" sx={{ borderRadius: 3, height: 56, color: '#fff', borderColor: 'rgba(255, 204, 188, 0.4)', px: 3, '&:hover': { borderColor: '#fff', color: '#fff' } }}>Limpiar</Button>
+                            <Button startIcon={<DeleteSweep />} onClick={limpiarFiltros} variant="outlined" sx={{ borderRadius: 3, height: 56, color: '#fff', borderColor: 'rgba(255, 204, 188, 0.4)', px: 3, '&:hover': { borderColor: '#fff', color: '#fff' } }}>{t("filterClean")}</Button>
                         </Box>
                         <Typography variant="body1" sx={{ color: '#ffd1b3', mt: 1, fontWeight: 700, fontSize: '1.2rem', letterSpacing: 1 }}>
                             {t("sloganHome")}

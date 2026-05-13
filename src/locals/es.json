@@ -12,6 +12,8 @@
     "filterNote": "Cualquier Nota",
     "textFilterNote": "Estrellas",
     "filterGender": "Todos los Géneros",
+    "filterLatest": "ultimas",
+    "filterClean": "Limpiar",
     "sloganHome": "DESCUBRE • CALIFICA • DISFRUTA",
     "textError": "Vaya, ha ocurrido un error. En este momento estamos trabajando en ello:",
     "buttonWatchFilm": "Ver Película",
@@ -67,5 +69,12 @@
     "textErrorComplete@": "El correo debe contener un @.",
     "buttonRegister": "Crear cuenta",
     "buttonLinkLogin": "¿Ya tienes una cuenta?",
-    "buttonSignIn": "Inicia sesión"
+    "buttonSignIn": "Inicia sesión",
+    "textControlFilmsDrafts": "Borradores",
+    "titleControlFilms": "Panel de Control",
+    "descriptionControlFilms": "Revisa y gestiona las películas pendientes de publicación",
+    "notFilmsPendingControlFilms": "No hay películas pendientes de revisión",
+    "pageFilmsEmptyControlFilms": "Todo está al día. Esta página está vacía.",
+    "buttonAcceptControlFilms": "Aceptar",
+    "buttonRejectControlFilms": "Rechazar"
 }

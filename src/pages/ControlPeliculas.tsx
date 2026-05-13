@@ -1,4 +1,4 @@
-import { Search, ArrowBack } from "@mui/icons-material";
+import { ArrowBack, Search } from "@mui/icons-material";
 import { Box, Button, Card, CardContent, CardMedia, Container, Grid, InputAdornment, Paper, Rating, TextField, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -6,7 +6,7 @@ import Footer from "../components/Footer";
 import Header from "../components/Header";
 import { useLanguage } from "../context/LanguageContext";
 import { useTheme } from "../context/ThemeContext";
-import { getBorradores, aceptarPelicula, borrarPelicula } from "../service/peliculasService";
+import { aceptarPelicula, borrarPelicula, getBorradores } from "../service/peliculasService";
 
 type getAllPeliculas = {
     id: string,
@@ -80,12 +80,12 @@ export default function ControlPeliculas() {
                                     {peliculasFiltradas.length}
                                 </Typography>
                                 <Typography sx={{ color: '#ffd1b3', fontWeight: 700, fontSize: '0.7rem', textTransform: 'uppercase', mt: 0.5 }}>
-                                    Borradores
+                                    {t("textControlFilmsDrafts")}
                                 </Typography>
                             </Box>
 
                             <Typography variant="h2" sx={{ fontWeight: 900, letterSpacing: -3, fontSize: { xs: '2.5rem', sm: '3.5rem', md: '4.5rem' }, color: '#fff', textShadow: '0px 10px 20px rgba(0,0,0,0.3)' }}>
-                                Panel de Control
+                                {t("titleControlFilms")}
                             </Typography>
 
                             <Button 
@@ -95,12 +95,12 @@ export default function ControlPeliculas() {
                                 startIcon={<ArrowBack />}
                                 sx={{ position: 'absolute', right: 0, bgcolor: '#005f8a', borderRadius: 3, textTransform: 'none', fontWeight: 900, py: 2.5, px: 4, fontSize: '1.2rem', display: { xs: 'none', md: 'flex' }, '&:hover': { bgcolor: '#004a6d' } }}
                             >
-                                Volver
+                                {t("buttonBack")}
                             </Button>
                         </Box>
 
                         <Typography variant="body1" sx={{ color: '#ffd1b3', mb: 5, fontWeight: 700, fontSize: '1.2rem', letterSpacing: 1 }}>
-                            Revisa y gestiona las películas pendientes de publicación
+                            {t("descriptionControlFilms")}
                         </Typography>
 
                         <Box sx={{ display: 'flex', justifyContent: 'center', mb: 4 }}>
@@ -126,10 +126,10 @@ export default function ControlPeliculas() {
                     ) : peliculasFiltradas.length === 0 ? (
                         <Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', mb: 18 }}>
                             <Typography variant="h4" sx={{ color: '#ffd1b3', fontWeight: 900, mb: 1, textShadow: '0 4px 10px rgba(0,0,0,0.3)' }}>
-                                No hay películas pendientes de revisión
+                                {t("notFilmsPendingControlFilms")}
                             </Typography>
                             <Typography sx={{ color: 'rgba(255, 255, 255, 0.7)', fontWeight: 600, fontSize: '1.1rem' }}>
-                                Todo está al día. Esta página está vacía.
+                                {t("pageFilmsEmptyControlFilms")}
                             </Typography>
                         </Box>
                     ) : (
@@ -172,10 +172,10 @@ export default function ControlPeliculas() {
                                             </Button>
                                             <Box sx={{ display: 'flex', gap: 1 }}>
                                                 <Button onClick={() => handleAceptar(pelicula.id)} variant="contained" sx={{ flexGrow: 1, bgcolor: '#2e7d32', borderRadius: 3, textTransform: 'none', fontWeight: 900, py: 1.5, '&:hover': { bgcolor: '#1b5e20' } }}>
-                                                    Aceptar
+                                                    {t("buttonAcceptControlFilms")}
                                                 </Button>
                                                 <Button onClick={() => handleRechazar(pelicula.id)} variant="contained" sx={{ flexGrow: 1, bgcolor: '#d32f2f', borderRadius: 3, textTransform: 'none', fontWeight: 900, py: 1.5, '&:hover': { bgcolor: '#b71c1c' } }}>
-                                                    Rechazar
+                                                    {t("buttonRejectControlFilms")}
                                                 </Button>
                                             </Box>
                                         </Box>

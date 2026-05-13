@@ -12,6 +12,8 @@
     "filterNote": "Any Rating",
     "textFilterNote": "Stars",
     "filterGender": "All Genders",
+    "filterLatest": "latest",
+    "filterClean": "Clean",
     "sloganHome": "DISCOVER • RATE • ENJOY",
     "textError": "Oops, something went wrong. We are currently working on it:",
     "buttonWatchFilm": "Watch Film",
@@ -67,5 +69,12 @@
     "textErrorComplete@": "Email must contain an @.",
     "buttonRegister": "Create Account",
     "buttonLinkLogin": "Already have an account?",
-    "buttonSignIn": "Sign In"
+    "buttonSignIn": "Sign In",
+    "textControlFilmsDrafts": "Drafts",
+    "titleControlFilms": "Control Panel",
+    "descriptionControlFilms": "Review and manage movies pending publication",
+    "notFilmsPendingControlFilms": "Review and manage movies pending publication",
+    "pageFilmsEmptyControlFilms": "Everything is up to date. This page is empty.",
+    "buttonAcceptControlFilms": "Accept",
+    "buttonRejectControlFilms": "Reject"
 }
