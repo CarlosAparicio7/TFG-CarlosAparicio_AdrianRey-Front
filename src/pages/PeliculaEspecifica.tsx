@@ -253,7 +253,20 @@ export default function PeliculaEspecifica() {
                                                     <Box sx={{ mb: 3, borderBottom: '2px solid #e2e8f0', pb: 2 }}>
                                                         <Typography variant="h5" sx={{ color: '#005f8a', fontWeight: 900, letterSpacing: -1 }}>{t("titleReviewWatchFilm")}</Typography>
                                                         <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mt: 1 }}>
-                                                            <Typography component="input" type="number" value={notaUsuario} onChange={(e) => setNotaUsuario(Number(e.target.value))} 
+                                                            <Typography component="input" 
+                                                                        type="number" 
+                                                                        value={notaUsuario === 0 ? "" : notaUsuario} 
+                                                                        onChange={(e) => {
+                                                                            const val = e.target.value; 
+                                                                            if (val === "") {
+                                                                                setNotaUsuario(0);
+                                                                            } else {
+                                                                                const num = Number(val);
+                                                                                if (!isNaN(num) && num >= 0 && num <= 10) {
+                                                                                    setNotaUsuario(num);
+                                                                                }
+                                                                            }
+                                                                        }} 
                                                                 sx={{ fontWeight: 800, color: '#f06b06', bgcolor: 'rgba(0, 0, 0, 0.05)', border: '1px solid rgba(240, 107, 6, 0.3)', borderRadius: 1, outline: 'none', width: '60px', fontSize: '1.2rem', textAlign: 'center', p: '4px 8px', '&:focus': { borderColor: '#f06b06', bgcolor: 'rgba(255, 255, 255, 0.8)' } }} 
                                                             />
                                                         </Box>

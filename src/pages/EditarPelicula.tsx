@@ -108,7 +108,18 @@ export default function EditarPelicula() {
     }
 
     const editarValoracion = (a: React.ChangeEvent<HTMLInputElement>) => {
-        setDatosPelicula({ ...datosPelicula, valoracion: Number(a.target.value) })
+        const valorOriginal = a.target.value;
+
+        if (valorOriginal === "") {
+            setDatosPelicula({ ...datosPelicula, valoracion: 0 });
+            return;
+        }
+
+        const valorNumerico = Number(valorOriginal);
+
+        if (!isNaN(valorNumerico) && valorNumerico >= 0 && valorNumerico <= 10) {
+            setDatosPelicula({ ...datosPelicula, valoracion: valorNumerico });
+        }
     }
 
     const editarUrlVideo = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -239,7 +250,7 @@ export default function EditarPelicula() {
                                         <TextField required fullWidth label={t("textLabelFilmmaker")} variant="outlined" value={datosPelicula.director} onChange={editarDirector} sx={{ bgcolor: '#fff', borderRadius: 3, '& .MuiOutlinedInput-root': { borderRadius: 3, fontWeight: 600 } }} />
                                         <TextField required fullWidth label={t("textLabelGenders")} variant="outlined" value={datosPelicula.genero} onChange={editarGenero} sx={{ bgcolor: '#fff', borderRadius: 3, '& .MuiOutlinedInput-root': { borderRadius: 3, fontWeight: 600 } }} />
                                         <TextField required fullWidth label={t("textLabelDescription")} variant="outlined" value={datosPelicula.descripcion} multiline rows={5} onChange={editarDescripcion} sx={{ bgcolor: '#fff', borderRadius: 3, '& .MuiOutlinedInput-root': { borderRadius: 3, fontWeight: 600 } }} />
-                                        <TextField required fullWidth label={t("textLabelRating")} variant="outlined" value={datosPelicula.valoracion} type="number" onChange={editarValoracion} slotProps={{ htmlInput: { min: 1, max: 10, step: 0.1 } }} sx={{ bgcolor: '#fff', borderRadius: 3, '& .MuiOutlinedInput-root': { borderRadius: 3, fontWeight: 600 } }} />
+                                        <TextField required fullWidth label={t("textLabelRating")} variant="outlined" value={datosPelicula.valoracion === 0 ? "" : datosPelicula.valoracion} type="number" onChange={editarValoracion} slotProps={{ htmlInput: { min: 1, max: 10, step: 0.1 } }} sx={{ bgcolor: '#fff', borderRadius: 3, '& .MuiOutlinedInput-root': { borderRadius: 3, fontWeight: 600 } }} />
                                     </Box>
                                 </Grid>
 

@@ -79,7 +79,18 @@ export default function SubirPelicula() {
     }
 
     const crearValoracion = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setAddPelicula({ ...addPelicula, valoracion: Number(e.target.value) });
+        const valorOriginal = e.target.value;
+
+        if (valorOriginal === "") {
+            setAddPelicula({ ...addPelicula, valoracion: 0 });
+            return;
+        }
+
+        const valorNumerico = Number(valorOriginal);
+
+        if (!isNaN(valorNumerico) && valorNumerico >= 0 && valorNumerico <= 10) {
+            setAddPelicula({ ...addPelicula, valoracion: valorNumerico });
+        }
     }
 
     const crearUrlVideoManual = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -196,7 +207,7 @@ export default function SubirPelicula() {
                                         <TextField required fullWidth label={t("textLabelFilmmaker")} variant="outlined" onChange={crearDirector} sx={{ bgcolor: '#fff', borderRadius: 3, '& .MuiOutlinedInput-root': { borderRadius: 3, fontWeight: 600 } }} />
                                         <TextField required fullWidth label={t("textLabelGenders")} variant="outlined" placeholder="Acción, Drama..." onChange={crearGenero} sx={{ bgcolor: '#fff', borderRadius: 3, '& .MuiOutlinedInput-root': { borderRadius: 3, fontWeight: 600 } }} />
                                         <TextField required fullWidth label={t("textLabelDescription")} variant="outlined" multiline rows={5} onChange={crearDescripcion} sx={{ bgcolor: '#fff', borderRadius: 3, '& .MuiOutlinedInput-root': { borderRadius: 3, fontWeight: 600 } }} />
-                                        <TextField required fullWidth label={t("textLabelRating")} variant="outlined" placeholder="1-10" type="number" onChange={crearValoracion} slotProps={{ htmlInput: { min: 1, max: 10, step: 0.1 } }} sx={{ bgcolor: '#fff', borderRadius: 3, '& .MuiOutlinedInput-root': { borderRadius: 3, fontWeight: 600 } }} />
+                                        <TextField required fullWidth label={t("textLabelRating")} variant="outlined" placeholder="1-10" type="number" value={addPelicula.valoracion === 0 ? "" : addPelicula.valoracion} onChange={crearValoracion} slotProps={{ htmlInput: { min: 1, max: 10, step: 0.1 } }} sx={{ bgcolor: '#fff', borderRadius: 3, '& .MuiOutlinedInput-root': { borderRadius: 3, fontWeight: 600 } }} />
                                     </Box>
                                 </Grid>
 

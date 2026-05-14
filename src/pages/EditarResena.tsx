@@ -61,7 +61,18 @@ export default function EditarResena() {
     }
 
     const editarNumeroEstrellas = (a: React.ChangeEvent<HTMLInputElement>) => {
-        setDatosResena({ ...datosResena, numeroEstrellas: Number(a.target.value) })
+        const valorOriginal = a.target.value;
+
+        if (valorOriginal === "") {
+            setDatosResena({ ...datosResena, numeroEstrellas: 0 });
+            return;
+        }
+
+        const valorNumerico = Number(valorOriginal);
+
+        if (!isNaN(valorNumerico) && valorNumerico >= 0 && valorNumerico <= 10) {
+            setDatosResena({ ...datosResena, numeroEstrellas: valorNumerico });
+        }
     }
 
     const botonEditarResena = async (e: React.FormEvent) => {
@@ -147,7 +158,7 @@ export default function EditarResena() {
                             <Grid container spacing={4} sx={{ justifyContent: 'center' }}>
                                 <Grid size={{ xs: 12 }}>
                                     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3, px: { md: 2 } }}>
-                                        <TextField required fullWidth label="Puntuación" variant="outlined" value={datosResena.numeroEstrellas} type="number" onChange={editarNumeroEstrellas} slotProps={{ htmlInput: { min: 1, max: 10, step: 0.1 } }} sx={{ bgcolor: '#fff', borderRadius: 3, '& .MuiOutlinedInput-root': { borderRadius: 3, fontWeight: 600 } }} />
+                                        <TextField required fullWidth label="Puntuación" variant="outlined" value={datosResena.numeroEstrellas === 0 ? "" : datosResena.numeroEstrellas} type="number" onChange={editarNumeroEstrellas} slotProps={{ htmlInput: { min: 1, max: 10, step: 0.1 } }} sx={{ bgcolor: '#fff', borderRadius: 3, '& .MuiOutlinedInput-root': { borderRadius: 3, fontWeight: 600 } }} />
                                         <TextField required fullWidth label="Comentario de Opinión" variant="outlined" value={datosResena.comentario} multiline rows={6} onChange={editarComentario} sx={{ bgcolor: '#fff', borderRadius: 3, '& .MuiOutlinedInput-root': { borderRadius: 3, fontWeight: 600 } }} />
                                         <Box sx={{ mt: 2, display: 'flex', justifyContent: 'center' }}>
                                             <Button type="submit" variant="contained" fullWidth startIcon={<CloudUpload />} sx={{ bgcolor: '#005f8a', color: '#fff', borderRadius: 4, textTransform: 'none', fontWeight: 900, py: 2, fontSize: '1.2rem', boxShadow: '0 10px 20px rgba(0,95,138,0.2)', transition: 'all 0.3s ease', '&:hover': { bgcolor: '#f06b06', transform: 'translateY(-4px)', boxShadow: '0 15px 25px rgba(240,107,6,0.3)' } }}>{t("buttonSaveChanges")}</Button>
