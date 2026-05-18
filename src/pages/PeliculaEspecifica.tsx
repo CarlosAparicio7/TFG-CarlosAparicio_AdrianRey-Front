@@ -137,6 +137,9 @@ export default function PeliculaEspecifica() {
         }).catch(err => console.error(err));
     };
 
+    const totalEstrellas = listaResenas.reduce((acumulador, resenaActual) => acumulador + resenaActual.numeroEstrellas, 0);
+    const mediaComunidad = listaResenas.length > 0 ? Number((totalEstrellas / listaResenas.length).toFixed(1)) : 0;
+    
     return (
     <>
         <Box sx={{ minHeight: '100vh', background: theme === 'dark' ? '#0f172a' : 'linear-gradient(90deg, #005f8a 30%, #f06b06 100%)', display: 'flex', flexDirection: 'column', backgroundAttachment: 'fixed' }}>
@@ -202,8 +205,8 @@ export default function PeliculaEspecifica() {
                                             <Box>
                                                 <Typography variant="overline" sx={{ color: '#e0f2fe', fontWeight: 900, fontSize: '0.9rem' }}>{t("textCommunityWatchFilm")}</Typography>
                                                 <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                                                    <Rating value={4.2 /2} precision={0.1} readOnly sx={{ '& .MuiRating-iconFilled': { color: '#00a8e8' } }} />
-                                                    <Typography variant="h4" sx={{ color: '#fff', fontWeight: 900 }}>4.2</Typography>
+                                                    <Rating value={mediaComunidad / 2} precision={0.1} readOnly sx={{ '& .MuiRating-iconFilled': { color: '#00a8e8' } }} />
+                                                    <Typography variant="h4" sx={{ color: '#fff', fontWeight: 900 }}>{mediaComunidad}</Typography>
                                                 </Box>
                                             </Box>
                                         </Box>
@@ -253,10 +256,7 @@ export default function PeliculaEspecifica() {
                                                     <Box sx={{ mb: 3, borderBottom: '2px solid #e2e8f0', pb: 2 }}>
                                                         <Typography variant="h5" sx={{ color: '#005f8a', fontWeight: 900, letterSpacing: -1 }}>{t("titleReviewWatchFilm")}</Typography>
                                                         <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mt: 1 }}>
-                                                            <Typography component="input" 
-                                                                        type="number" 
-                                                                        value={notaUsuario === 0 ? "" : notaUsuario} 
-                                                                        onChange={(e) => {
+                                                            <Typography component="input" type="number" value={notaUsuario === 0 ? "" : notaUsuario} onChange={(e) => {
                                                                             const val = e.target.value; 
                                                                             if (val === "") {
                                                                                 setNotaUsuario(0);
