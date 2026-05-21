@@ -35,6 +35,7 @@ export default function SubirPelicula() {
     const [progress, setProgress] = useState(0);
     const navigate = useNavigate();
     const [archivoBinario, setArchivoBinario] = useState<File | null>(null);
+    const listaGeneros = ["Acción", "Animación", "Aventura", "Ciencia Ficción", "Comedia", "Documental", "Drama", "Fantasía", "Terror", "Suspense", "Thriller", "Otros"];
 
     const { theme } = useTheme();
 
@@ -148,8 +149,6 @@ export default function SubirPelicula() {
             console.error(error);
         }
     }
-
-    const listaGeneros = ["Acción", "Animación", "Aventura", "Ciencia Ficción", "Comedia", "Documental", "Drama", "Fantasía", "Terror", "Suspense", "Thriller", "Otros"];
 
     return (
     <>

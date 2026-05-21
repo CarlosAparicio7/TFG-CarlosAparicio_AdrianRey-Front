@@ -49,6 +49,7 @@ export default function EditarPelicula() {
     const [archivoBinario, setArchivoBinario] = useState<File | null>(null);
     const [loading, setLoading] = useState(false);
     const [progress, setProgress] = useState(0);
+    const listaGeneros = ["Acción", "Animación", "Aventura", "Ciencia Ficción", "Comedia", "Documental", "Drama", "Fantasía", "Terror", "Suspense", "Thriller", "Otros"];
 
     const { theme } = useTheme();
 
@@ -193,8 +194,6 @@ export default function EditarPelicula() {
             console.log(error);
         }
     }
-
-    const listaGeneros = ["Acción", "Animación", "Aventura", "Ciencia Ficción", "Comedia", "Documental", "Drama", "Fantasía", "Terror", "Suspense", "Thriller", "Otros"];
 
     return (
         <Box sx={{ minHeight: '100vh', background: theme === 'dark' ? '#0f172a' : 'linear-gradient(90deg, #005f8a 30%, #f06b06 100%)', display: 'flex', flexDirection: 'column', backgroundAttachment: 'fixed' }}>
