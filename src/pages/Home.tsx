@@ -120,9 +120,12 @@ export default function Home() {
                                 onChange={(e) => setFiltroValoracion(e.target.value)}
                             >
                                 <MenuItem value="todos">{t("filterNote")}</MenuItem>
-                                {[...Array(11)].map((_, i) => (
-                                    <MenuItem key={i} value={i.toString()}>{i} {t("textFilterNote")}</MenuItem>
-                                ))}
+                                    {[...Array(10)].map((_, i) => {
+                                        const nota = 1 + i;
+                                        return(
+                                        <MenuItem key={nota} value={nota.toString()}>{nota} {t("textFilterNote")}</MenuItem>
+                                        )
+                                })}
                             </Select>
                             <Select size="medium" value={filtroGenero} displayEmpty sx={{ color: '#fff', bgcolor: 'rgba(0, 0, 0, 0.2)', borderRadius: 3, minWidth: 200, height: 56, border: '1px solid rgba(255, 255, 255, 0.2)', '& .MuiOutlinedInput-notchedOutline': { border: 'none' }, '& .MuiSvgIcon-root': { color: '#ffd1b3' } }}
                                 onChange={(e) => setFiltroGenero(e.target.value)}
