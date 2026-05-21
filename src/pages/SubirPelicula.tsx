@@ -1,5 +1,5 @@
 import { AddPhotoAlternate, CheckCircle, Close, CloudUpload, Movie, MovieFilter } from "@mui/icons-material";
-import { Box, Button, Container, Grid, IconButton, Input, LinearProgress, Paper, TextField, Typography } from "@mui/material";
+import { Box, Button, Container, Grid, IconButton, Input, LinearProgress, MenuItem, Paper, TextField, Typography} from "@mui/material";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
@@ -149,6 +149,8 @@ export default function SubirPelicula() {
         }
     }
 
+    const listaGeneros = ["Acción", "Animación", "Aventura", "Ciencia Ficción", "Comedia", "Documental", "Drama", "Fantasía", "Terror", "Suspense", "Thriller", "Otros"];
+
     return (
     <>
         <Box sx={{ minHeight: '100vh', background: theme === 'dark' ? '#0f172a' : 'linear-gradient(90deg, #005f8a 30%, #f06b06 100%)', display: 'flex', flexDirection: 'column', backgroundAttachment: 'fixed' }}>
@@ -205,7 +207,13 @@ export default function SubirPelicula() {
                                     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2.5 }}>
                                         <TextField required fullWidth label={t("textLabelName")} variant="outlined" onChange={crearNombre} sx={{ bgcolor: '#fff', borderRadius: 3, '& .MuiOutlinedInput-root': { borderRadius: 3, fontWeight: 600 } }} />
                                         <TextField required fullWidth label={t("textLabelFilmmaker")} variant="outlined" onChange={crearDirector} sx={{ bgcolor: '#fff', borderRadius: 3, '& .MuiOutlinedInput-root': { borderRadius: 3, fontWeight: 600 } }} />
-                                        <TextField required fullWidth label={t("textLabelGenders")} variant="outlined" placeholder="Acción, Drama..." onChange={crearGenero} sx={{ bgcolor: '#fff', borderRadius: 3, '& .MuiOutlinedInput-root': { borderRadius: 3, fontWeight: 600 } }} />
+                                        <TextField required fullWidth select label={t("textLabelGenders")} variant="outlined" value={addPelicula.genero} onChange={crearGenero} sx={{  bgcolor: '#fff',  borderRadius: 3,  '& .MuiOutlinedInput-root': {  borderRadius: 3,  fontWeight: 600 } }}>
+                                            {listaGeneros.map((gen) => (
+                                                <MenuItem key={gen} value={gen} sx={{ fontWeight: 600 }}>
+                                                    {gen}
+                                                </MenuItem>
+                                            ))}
+                                        </TextField>
                                         <TextField required fullWidth label={t("textLabelDescription")} variant="outlined" multiline rows={5} onChange={crearDescripcion} sx={{ bgcolor: '#fff', borderRadius: 3, '& .MuiOutlinedInput-root': { borderRadius: 3, fontWeight: 600 } }} />
                                         <TextField required fullWidth label={t("textLabelRating")} variant="outlined" placeholder="1-10" type="number" value={addPelicula.valoracion === 0 ? "" : addPelicula.valoracion} onChange={crearValoracion} slotProps={{ htmlInput: { min: 1, max: 10, step: 0.1 } }} sx={{ bgcolor: '#fff', borderRadius: 3, '& .MuiOutlinedInput-root': { borderRadius: 3, fontWeight: 600 } }} />
                                     </Box>
