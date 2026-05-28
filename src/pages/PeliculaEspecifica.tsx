@@ -161,7 +161,7 @@ export default function PeliculaEspecifica() {
                                     <Button component={Link} to={"/"} variant="contained" sx={{ width: '200px', height: '60px', bgcolor: '#005f8a', borderRadius: 3, textTransform: 'none', fontWeight: 900, py: 1.8, fontSize: '1.1rem', marginRight: 'auto', '&:hover': { bgcolor: '#f06b06' } }}>
                                         {t("buttonBack")}
                                     </Button>
-                                    <Typography variant="h2" sx={{ fontWeight: 900, letterSpacing: -3, fontSize: { xs: '2.5rem', sm: '3.5rem', md: '4.5rem' }, color: '#fff', textShadow: '0px 10px 20px rgba(0,0,0,0.3)' }}>
+                                    <Typography variant="h2" sx={{ fontWeight: 900, letterSpacing: -3, fontSize: { xs: '2.5rem', sm: '3.5rem', md: '4.5rem' }, color: '#fff', textShadow: '0px 10px 20px rgba(0,0,0,0.3)', textAlign: 'center', width: '100%' }}>
                                         {usePeliculaEspecifica?.nombre}
                                     </Typography>
                                     {datosUsuarioLogueado && datosUsuarioLogueado.rol === 'ADMIN' && (
