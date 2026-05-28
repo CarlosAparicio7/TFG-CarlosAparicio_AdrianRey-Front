@@ -76,5 +76,6 @@
     "notFilmsPendingControlFilms": "Review and manage movies pending publication",
     "pageFilmsEmptyControlFilms": "Everything is up to date. This page is empty.",
     "buttonAcceptControlFilms": "Accept",
-    "buttonRejectControlFilms": "Reject"
+    "buttonRejectControlFilms": "Reject",
+    "controlBack": "Back to Control"
 }

@@ -76,5 +76,6 @@
     "notFilmsPendingControlFilms": "No hay películas pendientes de revisión",
     "pageFilmsEmptyControlFilms": "Todo está al día. Esta página está vacía.",
     "buttonAcceptControlFilms": "Aceptar",
-    "buttonRejectControlFilms": "Rechazar"
+    "buttonRejectControlFilms": "Rechazar",
+    "controlBack": "Volver a control"
 }
